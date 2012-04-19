@@ -1,5 +1,7 @@
 package guibin.zhang.algorithm;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Guibin Zhang <guibin.beijing at gmail.com>
@@ -18,14 +20,54 @@ package guibin.zhang.algorithm;
  * 
  */
 public class Factorial {
-    
+
     /**
      * @param n
      * @return 
      */
     public int count1(int n) {
-       
-        return 0;
+
+        int counter = 0;
+        while (n > 0) {
+            int m = n;
+            while (m % 5 == 0) {
+                counter++;
+                m /= 5;
+            }
+            n--;
+        }
+
+        return counter;
     }
     
+    /**
+     * This recursive method could be "stack overflow" if n is too big.
+     * 
+     * @param n
+     * @return 
+     */
+    public BigDecimal factorial2(int n) {
+        if (n == 1) {
+            return new BigDecimal(1);
+        } else {
+            return new BigDecimal(n).multiply(factorial(n - 1));
+        }
+    }
+    
+    public BigDecimal factorial(int n) {
+        BigDecimal res = new BigDecimal(1);
+        for(int i=1; i<=n; i++) {
+            res = res.multiply(new BigDecimal(i));
+        }
+        
+        return res;
+    }
+
+    public static void main(String[] args) {
+        Factorial f = new Factorial();
+        int i = 10;
+
+        System.out.println(i + "! = " + f.factorial(i).toString() + ", has " + f.count1(i) + " 0s.");
+        System.out.println(i + "! = " + f.factorial2(i).toString() + ", has " + f.count1(i) + " 0s.");
+    }
 }
