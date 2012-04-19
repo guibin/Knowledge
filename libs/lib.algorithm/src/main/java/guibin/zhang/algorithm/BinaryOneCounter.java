@@ -17,6 +17,14 @@ package guibin.zhang.algorithm;
  * Convert from binary to int: Integer.parseInt("101011", 2); => 43
  * Convert from int to binary: Integer.toBinaryString(128);
  * 
+ * Extension:
+ * Given two positive integers A and B in binary form, if we want to change A to B,
+ * how many bits should be changed in A? Namely how many different bit between A and B?
+ * 
+ * Answer:
+ * 1. int C = A ^ B // Get the result of A xor B
+ * 2. Using the existing method to compute the amount of 1s in C, that is it.
+ * 
  * @author Guibin Zhang <guibin.beijing at gmail.com>
  */
 public class BinaryOneCounter {
