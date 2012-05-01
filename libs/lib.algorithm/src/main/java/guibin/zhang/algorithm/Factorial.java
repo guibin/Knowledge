@@ -41,6 +41,27 @@ public class Factorial {
     }
     
     /**
+     * the amount of ending zero = [N/5] + [N/(5*5)] + [N/(5*5*5)] + ..... + [N/(5)^k], where (5)^k > N
+     * [N/5] means in the number which is <= N, mutiple 5 combute one 0.
+     * [N/5*5] means in the number which is <= N, mutiple 5*5 combute one 0.
+     * 
+     * Becuause: 
+     * (5)^k > N => N/(5)^k == 0
+     * 
+     * @param n
+     * @return 
+     */
+    public int count2(int n) {
+        int counter = 0;
+        while(n > 0) {
+            n /= 5;
+            counter ++;
+        }
+        
+        return counter;
+    }
+    
+    /**
      * This recursive method could be "stack overflow" if n is too big.
      * 
      * @param n
@@ -68,6 +89,6 @@ public class Factorial {
         int i = 10;
 
         System.out.println(i + "! = " + f.factorial(i).toString() + ", has " + f.count1(i) + " 0s.");
-        System.out.println(i + "! = " + f.factorial2(i).toString() + ", has " + f.count1(i) + " 0s.");
+        System.out.println(i + "! = " + f.factorial(i).toString() + ", has " + f.count2(i) + " 0s.");
     }
 }
