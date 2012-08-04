@@ -34,8 +34,8 @@
                     <launchers>
 <!--mvn scala:run -Dlauncher=hellojava-->
                         <launcher>
-                            <id>hellojava</id>
-                            <mainClass>guibin.zhang.algorithm.HelloJava</mainClass>
+                            <id>BinaryOneCounter</id>
+                            <mainClass>guibin.zhang.algorithm.Factorial</mainClass>
 <!--                            <jvmArgs>
                                 <jvmArg>-Xmx1024m</jvmArg>
                             </jvmArgs>-->

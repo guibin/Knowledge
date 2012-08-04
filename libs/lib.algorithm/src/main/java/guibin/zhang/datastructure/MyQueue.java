@@ -1,9 +1,9 @@
-package guibin.zhang.algorithm;
+package guibin.zhang.datastructure;
 
 import java.util.Stack;
 
 /**
- * implement the queue's enqueue and dequeue with several stack
+ * implement the queue's enqueue and dequeue with stack
  * 
  * @author Guibin Zhang <guibin at Yahoo-inc>
  */

@@ -84,6 +84,8 @@
 
     <modules>
         <module>lib.algorithm</module>
+        <module>lib.hbase</module>
+        <module>lib.designpattern</module>
     </modules>
 
 </project>
