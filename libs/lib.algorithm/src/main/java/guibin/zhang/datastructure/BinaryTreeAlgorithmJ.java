@@ -1,5 +1,9 @@
 package guibin.zhang.datastructure;
 
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.LinkedList;
+
 /**
  *
  * @author guibin
@@ -55,13 +59,52 @@ public class BinaryTreeAlgorithmJ {
         }
     }
 
+    /**
+     * Traverse the tree by depth first way to compute the maximum depth
+     */
+    public int depthOfBinaryTreeByDepthTraverse(BinaryNodeJ root) {
+        
+        ArrayList<BinaryNodeJ> result = new ArrayList<BinaryNodeJ>();
+        Queue<BinaryNodeJ> queue = new LinkedList<BinaryNodeJ>();
+        
+        root.setDepth(1);
+        BinaryNodeJ current = root;
+        
+        while(current != null || queue.size() > 0) {
+            result.add(current);
+            if(current.left != null) {
+                current.left.setDepth(current.depth + 1);
+                queue.add(current.left);
+            }
+            if(current.right != null) {
+                current.right.setDepth(current.depth + 1);
+                queue.add(current.right);
+            }
+            
+            current = queue.peek() == null ? null : queue.poll();
+        } 
+        
+        //----------------------- Print the tree
+        for(BinaryNodeJ n : result) {
+            System.out.print(n.data.toString());
+        }
+        System.out.println();
+        //----------------------
+        
+        BinaryNodeJ lastOne = result.get(result.size() - 1);
+        return lastOne.getDepth();
+    }
+    
     public static void main(String[] args) {
-        //   A
-        //  / \
-        // B   C
-        ///   / \
-        //D  E   F
-        BinaryNodeJ D = new BinaryNodeJ("D");
+        //      A
+        //     / \
+        //    B   C
+        //   /   / \
+        //  D  E   F
+        // /
+        //G
+        BinaryNodeJ G = new BinaryNodeJ("G");
+        BinaryNodeJ D = new BinaryNodeJ(G, "D", null);
         BinaryNodeJ E = new BinaryNodeJ("E");
         BinaryNodeJ F = new BinaryNodeJ("F");
         BinaryNodeJ B = new BinaryNodeJ(D, "B", null);
@@ -71,9 +114,15 @@ public class BinaryTreeAlgorithmJ {
         BinaryTreeAlgorithmJ bta = new BinaryTreeAlgorithmJ();
         System.out.println("depthOfBinaryTree A is " + bta.depthOfBinaryTree(A));
         System.out.println("depthOfBinaryTree2 A is " + bta.depthOfBinaryTree2(A));
+        System.out.println("depthOfBinaryTreeByDepthTraverse A is " + bta.depthOfBinaryTreeByDepthTraverse(A));
         System.out.println("depthOfBinaryTree C is " + bta.depthOfBinaryTree(C));
         System.out.println("depthOfBinaryTree2 C is " + bta.depthOfBinaryTree2(C));
+        System.out.println("depthOfBinaryTreeByDepthTraverse C is " + bta.depthOfBinaryTreeByDepthTraverse(C));
         System.out.println("depthOfBinaryTree B is " + bta.depthOfBinaryTree(B));
         System.out.println("depthOfBinaryTree2 B is " + bta.depthOfBinaryTree2(B));
+        System.out.println("depthOfBinaryTreeByDepthTraverse B is " + bta.depthOfBinaryTreeByDepthTraverse(B));
+        System.out.println("depthOfBinaryTree G is " + bta.depthOfBinaryTree(G));
+        System.out.println("depthOfBinaryTree2 G is " + bta.depthOfBinaryTree2(G));
+        System.out.println("depthOfBinaryTreeByDepthTraverse G is " + bta.depthOfBinaryTreeByDepthTraverse(G));
     }
 }
