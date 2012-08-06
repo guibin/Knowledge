@@ -62,7 +62,7 @@ public class BinaryTreeAlgorithmJ {
     /**
      * Traverse the tree by depth first way to compute the maximum depth
      */
-    public int depthOfBinaryTreeByDepthTraverse(BinaryNodeJ root) {
+    public int depthOfBinaryTreeByBreadthTraverse(BinaryNodeJ root) {
         
         ArrayList<BinaryNodeJ> result = new ArrayList<BinaryNodeJ>();
         Queue<BinaryNodeJ> queue = new LinkedList<BinaryNodeJ>();
@@ -114,15 +114,15 @@ public class BinaryTreeAlgorithmJ {
         BinaryTreeAlgorithmJ bta = new BinaryTreeAlgorithmJ();
         System.out.println("depthOfBinaryTree A is " + bta.depthOfBinaryTree(A));
         System.out.println("depthOfBinaryTree2 A is " + bta.depthOfBinaryTree2(A));
-        System.out.println("depthOfBinaryTreeByDepthTraverse A is " + bta.depthOfBinaryTreeByDepthTraverse(A));
+        System.out.println("depthOfBinaryTreeByBreadthTraverse A is " + bta.depthOfBinaryTreeByBreadthTraverse(A));
         System.out.println("depthOfBinaryTree C is " + bta.depthOfBinaryTree(C));
         System.out.println("depthOfBinaryTree2 C is " + bta.depthOfBinaryTree2(C));
-        System.out.println("depthOfBinaryTreeByDepthTraverse C is " + bta.depthOfBinaryTreeByDepthTraverse(C));
+        System.out.println("depthOfBinaryTreeByBreadthTraverse C is " + bta.depthOfBinaryTreeByBreadthTraverse(C));
         System.out.println("depthOfBinaryTree B is " + bta.depthOfBinaryTree(B));
         System.out.println("depthOfBinaryTree2 B is " + bta.depthOfBinaryTree2(B));
-        System.out.println("depthOfBinaryTreeByDepthTraverse B is " + bta.depthOfBinaryTreeByDepthTraverse(B));
+        System.out.println("depthOfBinaryTreeByBreadthTraverse B is " + bta.depthOfBinaryTreeByBreadthTraverse(B));
         System.out.println("depthOfBinaryTree G is " + bta.depthOfBinaryTree(G));
         System.out.println("depthOfBinaryTree2 G is " + bta.depthOfBinaryTree2(G));
-        System.out.println("depthOfBinaryTreeByDepthTraverse G is " + bta.depthOfBinaryTreeByDepthTraverse(G));
+        System.out.println("depthOfBinaryTreeByBreadthTraverse G is " + bta.depthOfBinaryTreeByBreadthTraverse(G));
     }
 }
