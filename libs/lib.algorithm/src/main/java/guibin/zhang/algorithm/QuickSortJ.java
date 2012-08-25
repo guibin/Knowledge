@@ -72,12 +72,13 @@ public class QuickSortJ {
      * @param right right is the index of the rightmost element of the array
      * (inclusive) number of elements in subarray = right-left+1
      * @param pivotIndex
-     * @return
+     * @return new pivot index
      */
     public int partition(int[] array, int left, int right, int pivotIndex) {
         int pivotValue = array[pivotIndex];
         // Move pivot to end
         swap(array, pivotIndex, right);
+        // storeIndex is used to mark the position of the small one partition.
         int storeIndex = left;
 
         for (int i = left; i < right; i++) {
