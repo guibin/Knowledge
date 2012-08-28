@@ -1,4 +1,4 @@
-package guibin.zhang.datastructure;
+package guibin.zhang.datastructure.misc;
 
 /**
  * No3 of the book A.

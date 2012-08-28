@@ -1,4 +1,4 @@
-package guibin.zhang.datastructure;
+package guibin.zhang.algorithm;
 
 /**
  * Given two strings s1 and s2, please check if s2 can be got by s1 rotation

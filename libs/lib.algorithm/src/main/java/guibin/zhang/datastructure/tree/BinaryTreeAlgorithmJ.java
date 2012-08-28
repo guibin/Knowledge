@@ -1,4 +1,4 @@
-package guibin.zhang.datastructure;
+package guibin.zhang.datastructure.tree;
 
 import java.util.ArrayList;
 import java.util.Queue;
@@ -60,7 +60,7 @@ public class BinaryTreeAlgorithmJ {
     }
 
     /**
-     * Traverse the tree by depth first way to compute the maximum depth
+     * Traverse the tree by breadth first way to compute the maximum depth
      */
     public int depthOfBinaryTreeByBreadthTraverse(BinaryNodeJ root) {
         

@@ -1,4 +1,4 @@
-package guibin.zhang.datastructure;
+package guibin.zhang.datastructure.misc;
 
 import java.util.Stack;
 

@@ -1,4 +1,4 @@
-package guibin.zhang.datastructure;
+package guibin.zhang.datastructure.list;
 
 /**
  * Given a headless singly list, a pointer points to a node in the list, 
