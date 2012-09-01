@@ -4,19 +4,19 @@ package guibin.zhang.datastructure.tree;
  *
  * @author guibin
  */
-public class BinaryNodeJ {
+public class BinaryNodeJ<T> {
     
     public BinaryNodeJ left = null;
     public BinaryNodeJ right = null;
-    public Object data = null;
+    public T data = null;
 
     public int depth = 0;
     
-    public BinaryNodeJ(Object data) {
+    public BinaryNodeJ(T data) {
         this.data = data;
     }
     
-    public BinaryNodeJ(BinaryNodeJ left, Object data, BinaryNodeJ right) {
+    public BinaryNodeJ(BinaryNodeJ left, T data, BinaryNodeJ right) {
         this.left = left;
         this.right = right;
         this.data = data;
