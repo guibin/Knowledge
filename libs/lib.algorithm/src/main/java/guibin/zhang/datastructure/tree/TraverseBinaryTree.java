@@ -111,9 +111,9 @@ public class TraverseBinaryTree {
     
     private void inOrderRecursively(List<BinaryNodeJ> result, BinaryNodeJ root) {
         
-        if(root != null) {//Access the node
+        if(root != null) {
             inOrderRecursively(result, root.left);
-            result.add(root);
+            result.add(root); //Access the node
             inOrderRecursively(result, root.right);
         }
     }

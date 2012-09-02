@@ -30,7 +30,7 @@ public class BinaryNodeJ<T> {
         this.depth = depth;
     }    
     
-    public static BinaryNodeJ getDemoTree() {
+    public static BinaryNodeJ<String> getDemoTree() {
         /**
          *     A
          *    /  \
@@ -45,18 +45,45 @@ public class BinaryNodeJ<T> {
          * Post-order: H,D,E,B,F,I,G,C,A
          * Breadth-first: A,B,C,D,E,F,G,H,I
          */
-        BinaryNodeJ H = new BinaryNodeJ("H");
-        BinaryNodeJ I = new BinaryNodeJ("I");
+        BinaryNodeJ<String> H = new BinaryNodeJ<String>("H");
+        BinaryNodeJ<String> I = new BinaryNodeJ<String>("I");
         
-        BinaryNodeJ D = new BinaryNodeJ(null, "D", H);
-        BinaryNodeJ E = new BinaryNodeJ("E");
+        BinaryNodeJ<String> D = new BinaryNodeJ<String>(null, "D", H);
+        BinaryNodeJ<String> E = new BinaryNodeJ<String>("E");
         
-        BinaryNodeJ F = new BinaryNodeJ("F");
-        BinaryNodeJ G = new BinaryNodeJ(I, "G", null);
+        BinaryNodeJ<String> F = new BinaryNodeJ<String>("F");
+        BinaryNodeJ<String> G = new BinaryNodeJ<String>(I, "G", null);
         
-        BinaryNodeJ B = new BinaryNodeJ(D, "B", E);
-        BinaryNodeJ C = new BinaryNodeJ(F, "C", G);
-        BinaryNodeJ A = new BinaryNodeJ(B, "A", C);
+        BinaryNodeJ<String> B = new BinaryNodeJ<String>(D, "B", E);
+        BinaryNodeJ<String> C = new BinaryNodeJ<String>(F, "C", G);
+        BinaryNodeJ<String> A = new BinaryNodeJ<String>(B, "A", C);
+        
+        return A;
+    }
+    
+    public static BinaryNodeJ<Integer> getBinarySearchTree() {
+       /**
+         *     12
+         *    /  \
+         *   8    15
+         *  / \  / \
+         * 5  10 14 17
+         *  \      /
+         *   7    16
+         * 
+         */
+        BinaryNodeJ<Integer> H = new BinaryNodeJ<Integer>(7);
+        BinaryNodeJ<Integer> I = new BinaryNodeJ<Integer>(16);
+        
+        BinaryNodeJ<Integer> D = new BinaryNodeJ<Integer>(null, 5, H);
+        BinaryNodeJ<Integer> E = new BinaryNodeJ<Integer>(10);
+        
+        BinaryNodeJ<Integer> F = new BinaryNodeJ<Integer>(14);
+        BinaryNodeJ<Integer> G = new BinaryNodeJ<Integer>(I, 17, null);
+        
+        BinaryNodeJ<Integer> B = new BinaryNodeJ<Integer>(D, 8, E);
+        BinaryNodeJ<Integer> C = new BinaryNodeJ<Integer>(F, 15, G);
+        BinaryNodeJ<Integer> A = new BinaryNodeJ<Integer>(B, 12, C);
         
         return A;
     }
