@@ -1,14 +1,14 @@
 package guibin.zhang.datastructure.tree;
 
 import java.util.ArrayList;
-import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  *
  * @author guibin
  */
-public class BinaryTreeAlgorithmJ {
+public class BinaryTreeDepth {
 
     /**
      * Suppose there is only one node in the tree which is root, the depth is 1;
@@ -111,7 +111,7 @@ public class BinaryTreeAlgorithmJ {
         BinaryNodeJ C = new BinaryNodeJ(E, "C", F);
         BinaryNodeJ A = new BinaryNodeJ(B, "A", C);
         
-        BinaryTreeAlgorithmJ bta = new BinaryTreeAlgorithmJ();
+        BinaryTreeDepth bta = new BinaryTreeDepth();
         System.out.println("depthOfBinaryTree A is " + bta.depthOfBinaryTree(A));
         System.out.println("depthOfBinaryTree2 A is " + bta.depthOfBinaryTree2(A));
         System.out.println("depthOfBinaryTreeByBreadthTraverse A is " + bta.depthOfBinaryTreeByBreadthTraverse(A));
