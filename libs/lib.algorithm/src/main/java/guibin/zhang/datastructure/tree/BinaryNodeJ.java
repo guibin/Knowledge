@@ -8,6 +8,7 @@ public class BinaryNodeJ<T> {
     
     public BinaryNodeJ left = null;
     public BinaryNodeJ right = null;
+    public BinaryNodeJ parent = null;
     public T data = null;
 
     public int depth = 0;
