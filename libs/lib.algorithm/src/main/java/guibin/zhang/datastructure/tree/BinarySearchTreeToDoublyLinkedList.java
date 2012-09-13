@@ -60,8 +60,10 @@ public class BinarySearchTreeToDoublyLinkedList {
         if (b==null) return a;
         
         // find the last node in each using the .previous pointer
+        // Because it is circular doubly linked list, given a and b are all the head of the 
+        // doubly linked list, so the last node should the previous node of the head
         BinaryNodeJ<Integer> aLast = a.left;
-        BinaryNodeJ<Integer> bLast = b.right;
+        BinaryNodeJ<Integer> bLast = b.left;
         
         // join the two together to make it connected and circular
         join(aLast, b);
@@ -104,12 +106,12 @@ public class BinarySearchTreeToDoublyLinkedList {
       method messier than they should be.
     */
     public static void treeInsert(BinaryNodeJ<Integer> root, int newData) {
-        if (newData<=root.data) {
-            if (root.left!=null) treeInsert(root.left, newData);
+        if (newData <= root.data) {
+            if (root.left != null) treeInsert(root.left, newData);
             else root.left = new BinaryNodeJ<Integer>(newData);
         }
         else {
-            if (root.right!=null) treeInsert(root.right, newData);
+            if (root.right != null) treeInsert(root.right, newData);
             else root.right = new BinaryNodeJ<Integer>(newData);
         }
     }
