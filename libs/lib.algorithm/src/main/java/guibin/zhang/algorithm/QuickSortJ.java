@@ -93,6 +93,23 @@ public class QuickSortJ {
         return storeIndex;
     }
 
+    public int partition(int[] array, int p, int r) {
+        //Let the last element the pivot
+        int pivotValue = array[p];
+        //The marker to less or equal to  the pivot
+        int i = p - 1;
+        for (int j=p; j<r; j++) {
+            if(array[j] <= pivotValue) {
+                i++;
+                swap(array, i, j);
+            }
+        }
+        //Move the pivot to the final place(The position i+1)
+        swap(array, i+1, r);
+        
+        return i+1;
+    }
+    
     public void doSortInplaceVersion(int[] array, int start, int end) {
 
         if (start < end) {
