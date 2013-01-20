@@ -75,6 +75,11 @@ public class BusinessTasks {
     
     /**
      * Actually delete the No.n task from task list.
+     * 
+     * If there are k things, and you want to count to n, starting from j, 
+     * you will simply end up at (j+n)%k. 
+     * Using this, its just a matter of removing the elements as specified, and running the simulation.
+     * 
      * @param list Task list.
      * @param n The No.n task will be removed/done.
      * @return The last task
