@@ -100,6 +100,36 @@ public class BinarySearch {
         }
     }
     
+    /**
+     * Find the first occurance of a number in a sorted array.
+     * http://www.careercup.com/question?id=14659673
+     * 
+     * @param arr The array to be searched.
+     * @param target The target to be searched.
+     * @return 
+     */
+    public int searchFirstOccurance(int[] arr, int target) {
+        
+        int lo = 0;
+        int hi = arr.length;
+        
+        while(lo < hi) {
+            int mid = lo + (hi - lo)/2;
+            if(arr[mid] < target) {
+                lo = mid + 1;
+            } else if(arr[mid] > target) {
+                hi = mid - 1;
+            } else {//arr[mid] == target
+                hi = mid;
+            }
+        }
+        
+        if(arr[lo] == target)
+            return lo;
+        else return -1;
+        
+    }
+    
     public static void main(String[] args) {
         int[] arr = {0, 5, 13, 19, 22, 41, 55, 68, 72, 81, 98, 110};
         BinarySearch bs = new BinarySearch();
@@ -121,5 +151,11 @@ public class BinarySearch {
         int k = bs.searchLastLessValue(arr, 110);//10
         int l = bs.searchLastLessValue(arr, 71);//7
         System.out.println(i + "," + j + "," + k + "," + l);
+        
+        int[] arr2 = {1, 2 , 2, 3, 3, 4};
+        int m = bs.searchFirstOccurance(arr2, 2);//1
+        int n = bs.searchFirstOccurance(arr2, 3);//3
+        int o = bs.searchFirstOccurance(arr2, 0);//-1
+        System.out.println(m + "," + n + ", " + o);
     }
 }
