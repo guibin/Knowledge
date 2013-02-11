@@ -95,7 +95,7 @@ public class QuickSortJ {
 
     public int partition(int[] array, int p, int r) {
         //Let the last element the pivot
-        int pivotValue = array[p];
+        int pivotValue = array[r];
         //The marker to less or equal to  the pivot
         int i = p - 1;
         for (int j=p; j<r; j++) {
