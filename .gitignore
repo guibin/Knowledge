@@ -1,3 +1,4 @@
 /libs/lib.algorithm/target/
 /libs/lib.hbase/target/
 /libs/lib.designpattern/target/
+.DS_Store
