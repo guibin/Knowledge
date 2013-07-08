@@ -21,6 +21,11 @@ public class PalindromePartitionII {
     /**
      * http://polythinking.wordpress.com/2013/06/09/leetcode-palindrome-partitioning-ii/
      * Solution 1: 记忆化搜索实现，能pass small data set，但运行large data set里 Time Limit Exceeded。
+     * 
+     * 这题一般人一看就是DP，DP公式也很容易推出，算是一道简单的DP。
+     * dp(i)=min(1+dp(j+1) if s(i,j) is palindrome, j from i until n)
+     * 从以上的分析时间复杂度为O(n^3), 主要是因为检查回文也需要O(n)的时间。因此这题有意思的一点就是如何降低时间复杂度到O(n^2)？
+     * 
      * @param s
      * @return 
      */
@@ -85,6 +90,8 @@ public class PalindromePartitionII {
      * http://fisherlei.blogspot.com/2013/03/leetcode-palindrome-partitioning-ii.html
      * http://discuss.leetcode.com/questions/1266/palindrome-partitioning-ii
      * http://blog.csdn.net/binary_search/article/details/8738061
+     * http://blog.sina.com.cn/s/blog_b9285de20101iwqt.html
+     * http://discuss.leetcode.com/questions/1266/palindrome-partitioning-ii
      * @param s
      * @return 
      */
@@ -114,6 +121,9 @@ public class PalindromePartitionII {
          * 
          * Define: palindrome[i][j] = true if [i][j] is palindrome, 
          * Then palindrome P[i][j] = str[i] == str[j] && P[i+1][j-1];
+         * This method of detecting the palindrome is to reduce the time complexity from O(n) to O(1)
+         * 
+         * That means: 要检查一个回文只需要知道头尾的字符相等，并且中间的字串已经成为了回文即可。O(1)复杂度。
          * 
          *  Notion: i is on the left and j is on the right
          *  a   b   a   b   b   b   a   b   b   a   b   a
