@@ -19,6 +19,7 @@ public class PalindromePartitionII {
     private Map<String, Boolean> stringToIsPalindrome = new HashMap<String, Boolean>();
     
     /**
+     * http://polythinking.wordpress.com/2013/06/09/leetcode-palindrome-partitioning-ii/
      * Solution 1: 记忆化搜索实现，能pass small data set，但运行large data set里 Time Limit Exceeded。
      * @param s
      * @return 
@@ -52,6 +53,7 @@ public class PalindromePartitionII {
     
     /**
      * 判断字符串是否为palindrome.
+     * 游标从字符串两边开始向中间移动，依次比较前后相应位置上的字符。
      * @param s
      * @return 
      */
@@ -79,6 +81,70 @@ public class PalindromePartitionII {
     }
     
     
+    /**
+     * http://fisherlei.blogspot.com/2013/03/leetcode-palindrome-partitioning-ii.html
+     * http://discuss.leetcode.com/questions/1266/palindrome-partitioning-ii
+     * http://blog.csdn.net/binary_search/article/details/8738061
+     * @param s
+     * @return 
+     */
+    public int minCut_v2(String s) {
+        
+        int length = s.length();
+        int[] numberOfCuts = new int[length + 1];
+        boolean[][] palindrome = new boolean[length][length];//Initialized as false by default
+        
+        /**
+         * numberOfCuts[i] means minimum number of cuts for the sub-string s[from i to end].
+         * 
+         * For the worst case, the string is cut by each char.
+         * since a single char is always a palindrome, max cut string s needs is (s.length() - 1). 
+         * 
+         * numberOfCuts[i] = Math.min(numberOfCuts[i], 1 + numberOfCuts[j + 1]) if s[i,j] is palindrome
+         * min{ 第一段被切割的次数 + 第二段被切割的次数 + 1 }
+         * 
+         */
+        for(int i = 0; i <= length; i++) { //Initialize the numberOfCuts with the worst case.
+            numberOfCuts[i] = length - 1 - i;
+        }
+        
+        /**
+         * 如何判断[i,j]是否是回文？每次都从i到j比较一遍，这样比较直观，参考上面的 isPalindrome，
+         * 但是太浪费了，这里也是一个DP问题。
+         * 
+         * Define: palindrome[i][j] = true if [i][j] is palindrome, 
+         * Then palindrome P[i][j] = str[i] == str[j] && P[i+1][j-1];
+         * 
+         *  Notion: i is on the left and j is on the right
+         *  a   b   a   b   b   b   a   b   b   a   b   a
+         *                  i               j
+         *                     i+1     j-1
+         * 
+         * j - i < 2 ====>>>>>> j - 1 < i + 1, that is when s[j - 1] is on the left of s[i + 1]
+         */
+        for(int i = length - 2; i >= 0; i--) {
+            for(int j = i; j < length; j++) {
+                //This condition below is to to judge whether s[i,j] is palindrome.
+                //Question, why when j-1 < i+1, it is palindorme???
+                if(s.charAt(i) == s.charAt(j) && (j - 1 < i + 1 || palindrome[i + 1][j - 1])) {
+                    palindrome[i][j] = true;
+                    /**
+                     * The expression below equals to:
+                     * result = Math.min(result, minCut_v1(s.substring(0, i)) + 1 + minCut_v1(s.substring(i)));
+                     * 
+                     * which means:
+                     * if s[i,j] is palindrome, then numberOfCut[i:] = numberOfCut[i:j] + numberOfCut[j+1:]
+                     *                                                        |
+                     *                                           s[i,j] is palindrome, so it is 1
+                     */
+                    numberOfCuts[i] = Math.min(numberOfCuts[i], numberOfCuts[j + 1] + 1);
+                }
+            }
+        }
+        
+        return numberOfCuts[0];
+    }
+    
     public static void main(String[] args) {
         PalindromePartitionII pp = new PalindromePartitionII();
         System.out.println("ab: " + pp.isPalindrome("ab"));
@@ -87,12 +153,20 @@ public class PalindromePartitionII {
         System.out.println("abcba: " + pp.isPalindrome("abcba"));
         System.out.println("abcdba: " + pp.isPalindrome("abcdba"));
         
-        System.out.println("------------");
+        System.out.println("------minCut_v1------");
         System.out.println("a: " + pp.minCut_v1("a"));
         System.out.println("ab: " + pp.minCut_v1("ab"));
         System.out.println("aba: " + pp.minCut_v1("aba"));
         System.out.println("abac: " + pp.minCut_v1("abac"));
         System.out.println("cabababcbc: " + pp.minCut_v1("cabababcbc"));
         System.out.println("ltsqjodzeriqdtyewsrpfscozbyrpidadvsmlylqrviuqiynbscgmhulkvdzdicgdwvquigoepiwxjlydogpxdahyfhdnljshgjeprsvgctgnfgqtnfsqizonirdtcvblehcwbzedsmrxtjsipkyxk: " + pp.minCut_v1("ltsqjodzeriqdtyewsrpfscozbyrpidadvsmlylqrviuqiynbscgmhulkvdzdicgdwvquigoepiwxjlydogpxdahyfhdnljshgjeprsvgctgnfgqtnfsqizonirdtcvblehcwbzedsmrxtjsipkyxk"));
+        
+        System.out.println("------minCut_v2------");
+        System.out.println("a: " + pp.minCut_v2("a"));
+        System.out.println("ab: " + pp.minCut_v2("ab"));
+        System.out.println("aba: " + pp.minCut_v2("aba"));
+        System.out.println("abac: " + pp.minCut_v2("abac"));
+        System.out.println("cabababcbc: " + pp.minCut_v2("cabababcbc"));
+        System.out.println("ltsqjodzeriqdtyewsrpfscozbyrpidadvsmlylqrviuqiynbscgmhulkvdzdicgdwvquigoepiwxjlydogpxdahyfhdnljshgjeprsvgctgnfgqtnfsqizonirdtcvblehcwbzedsmrxtjsipkyxk: " + pp.minCut_v2("ltsqjodzeriqdtyewsrpfscozbyrpidadvsmlylqrviuqiynbscgmhulkvdzdicgdwvquigoepiwxjlydogpxdahyfhdnljshgjeprsvgctgnfgqtnfsqizonirdtcvblehcwbzedsmrxtjsipkyxk"));
     }
 }
