@@ -11,7 +11,7 @@ import java.util.Map;
  * 
  * http://blog.163.com/guixl_001/blog/static/417641042013319113320284/
  * 
- * @author guibin
+ * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class PalindromePartitionII {
     
@@ -98,6 +98,12 @@ public class PalindromePartitionII {
     public int minCut_v2(String s) {
         
         int length = s.length();
+        
+        /**
+         * The length of numberOfCuts is length+1 instead of length is because:
+         * numberOfCuts[i] means the minimum cuts of s[i:]
+         * So s[0] is the whole string, s[length] is the last empty string
+         */
         int[] numberOfCuts = new int[length + 1];
         boolean[][] palindrome = new boolean[length][length];//Initialized as false by default
         
@@ -131,6 +137,9 @@ public class PalindromePartitionII {
          *                     i+1     j-1
          * 
          * j - i < 2 ====>>>>>> j - 1 < i + 1, that is when s[j - 1] is on the left of s[i + 1]
+         * 
+         * i = length - 2 means start from the last element but one.
+         * Since the last element is s[length - 1], so the last but one is s[length - 2]
          */
         for(int i = length - 2; i >= 0; i--) {
             for(int j = i; j < length; j++) {
