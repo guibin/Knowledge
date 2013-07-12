@@ -10,6 +10,9 @@ import java.util.Map;
  * http://besttony.wordpress.com/2013/04/21/leetcode-palindrome-partitioning/
  * http://n00tc0d3r.blogspot.com/2013/05/palindrome-partitioning.html
  * 
+ * http://blog.sina.com.cn/s/blog_b9285de20101jbtl.html
+ * http://discuss.leetcode.com/questions/1265/palindrome-partitioning
+ * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class PalindromePartition {

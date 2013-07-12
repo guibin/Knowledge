@@ -47,7 +47,7 @@ public class SurroundedRegions {
      * 
      * @param board 
      */
-    public void solve(char[][] board) {
+    public void solve_v1(char[][] board) {
         
         if(board.length <= 0 || board[0].length <= 0) return;
         int rows = board.length;
@@ -114,15 +114,102 @@ public class SurroundedRegions {
         }
     }
     
-    public static void main(String[] args) {
-        char[][] borad = {{'X', 'X', 'X', 'X'},
-                          {'X', 'O', 'O', 'X'},
-                          {'X', 'X', 'O', 'X'},
-                          {'X', 'O', 'X', 'X'},
-                          {'X', 'O', 'X', 'X'}};
+    /**
+     * Solved by mark DFS
+     * 
+     * @param board 
+     */
+    public void solve_v2(char[][] board) {
         
-        System.out.println(borad.length);
-        System.out.println(borad[0].length);
-        System.out.println(borad[1][2]);
+        if(board.length <= 0 || board[0].length <= 0) {
+            return;
+        }
+        
+        int rows = board.length;
+        int columns = board[0].length;
+        
+        //The first column and last column
+        for(int i = 0; i < rows; i++) {
+            markDFS(board, i, 0);
+            if(columns > 1) {
+                markDFS(board, i, columns - 1);
+            }
+        }
+        
+        //The first row and the last row
+        for(int j = 0; j < columns; j++) {
+            markDFS(board, 0, j);
+            if(rows > 1) {
+                markDFS(board, rows - 1, j);
+            }
+        }
+        
+        for (int i = 0; i < rows; i++) {
+            for(int j = 0; j < columns; j++) {
+                if(board[i][j] == 'N') {
+                    board[i][j] = 'O';
+                } else if(board[i][j] == 'O') {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+    }
+    
+    private void markDFS(char[][] board, int x, int y) {
+        int rows = board.length;
+        int columns = board[0].length;
+        
+        if(x < 0 || x >= rows || y < 0 || y>= columns || board[x][y] != 'O') {
+            return;
+        }
+        
+        //mark current node
+        board[x][y] = 'N';
+        //mark its neighbour if needed
+        markDFS(board, x - 1, y);
+        markDFS(board, x + 1, y);
+        markDFS(board, x, y - 1);
+        markDFS(board, x, y + 1);
+    }
+    
+    
+    public void printlnResult(char[][] board) {
+        int rows = board.length;
+        int columns = board[0].length;
+        
+        StringBuilder sb = new StringBuilder();
+        
+        for(int i = 0; i < board.length; i++) {
+            for(int j = 0; j < board[0].length; j++) {
+                sb.append(board[i][j]).append(",");
+            }
+            sb.append("\n");
+        }
+        
+        System.out.println(sb.toString());
+    }
+    
+    public static void main(String[] args) {
+        SurroundedRegions sr = new SurroundedRegions();
+        
+        char[][] board1 = {"XOXX".toCharArray(), 
+                           "OXOX".toCharArray(), 
+                           "XOXO".toCharArray(), 
+                           "OXOX".toCharArray()};
+        
+        char[][] board2 = {"OXXOX".toCharArray(), 
+                           "XOOXO".toCharArray() ,
+                           "XOXOX".toCharArray() ,
+                           "OXOOO".toCharArray() ,
+                           "XXOXO".toCharArray()};
+        
+        sr.printlnResult(board1);
+        sr.solve_v1(board1);
+        sr.printlnResult(board1);
+
+        System.out.println("----------------------");
+        sr.printlnResult(board2);
+        sr.solve_v1(board2);
+        sr.printlnResult(board2);
     }
 }
