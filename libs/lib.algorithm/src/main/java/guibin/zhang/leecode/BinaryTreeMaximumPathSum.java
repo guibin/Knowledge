@@ -1,0 +1,98 @@
+package guibin.zhang.leecode;
+
+/**
+ * Given a binary tree, find the maximum path sum.
+ * The path may start and end at any node in the tree.
+ * 
+ * For example:
+ * Given the below binary tree,
+ * 
+ *     1
+ *    / \
+ *   2   3
+ * 
+ * Return 6.
+ * 
+ * @author Gubin Zhang <guibin.beijing@gmail.com>
+ */
+public class BinaryTreeMaximumPathSum {
+    
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+    }
+    
+    private int maxSum;
+    
+    private int maxPathSum(TreeNode root) {
+        
+        if(root == null) return 0;
+        
+        maxSum = Integer.MIN_VALUE;
+        maxSinglePathSum(root);
+        return maxSum;
+        
+    }
+    /**
+     * Compute the max sum up to root: Max(left, right) + root.val
+     * @param root
+     * @return 
+     */
+    public int maxSinglePathSum(TreeNode root) {
+        
+        if(root == null) return 0;
+        
+        int leftSum = maxSinglePathSum(root.left);
+        int rightSum = maxSinglePathSum(root.right);
+        /**
+         * For each node like following, there should be four ways existing for max path:
+         * 1. Node only
+         * 2. left-sub + node
+         * 3. right-sub + node
+         * 4. left-sub + node + right-sub
+         * 
+         *         a
+         *        /  \ 
+         *      node  ...
+         *      /  \
+         *    l-sub r-sub
+         *   /   \
+         *  ...
+         */   
+        int pathSum = root.val + Math.max(leftSum, 0) + Math.max(rightSum, 0);
+        
+        maxSum = pathSum > maxSum ? pathSum : maxSum;
+        
+        //Here is to compute the max sum up to root.
+        return Math.max(Math.max(leftSum, rightSum), 0) + root.val;
+    }
+    
+    public static void main(String[] args) {
+        BinaryTreeMaximumPathSum bps = new BinaryTreeMaximumPathSum();
+        
+        BinaryTreeMaximumPathSum.TreeNode a = bps.new TreeNode(1);
+        BinaryTreeMaximumPathSum.TreeNode b = bps.new TreeNode(-2);
+        BinaryTreeMaximumPathSum.TreeNode c = bps.new TreeNode(3);
+        BinaryTreeMaximumPathSum.TreeNode d = bps.new TreeNode(-4);
+        BinaryTreeMaximumPathSum.TreeNode e = bps.new TreeNode(5);
+        BinaryTreeMaximumPathSum.TreeNode f = bps.new TreeNode(-5);
+        /**
+         *            1a
+         *           /   \
+         *        -2b    3c
+         *         / \   /
+         *      -4d  5e -5f
+         */
+        a.left = b;
+        a.right = c;
+        b.left = d;
+        b.right = e;
+        c.left = f;
+        System.out.println(bps.maxPathSum(a));
+    }
+}
