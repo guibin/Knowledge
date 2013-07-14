@@ -30,6 +30,8 @@ import java.util.HashSet;
  * http://kimixxxxxx.blogspot.com/2013/05/word-ladder-ii.html
  * http://discuss.leetcode.com/questions/1051/word-ladder-ii
  * http://www.cnblogs.com/shawnhue/archive/2013/06/05/leetcode_126.html
+ * https://github.com/mengli/leetcode/blob/master/Word%20Ladder%20II.java
+ * https://github.com/rffffffff007/leetcode/blob/master/Word%20Ladder%20II.java
  * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
