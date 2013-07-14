@@ -13,6 +13,10 @@ package guibin.zhang.leecode;
  * 
  * Return 6.
  * 
+ * http://fisherlei.blogspot.com/2013/01/leetcode-binary-tree-maximum-path-sum.html
+ * http://www.cnblogs.com/shawnhue/archive/2013/06/08/leetcode_124.html
+ * http://discuss.leetcode.com/questions/288/binary-tree-maximum-path-sum
+ * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class BinaryTreeMaximumPathSum {
