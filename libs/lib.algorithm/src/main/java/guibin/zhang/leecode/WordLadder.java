@@ -2,6 +2,7 @@ package guibin.zhang.leecode;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
@@ -23,6 +24,13 @@ import java.util.Set;
  * Return 0 if there is no such transformation sequence. All words have the same
  * length. All words contain only lowercase alphabetic characters.
  *
+ * It is a BFS problem.
+ * http://mattcb.blogspot.com/2013/02/word-ladder.html
+ * http://wizardrichard.blogspot.com/2013/03/leetcode-word-ladder.html
+ * http://blog.csdn.net/guixunlong/article/details/8840371
+ * http://discuss.leetcode.com/questions/1108/word-ladder
+ * 
+ * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class WordLadder {
@@ -84,5 +92,65 @@ public class WordLadder {
             sArr[i] = origin;
         }
         return rest;
+    }
+    
+    /**
+     * This can only pass the small judge, but TLE when testing the large judge.
+     * @param start
+     * @param end
+     * @param dict
+     * @return 
+     */
+    public int ladderLength_v2(String start, String end, HashSet<String> dict) {
+        
+        LinkedList<String> queue = new LinkedList<String>();
+        LinkedList<Integer> len = new LinkedList<Integer>();
+        
+        queue.offer(start);
+        len.offer(1);
+        dict.remove(start);
+        
+        while(!queue.isEmpty()) {
+            String current = queue.poll();
+            int depth = len.poll();
+            if(current.equals(end)) {
+                return depth;
+            }
+            
+            Iterator<String> it = dict.iterator();
+            while(it.hasNext()) {
+                String tmp = it.next();
+                if(isAdjacent(tmp, current)) {
+                    queue.offer(tmp);
+                    len.offer(depth + 1);
+                    it.remove();
+                }
+            }
+        }
+        return 0;
+    }
+    
+    /**
+     * Judge whether the two input string has only the difference of one character.
+     * @param a
+     * @param b
+     * @return 
+     */
+    public boolean isAdjacent(String a, String b) {
+        
+        boolean flag = true;
+        int counter = 0;
+        for(int i = 0; i < a.length(); i++) {
+            if(a.charAt(i) != b.charAt(i)) {
+                counter ++;
+                
+                if(counter > 1) {
+                    flag = false;
+                    return flag;
+                }
+            }
+        }
+        
+        return flag;
     }
 }
