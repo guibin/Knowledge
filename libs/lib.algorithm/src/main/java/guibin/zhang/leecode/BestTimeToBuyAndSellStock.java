@@ -25,7 +25,7 @@ package guibin.zhang.leecode;
  * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
-public class BestTimeToBuyandSellStock {
+public class BestTimeToBuyAndSellStock {
     
     public int maxProfit(int[] prices) {
         
