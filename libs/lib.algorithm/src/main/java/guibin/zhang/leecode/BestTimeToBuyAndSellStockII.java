@@ -34,18 +34,24 @@ public class BestTimeToBuyAndSellStockII {
         int buy = 0;
         int sell = 0;
         boolean sold = false;
-        for(int i = 1; i < len - 1; i++) {
-            //Case of peak of wave /\
-            if(prices[i - 1] <= prices[i] && prices[i + 1] <= prices[i]) {
-                sell = i;
-                if(sell >= buy && !sold) {
-                    maxProfit = Math.max(maxProfit, maxProfit + prices[sell] - prices[buy]);
-                    sold = true;
-                }
-            //Case of trough of wave \/
-            } else if (prices[i - 1] >= prices[i] && prices[i + 1] >= prices[i]) {
+        for(int i = 0; i < len - 1; i++) {
+            //Case of start from /
+            if (i == 0 && prices[i] < prices[i + 1]) {
                 buy = i;
                 sold = false;
+            } else if (i > 0) {
+                //Case of peak of wave /\
+                if (prices[i - 1] <= prices[i] && prices[i + 1] <= prices[i]) {
+                    sell = i;
+                    if (sell >= buy && !sold) {
+                        maxProfit += prices[sell] - prices[buy];
+                        sold = true;
+                    }
+                    //Case of trough of wave \/
+                } else if (prices[i - 1] >= prices[i] && prices[i + 1] >= prices[i]) {
+                    buy = i;
+                    sold = false;
+                }
             }
         }
         //last /
@@ -53,7 +59,6 @@ public class BestTimeToBuyAndSellStockII {
             sell = len - 1;
             maxProfit += prices[sell] - prices[buy];
         } 
-        
         return maxProfit;
     }
     
@@ -81,6 +86,7 @@ public class BestTimeToBuyAndSellStockII {
         //[1,9,6,9,1,7,1,1,5,9,9,9]             33	25
         //[3,4,6,0,3,7,5,8,2,9,1,6,6,2]         30	25
         //[5,6,6,5,4,1,9,2,4,5]                 13	12
+        //[4,1,2]                                       1
         BestTimeToBuyAndSellStockII bttbs = new BestTimeToBuyAndSellStockII();
         int[] prices1 = {5,2,3,2,6,6,2,9,1,0,7,4,5,0};
         int[] prices2 = {8,3,6,2,8,8,8,4,2,0,7,2,9,4,9};
@@ -88,11 +94,13 @@ public class BestTimeToBuyAndSellStockII {
         int[] prices4 = {1,9,6,9,1,7,1,1,5,9,9,9};
         int[] prices5 = {3,4,6,0,3,7,5,8,2,9,1,6,6,2};
         int[] prices6 = {5,6,6,5,4,1,9,2,4,5};
+        int[] prices7 = {4, 1, 2};
         System.out.println(bttbs.maxProfit(prices1));
         System.out.println(bttbs.maxProfit(prices2));
         System.out.println(bttbs.maxProfit(prices3));
         System.out.println(bttbs.maxProfit(prices4));
         System.out.println(bttbs.maxProfit(prices5));
         System.out.println(bttbs.maxProfit(prices6));
+        System.out.println(bttbs.maxProfit(prices7));
     }
 }
