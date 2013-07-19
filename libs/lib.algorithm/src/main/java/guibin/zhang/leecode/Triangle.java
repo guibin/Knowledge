@@ -39,7 +39,7 @@ public class Triangle {
         
         //From the last row but one, upto to the first row
         for(int row = triangle.size() - 2; row >= 0; row--) {
-            for(int j = 0, col = 0; j < triangle.get(row + 1).size() - 1; j++, col++) {
+            for(int j = 0, col = 0; j < triangle.get(row).size(); j++, col++) {
                 path[col] = triangle.get(row).get(col) + Math.min(path[j], path[j + 1]);
             }
         }
