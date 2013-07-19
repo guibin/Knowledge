@@ -125,6 +125,7 @@ public class PopulatingNextRightPointersInEachNode {
                         last.next = curr;
                     }
                 } else {
+                    // root is the left-most node of next row.
                     root = curr;
                 }
                 last = curr;
