@@ -55,7 +55,7 @@ public class MinimumDepthOfBinaryTree {
     }
     
     /**
-     * This is the standard function to get the depth of the tree.
+     * This is the standard function to get the min depth of the tree.
      * @param root
      * @return 
      */
