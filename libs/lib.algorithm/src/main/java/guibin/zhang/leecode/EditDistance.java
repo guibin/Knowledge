@@ -11,6 +11,9 @@ package guibin.zhang.leecode;
  * c) Replace a character
  * 
  * http://www.csse.monash.edu.au/~lloyd/tildeAlgDS/Dynamic/Edit/
+ * http://www.youtube.com/watch?v=gSGf8P8D_uY
+ * http://www.youtube.com/watch?v=dUSqwTC8TM8
+ * http://www.youtube.com/watch?v=CB425OsE4Fo
  * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
