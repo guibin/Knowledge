@@ -80,6 +80,51 @@ public class ReverseLinkedList {
         }
     }
     
+    /**
+     * pre last curr
+     *  |   |   |
+     *  0   5   4   3   2   1
+     * 
+     * pre     last curr
+     *  |       |   |
+     *  0   4   5   3   2   1
+     * 
+     * pre         last curr
+     *  |           |   |
+     *  0   3   4   5   2   1
+     * 
+     * pre             last curr
+     *  |               |   |
+     *  0   2   3   4   5   1
+     * 
+     * pre                 last
+     *  |                   |
+     *  0   1   2   3   4   5
+     * 
+     * So from the steps above, you can see the pointer pre and last are fixed. Only curr are moving.
+     * 
+     * http://www.cnblogs.com/lichen782/p/leetcode_Reverse_Nodes_in_kGroup.html
+     * 
+     * @param head
+     * @return 
+     */
+    public ListNode reverse_v4(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pre = dummy;
+        ListNode curr = head.next;
+        ListNode last = head;//The first node must be the last one
+        while(curr != null) {
+            last.next = curr.next;
+            curr.next = pre.next;
+            pre.next = curr;
+            curr = last.next;
+        }
+        head = dummy.next;
+        
+        return head;
+    }
+    
     public void print(ListNode n) {
         ListNode p = n;
         while(p != null) {
@@ -111,5 +156,8 @@ public class ReverseLinkedList {
         System.out.println("Reversed recursively2:");
         ListNode p = rl.reverse_v3(null, m);
         rl.print(p);
+        System.out.println("Reversed iterately2:");
+        ListNode q = rl.reverse_v4(p);
+        rl.print(q);
     }
 }
