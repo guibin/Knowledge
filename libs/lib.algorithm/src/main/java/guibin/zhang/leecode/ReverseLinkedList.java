@@ -125,6 +125,37 @@ public class ReverseLinkedList {
         return head;
     }
     
+    /**
+     * Reverse a list between pre and next exclusively.
+     * 
+     * an example:
+     * a linked list:
+     * 0->1->2->3->4->5->6
+     * |           |   
+     * pre        next
+     * 
+     * after call pre = reverse(pre, next)
+     * 0->3->2->1->4->5->6
+     *          |  |
+     *          pre next
+     * 
+     * @param pre
+     * @param next
+     * @return the reversed list's last node, which is the precedence of parameter next
+     */
+    public ListNode reverse(ListNode pre, ListNode next) {
+        
+        ListNode last = pre.next; //where first will be doomed "last"
+        ListNode curr = last.next;
+        while(curr != next) {//Note here is the next instead of null.
+            last.next = curr.next;
+            curr.next = pre.next;
+            pre.next = curr;
+            curr = last.next;
+        }
+        return last;
+    }
+    
     public void print(ListNode n) {
         ListNode p = n;
         while(p != null) {
@@ -158,6 +189,9 @@ public class ReverseLinkedList {
         rl.print(p);
         System.out.println("Reversed iterately2:");
         ListNode q = rl.reverse_v4(p);
+        rl.print(q);
+        System.out.println("Reversed iterately3 between first and last exclusitively:");
+        ListNode r = rl.reverse(q, q.next.next.next.next);
         rl.print(q);
     }
 }
