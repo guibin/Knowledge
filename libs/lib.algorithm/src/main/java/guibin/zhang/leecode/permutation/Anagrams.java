@@ -1,4 +1,4 @@
-package guibin.zhang.leecode;
+package guibin.zhang.leecode.permutation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +10,10 @@ import java.util.Map;
  * Given an array of strings, return all groups of strings that are anagrams.
  * 
  * Note: All inputs will be in lower-case.
+ * 
+ * For example:
+ * Input:　　["tea","and","ate","eat","den"]
+ * Output:   ["tea","ate","eat"]
  * 
  * http://www.cnblogs.com/AnnieKim/archive/2013/04/25/3041982.html
  * 
@@ -30,6 +34,7 @@ public class Anagrams {
         
         for (int i = 0; i < strs.length; i++) {
             char[] cs = strs[i].toCharArray();
+            //Anagrams(回文构词法): 是由颠倒字母顺序组成的单词, 因此回文的文字排序之后一定是相同的
             Arrays.sort(cs);
             String tmp = new String(cs);
             
