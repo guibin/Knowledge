@@ -1,4 +1,4 @@
-package guibin.zhang.leecode;
+package guibin.zhang.leecode.tree;
 
 /**
  * Given a singly linked list where elements are sorted in ascending order, 
