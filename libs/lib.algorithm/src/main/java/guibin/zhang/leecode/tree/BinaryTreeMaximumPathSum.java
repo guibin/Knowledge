@@ -1,4 +1,4 @@
-package guibin.zhang.leecode;
+package guibin.zhang.leecode.tree;
 
 /**
  * Given a binary tree, find the maximum path sum.
