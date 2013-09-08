@@ -34,16 +34,20 @@ public class FourSum {
         int len = num.length;
         
         for (int i = 0; i < len - 3; i++) {
+            //To avoid the duplicated result
             if (i > 0 && num[i] == num[i - 1]) continue;
             for (int j = i + 1; j < len - 2; j++) {
+                //To avoid the duplicated result
                 if (j > i + 1 && num[j] == num[j - 1]) continue;
                 int m = j + 1;
                 int n = len - 1;
                 while (m < n) {
+                    //To avoid the duplicated result
                     if (m > j + 1 && num[m] == num[m - 1]) {
                         m ++;
                         continue;
                     }
+                    //To avoid the duplicated result
                     if (n < len - 1 && num[n] == num[n + 1]) {
                         n --;
                         continue;
@@ -68,5 +72,17 @@ public class FourSum {
             }
         }
         return result;
+    }
+    
+    public static void main(String[] args) {
+        FourSum fs = new FourSum();
+        int[] num = {1, 1, 0, -1, -1, 2, -2};
+        ArrayList<ArrayList<Integer>> result = fs.fourSum(num, 0);
+        for (ArrayList<Integer> a : result) {
+            for (int i : a) {
+                System.out.print(i + ",");
+            }
+            System.out.println();
+        }
     }
 }
