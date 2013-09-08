@@ -25,22 +25,34 @@ public class MaximumSubarray {
             return A[0];
         }
 
-        int max = A[0];
+        int maxSum = A[0];
+        int maxItem = A[0];
 
         int sum = 0;
         for (int i = 0; i < A.length; i++) {
 
             sum += A[i];
-
-            if (sum > max) {
-                max = sum;
+            maxItem = Math.max(maxItem, A[i]);
+            
+            if (sum > maxSum) {
+                maxSum = sum;
             }
 
             if (sum < 0) {
                 sum = 0;
             }
         }
-
-        return max;
+        
+        if (maxSum > 0) {
+            return maxSum;
+        } else {
+            return maxItem;
+        }
+    }
+    
+    public static void main(String[] args) {
+        MaximumSubarray ms = new MaximumSubarray();
+        int[] A = {1};
+        System.out.println(ms.maxSubArray(A));
     }
 }
