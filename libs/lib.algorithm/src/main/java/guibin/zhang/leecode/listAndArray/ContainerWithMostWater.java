@@ -12,6 +12,8 @@ package guibin.zhang.leecode.listAndArray;
  * 
  * The thought is very similar with the **FourSum, ThreeSum**.
  * 
+ * This problem is similar with LargestRectangleInHistogram and TrappingRainWater
+ * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class ContainerWithMostWater {

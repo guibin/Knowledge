@@ -1,5 +1,7 @@
 package guibin.zhang.leecode.listAndArray;
 
+import java.util.Stack;
+
 /**
  * 
  * Given n non-negative integers representing an elevation map where the width of each bar is 1, 
@@ -10,6 +12,10 @@ package guibin.zhang.leecode.listAndArray;
  * 
  * The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. 
  * In this case, 6 units of rain water (blue section) are being trapped. 
+ * 
+ * This problem is similar with ContainerWithMostWater and LagestRectangleInHistogram
+ * Prefer to the method **trap_v3**, which is very similar with LargestRectangleInHistogram
+ * 
  * 
  * http://n00tc0d3r.blogspot.com/2013/06/trapping-rain-water.html
  * 
@@ -78,6 +84,33 @@ public class TrappingRainWater {
         }
 
         return waterSum - allSum;
+    }
+    
+    
+    public int trap_v3(int[] A) {
+        
+        int vol = 0;
+        int len = A.length;
+        int curr = 0;
+        //Skip zeros
+        while (curr < len && A[curr] == 0) curr++;
+        
+        Stack<Integer> indices = new Stack<Integer>();
+        while (curr < len) {
+            while (!indices.isEmpty() && A[curr] >= A[indices.peek()]) {
+                int b = indices.pop();
+                if (indices.isEmpty()) break;
+                //这里 -1 的原因是 curr 距离 indices.peek() 中间隔了一个较小的 indices.pop.
+                //A[b] 是较小的 indices.pop 的高度
+                //curr - indices.peek() - 1 is the bottom.
+                //(Math.min - A[b]) is the delta height that can contain the water.
+                vol += (curr - indices.peek() - 1) * (Math.min(A[curr], indices.peek()) - A[b]);
+            }
+            indices.push(curr);
+            curr ++;
+        }
+        
+        return vol;
     }
     
     /**

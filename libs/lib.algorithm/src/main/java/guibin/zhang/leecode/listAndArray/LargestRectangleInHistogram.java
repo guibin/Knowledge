@@ -19,6 +19,8 @@ import java.util.Stack;
  * Given height = [2,1,5,6,2,3],
  * return 10.
  * 
+ * This problem is similar with ContainerWithMostWater and TrappingRainWater
+ * 
  * http://www.youtube.com/watch?v=E5C5W6waHlo
  * http://blog.csdn.net/abcbc/article/details/8943485
  * http://blog.csdn.net/dgq8211/article/details/7740610
@@ -34,18 +36,20 @@ public class LargestRectangleInHistogram {
         int lastIndex = 0;
         int maxArea = 0;
         for (int i = 0; i < histo.length; i++) {
+            //Case 1, the height is larger thus we can be candidate of rectangle of *start*
             if (height.isEmpty() || histo[i] > height.peek()) {
                 height.push(histo[i]);
                 indices.push(i);
             } else if (histo[i] < height.peek()) {
+                //If current height is shorter, thus we need pop those larger heights, 
+                //and compute the candidate rectangle's area size.
                 while (!height.isEmpty() && histo[i] < height.peek()) {
                     lastIndex = indices.pop();
                     //Deem i as the end point, lastIndex as the start point, length = end - start
-                    int tempArea = height.pop() * (i - lastIndex);
-                    if (tempArea > maxArea) {
-                        maxArea = tempArea;
-                    }
+                    int area = height.pop() * (i - lastIndex);
+                    maxArea = Math.max(maxArea, area);
                 }
+                //After poping those unqualified start positions including current index, add current
                 height.push(histo[i]);
                 //Note: here is lastIndex, not i;
                 indices.push(lastIndex);
@@ -54,10 +58,8 @@ public class LargestRectangleInHistogram {
         
         while (!height.isEmpty()) {
             //end - start: indices holds the start point.
-            int tempArea = height.pop() * (histo.length - indices.pop());
-            if (tempArea > maxArea) {
-                maxArea = tempArea;
-            }
+            int area = height.pop() * (histo.length - indices.pop());
+            maxArea = Math.max(maxArea, area);
         }
         return maxArea;
     }
