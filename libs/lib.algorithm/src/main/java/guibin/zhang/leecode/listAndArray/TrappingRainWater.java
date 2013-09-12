@@ -96,7 +96,7 @@ public class TrappingRainWater {
         while (curr < len && A[curr] == 0) curr++;
         
         Stack<Integer> indices = new Stack<Integer>();
-        while (curr < len) {
+        for (; curr < len; curr ++) {
             while (!indices.isEmpty() && A[curr] >= A[indices.peek()]) {
                 int b = indices.pop();
                 if (indices.isEmpty()) break;
@@ -104,10 +104,9 @@ public class TrappingRainWater {
                 //A[b] 是较小的 indices.pop 的高度
                 //curr - indices.peek() - 1 is the bottom.
                 //(Math.min - A[b]) is the delta height that can contain the water.
-                vol += (curr - indices.peek() - 1) * (Math.min(A[curr], indices.peek()) - A[b]);
+                vol += (curr - indices.peek() - 1) * (Math.min(A[curr], A[indices.peek()]) - A[b]);
             }
             indices.push(curr);
-            curr ++;
         }
         
         return vol;
