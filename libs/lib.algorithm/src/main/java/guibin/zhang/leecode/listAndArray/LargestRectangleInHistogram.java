@@ -52,12 +52,16 @@ public class LargestRectangleInHistogram {
                 //After poping those unqualified start positions including current index, add current
                 height.push(histo[i]);
                 //Note: here is lastIndex, not i;
+                //indices is used to save the start index, so here should push lastIndex instead of i.
                 indices.push(lastIndex);
             }
         }
         
         while (!height.isEmpty()) {
             //end - start: indices holds the start point.
+            //Because at this time, the height in the stack of height are all greater than histo[curr] 
+            //while curr = histo.length - 1. Since it is possible the last item of indices is (histo.length - 1),
+            //so we should use (histo.length - indices.pop()) as width 
             int area = height.pop() * (histo.length - indices.pop());
             maxArea = Math.max(maxArea, area);
         }
