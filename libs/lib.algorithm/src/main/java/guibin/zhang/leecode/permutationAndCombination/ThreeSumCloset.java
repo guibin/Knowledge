@@ -15,20 +15,21 @@ public class ThreeSumCloset {
         int len = num.length;
         if(len < 3) return 0;
         
-        int closet = num[0];
+        int closet = num[0] + num[1] + num[2];
         Arrays.sort(num);
         
         for (int i = 0; i < len - 2; i++) {
             int j = i + 1;
             int m = len - 1;
             while (j < m) {
-                int delta = num[i] + num[j] + num[m] - target;
+                int sum = num[i] + num[j] + num[m];
+                int delta = sum - target;
                 if (delta == 0) {
-                    closet = delta;
+                    closet = sum;
                     return closet;
                 } else {
-                    if (Math.abs(delta) < Math.abs(closet)) {
-                        closet = delta;
+                    if (Math.abs(delta) < Math.abs(closet - target)) {
+                        closet = sum;
                     }
                     if (delta > 0) {
                         m --;
