@@ -18,4 +18,20 @@ public class SinglyListNode<T> {
         this.data = data;
         this.next = node;
     }
+    
+    public void print() {
+        String delimiter = " -> ";
+        StringBuilder sb = new StringBuilder();
+        
+        SinglyListNode<T> curr = this;
+        while(curr != null && curr.data != null) {
+            sb.append(curr.data.toString()).append(delimiter);
+            curr = curr.next;
+        }
+        
+        if(sb.length() > delimiter.length()) {
+            sb.delete(sb.length() - delimiter.length(), sb.length());
+        }
+        System.out.println(sb.toString());
+    }
 }
