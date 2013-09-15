@@ -7,14 +7,25 @@ package guibin.zhang.leetcode.search;
  */
 public class FindKth {
     
-    public double findKth (int[] a, int startA, int endA, int[] b, int startB, int endB, int k) {
+    /**
+     * Find the k-th largest items from TWO SORTED arrays
+     * @param a The first sorted array
+     * @param startA start position inclusive
+     * @param endA end position inclusive
+     * @param b The second sorted array
+     * @param startB start position inclusive
+     * @param endB end position inclusive
+     * @param k The expected position, 1 based
+     * @return 
+     */
+    public double findKthFromTwoSortedArray (int[] a, int startA, int endA, int[] b, int startB, int endB, int k) {
         
-        int m = endA - startA;
-        int n = endB - startB;
+        int m = endA - startA + 1;
+        int n = endB - startB + 1;
         
         //Always assume a.length <= b.length
         if (m > n) {
-            return findKth(b, startB, endB, a, startA, endA, k);
+            return findKthFromTwoSortedArray(b, startB, endB, a, startA, endA, k);
         }
         
         //Two edge cases
@@ -31,10 +42,10 @@ public class FindKth {
         
         if (a[startA + pa - 1] < b[startB + pb - 1]) {
             //Discard the partA from a
-            return findKth(a, startA + pa, endA, b, startB, endB, k - pa);
+            return findKthFromTwoSortedArray(a, startA + pa, endA, b, startB, endB, k - pa);
         } else if (a[startA + pa - 1] > b[startB + pb - 1]) {
             //Discard the partB from b
-            return findKth(a, startA, endA, b, startB + pb, endB, k - pb);
+            return findKthFromTwoSortedArray(a, startA, endA, b, startB + pb, endB, k - pb);
         } else {
             return a[startA + pa - 1];
         }
@@ -44,6 +55,6 @@ public class FindKth {
         int a[] = {};
         int b[] = {2, 3};
         FindKth fk = new FindKth();
-        System.out.println(fk.findKth(a, 0, a.length, b, 0, b.length, 2));
+        System.out.println(fk.findKthFromTwoSortedArray(a, 0, a.length - 1, b, 0, b.length - 1, 2));
     }
 }

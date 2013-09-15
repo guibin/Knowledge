@@ -25,17 +25,17 @@ public class MedianOfTwoSortedArrays {
         // DO NOT write main() function
         int total = A.length + B.length;
         if (total % 2 == 0) {
-            return (findKth(A, 0, A.length, B, 0, B.length, total / 2) + 
-                    findKth(A, 0, A.length, B, 0, B.length, total / 2 + 1)) / 2.0;
+            return (findKth(A, 0, A.length - 1, B, 0, B.length - 1, total / 2) + 
+                    findKth(A, 0, A.length - 1, B, 0, B.length - 1, total / 2 + 1)) / 2.0;
         } else {
-            return findKth(A, 0, A.length, B, 0, B.length, total / 2 + 1);
+            return findKth(A, 0, A.length - 1, B, 0, B.length - 1, total / 2 + 1);
         }
     }
     
     public double findKth (int[] a, int startA, int endA, int[] b, int startB, int endB, int k) {
         
-        int m = endA - startA;
-        int n = endB - startB;
+        int m = endA - startA + 1;
+        int n = endB - startB + 1;
         //Always suppose length of a <= length of b
         if (m > n) {
             return findKth(b, startB, endB, a, startA, endA, k);
