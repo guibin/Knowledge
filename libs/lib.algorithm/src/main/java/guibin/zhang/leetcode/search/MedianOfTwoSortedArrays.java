@@ -8,6 +8,14 @@ package guibin.zhang.leetcode.search;
  * Find the median of the two sorted arrays. 
  * The overall run time complexity should be O(log (m+n)).
  * 
+ * http://blog.csdn.net/lemon_wonder/article/details/9002762
+ * http://blog.csdn.net/zxzxy1988/article/details/8587244
+ * http://fisherlei.blogspot.com/2012/12/leetcode-median-of-two-sorted-arrays.html
+ * https://code.google.com/p/leetcode/source/browse/medianTwoSortedArray.java?r=4c766c4299fa8d0004884440e3bd150ae5ef0211
+ * https://code.google.com/p/leetcode/source/browse/medianTwoSortedArray.java?r=4c766c4299fa8d0004884440e3bd150ae5ef0211
+ * http://gongxuns.blogspot.com/2012/12/leetcodemedian-of-two-sorted-arrays.html
+ * http://wcf1987.iteye.com/blog/1678149
+ * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class MedianOfTwoSortedArrays {
