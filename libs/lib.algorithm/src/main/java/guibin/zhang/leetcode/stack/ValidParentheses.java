@@ -1,4 +1,4 @@
-package guibin.zhang.leecode.stack;
+package guibin.zhang.leetcode.stack;
 
 import java.util.Stack;
 

@@ -1,4 +1,4 @@
-package guibin.zhang.leecode.permutationAndCombination;
+package guibin.zhang.leetcode.permutationAndCombination;
 
 import java.util.ArrayList;
 import java.util.List;

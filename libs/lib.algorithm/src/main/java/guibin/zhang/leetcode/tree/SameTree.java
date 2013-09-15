@@ -1,4 +1,4 @@
-package guibin.zhang.leecode.tree;
+package guibin.zhang.leetcode.tree;
 
 /**
  * Given two binary trees, write a function to check if they are equal or not.

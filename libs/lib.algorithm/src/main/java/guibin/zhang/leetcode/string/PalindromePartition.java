@@ -1,4 +1,4 @@
-package guibin.zhang.leecode.string;
+package guibin.zhang.leetcode.string;
 
 import java.util.ArrayList;
 import java.util.HashMap;

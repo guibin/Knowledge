@@ -1,4 +1,4 @@
-package guibin.zhang.leecode.tree;
+package guibin.zhang.leetcode.tree;
 
 /**
  * 

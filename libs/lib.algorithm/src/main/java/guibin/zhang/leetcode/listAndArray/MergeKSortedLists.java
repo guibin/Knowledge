@@ -1,4 +1,4 @@
-package guibin.zhang.leecode.listAndArray;
+package guibin.zhang.leetcode.listAndArray;
 
 import java.util.ArrayList;
 

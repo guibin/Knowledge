@@ -1,4 +1,4 @@
-package guibin.zhang.leecode.tree;
+package guibin.zhang.leetcode.tree;
 
 /**
  * Given a binary tree, determine if it is height-balanced.

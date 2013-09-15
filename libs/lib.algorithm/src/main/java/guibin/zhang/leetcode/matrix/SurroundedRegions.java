@@ -1,4 +1,4 @@
-package guibin.zhang.leecode.matrix;
+package guibin.zhang.leetcode.matrix;
 
 import java.util.LinkedList;
 import java.util.Queue;

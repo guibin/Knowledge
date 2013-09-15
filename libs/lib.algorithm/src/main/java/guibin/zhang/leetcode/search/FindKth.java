@@ -1,4 +1,4 @@
-package guibin.zhang.leecode.search;
+package guibin.zhang.leetcode.search;
 
 /**
  * Find the k th elements from two sorted arrays.
