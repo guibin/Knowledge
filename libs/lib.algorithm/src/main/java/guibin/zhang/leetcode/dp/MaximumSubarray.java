@@ -1,4 +1,4 @@
-package guibin.zhang.leetcode.listAndArray;
+package guibin.zhang.leetcode.dp;
 
 /**
  *
@@ -48,6 +48,33 @@ public class MaximumSubarray {
         } else {
             return maxItem;
         }
+    }
+    
+    /**
+     * 
+     * 200 / 200 test cases passed.
+     * Status: Accepted
+     * Runtime: 376 ms
+     * 
+     * @param A
+     * @return 
+     */
+    public int maxSubArray_v2(int[] A) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int sum = 0;
+        int maxSum = A[0];
+        for (int i = 0; i < A.length; i++) {
+            sum += A[i];
+            maxSum = Math.max(maxSum, sum);
+            
+            //This is the key point
+            if (sum < 0) {
+                sum = 0;
+            }
+        }
+        
+        return maxSum;
     }
     
     public static void main(String[] args) {
