@@ -23,7 +23,7 @@ public class MinimumPathSum {
         int cols = grid[0].length;
 
         int[][] p = new int[rows][cols];
-        p[0][0] = grid[0][0];
+        p[0][0] = grid[0][0];//Note the corner case: only one item.
         for (int i = 1; i < cols; i++) {
             p[0][i] = p[0][i - 1] + grid[0][i];
         }
