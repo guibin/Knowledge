@@ -1,4 +1,4 @@
-package guibin.zhang.leetcode.matrix;
+package guibin.zhang.leetcode.dp;
 
 /**
  *
