@@ -20,4 +20,6 @@ public class ThreadSafeSingleton {
         }
         return instance;
     }
+    
+    private ThreadSafeSingleton() {}
 }
