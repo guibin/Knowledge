@@ -45,26 +45,18 @@ public class MergeSortJ {
             //MERGE-----
             int i = 0, j = 0, k = 0;
             // the below loop will run until one of the sub-arrays becomes empty
-            while(arr1.length != j && arr2.length != k) {
+            while(j < arr1.length && k < arr2.length) {
                 if(arr1[j] < arr2[k]) {
-                    array[i] = arr1[j];
-                    i ++;
-                    j ++;
+                    array[i++] = arr1[j++];
                 } else {
-                    array[i] = arr2[k];
-                    i ++;
-                    k ++;
+                    array[i++] = arr2[k++];
                 }
             }
-            while(arr1.length > j) {
-                array[i] = arr1[j];
-                i ++;
-                j ++;
+            while(j < arr1.length) {
+                array[i++] = arr1[j++];
             }
-            while(arr2.length > k) {
-                array[i] = arr2[k];
-                i ++;
-                k ++;
+            while(k < arr2.length) {
+                array[i++] = arr2[k++];
             }
             
         }
