@@ -46,11 +46,7 @@ public class MergeSortJ {
             int i = 0, j = 0, k = 0;
             // the below loop will run until one of the sub-arrays becomes empty
             while(j < arr1.length && k < arr2.length) {
-                if(arr1[j] < arr2[k]) {
-                    array[i++] = arr1[j++];
-                } else {
-                    array[i++] = arr2[k++];
-                }
+                array[i++] = arr1[j] < arr2[k] ? arr1[j++] : arr2[k++];
             }
             while(j < arr1.length) {
                 array[i++] = arr1[j++];
