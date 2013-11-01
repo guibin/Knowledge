@@ -20,7 +20,7 @@ public class CharacterCombination {
      * @param branch The target array, which contains the combination result.
      * @param idx The index for target array.
      */
-    public void combine(char[] arr, int k, int startId, char[] branch, int idx) {
+    public void combine(char[] arr, char[] branch, int idx, int k, int startId) {
         
         if (idx == k) {
             System.out.println(branch);
@@ -29,7 +29,7 @@ public class CharacterCombination {
         
         for (int i = startId; i < arr.length; i++) {
             branch[idx++] = arr[i];
-            combine(arr, k, ++startId, branch, idx);
+            combine(arr, branch, idx, k, ++startId);
             -- idx;
         }
     }
@@ -40,7 +40,7 @@ public class CharacterCombination {
         char[] arr = "ABCDE".toCharArray();
         int k = 3;
         char[] branch = new char[k];
-        cc.combine(arr, k, 0, branch, 0);
+        cc.combine(arr, branch, 0, k, 0);
         
         /**
          * The expected output should be:
