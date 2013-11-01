@@ -18,19 +18,19 @@ public class CharacterCombination {
      * @param k Combination of k elements from the source array.
      * @param startId Start index to recurse.
      * @param branch The target array, which contains the combination result.
-     * @param numOfElem The index for target array.
+     * @param idx The index for target array.
      */
-    public void combine(char[] arr, int k, int startId, char[] branch, int numOfElem) {
+    public void combine(char[] arr, int k, int startId, char[] branch, int idx) {
         
-        if (numOfElem == k) {
+        if (idx == k) {
             System.out.println(branch);
             return;
         }
         
         for (int i = startId; i < arr.length; i++) {
-            branch[numOfElem++] = arr[i];
-            combine(arr, k, ++startId, branch, numOfElem);
-            -- numOfElem;
+            branch[idx++] = arr[i];
+            combine(arr, k, ++startId, branch, idx);
+            -- idx;
         }
     }
     
