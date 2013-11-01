@@ -13,22 +13,21 @@ public class CharacterFullPermutation {
      * Idea: one loop + one recursion + one tracking array.
      * 
      * @param arr The source array.
-     * @param size The size of array.
      * @param branch The target array, which contains the permutation result.
      * @param level The index for target array.
      * @param visited The array which is used to track the visiting status.
      */
-    public void generatePermutations(char[] arr, int size, char[] branch, int level, boolean[] visited) {
+    public void generatePermutations(char[] arr, char[] branch, int level, boolean[] visited) {
         
-        if (level >= size - 1) {
+        if (level >= arr.length - 1) {
             System.out.println(branch);
             return;
         }
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < arr.length; i++) {
             if (!visited[i]) {
                 branch[++level] = arr[i];
                 visited[i] = true;
-                generatePermutations(arr, size, branch, level, visited);
+                generatePermutations(arr, branch, level, visited);
                 visited[i] = false;
                 level --;
             }
@@ -44,7 +43,7 @@ public class CharacterFullPermutation {
         char[] arr = str.toCharArray();
         boolean[] visited = new boolean[n];
         char[] branch = new char[n];
-        cp.generatePermutations(arr, n, branch, -1, visited);
+        cp.generatePermutations(arr, branch, -1, visited);
         
         /**
          * The expected permutation ABCD is:
