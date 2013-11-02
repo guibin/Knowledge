@@ -6,17 +6,17 @@ package guibin.zhang.leetcode.permutationAndCombination;
  */
 public class CharacterPowerSet {
     
-    public void combine(char[] arr, int k, int startId, char[] branch, int numOfElem) {
+    public void combine(char[] arr, char[] branch, int idx, int startId, int k) {
         
-        if (k == numOfElem) {
+        if (k == idx) {
             System.out.println(branch);
             return;
         }
         
         for (int i = startId; i < arr.length; i++) {
-            branch[numOfElem++] = arr[i];
-            combine(arr, k, ++startId, branch, numOfElem);
-            numOfElem --;
+            branch[idx++] = arr[i];
+            combine(arr, branch, idx, ++startId, k);
+            idx --;
         }
     }
     
@@ -24,7 +24,7 @@ public class CharacterPowerSet {
         
         for (int i = 0; i < arr.length; i++) {
             char[] branch = new char[i];
-            combine(arr, i, 0, branch, 0);
+            combine(arr, branch, 0,  0, i);
         }
     }
     
