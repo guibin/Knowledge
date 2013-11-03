@@ -39,29 +39,36 @@ public class CombinationSum {
         }
 
         Arrays.sort(candidates);
-
-        ArrayList<Integer> row = new ArrayList<Integer>();
-        int level = 0;
-        int sum = 0;
-        dfs(candidates, level, sum, target, row, results);
+        
+        combinate(candidates, target, new ArrayList<Integer>(), 0, results, 0);
         return results;
     }
 
-    public void dfs(int[] candidates, int level, int sum, int target, ArrayList<Integer> row, ArrayList<ArrayList<Integer>> results) {
-
-        if (sum > target) {
+    /**
+     * This is the combination with duplication, Idea: one loop + one recursion + startId, but startId is i while recursing.
+     * 
+     * @param arr
+     * @param target
+     * @param branch
+     * @param sum
+     * @param result
+     * @param startId 
+     */
+    public void combinate(int[] arr, int target, ArrayList<Integer> branch, int sum,  
+            ArrayList<ArrayList<Integer>> result, int startId) {
+        
+        if (sum == target) {
+            result.add(new ArrayList<Integer>(branch));
             return;
-        } else if (sum == target) {
-            results.add(new ArrayList<Integer>(row));
+        } else if (sum > target) {
             return;
         } else {
-            for (int i = level; i < candidates.length; i++) {
-                sum += candidates[i];
-                row.add(candidates[i]);
-                //Note: level if from i, instead of i + 1.
-                dfs(candidates, i, sum, target, row, results);
-                row.remove(row.size() - 1);
-                sum -= candidates[i];
+            for (int i = startId; i < arr.length; i++) {
+                sum += arr[i];
+                branch.add(arr[i]);
+                combinate(arr, target, branch, sum, result, i);
+                sum -= arr[i];
+                branch.remove(branch.size() - 1);
             }
         }
     }
