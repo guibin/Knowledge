@@ -5,7 +5,7 @@ package guibin.zhang.leetcode.permutationAndCombination;
  * 
  * Summary: Difference between permutation and combination is: ***startId for loop.***
  * A. If startId keep unchanged in while recursing, it is permutation with duplication.
- * B. If startId keep increased(self increase or i++), it is combination. 
+ * B. If startId keep increased(self increase or i++ or i + 1), it is combination. 
  *    self increase is combination, i++ is combination with duplication.
  * C. If startId starts from 0 for loop, with a visited tracking array, it is permutation.
  * 
@@ -133,6 +133,27 @@ public class CharacterFullPermutation {
     }
     
     /**
+     * It is same with generateCombination.
+     * 
+     * Expected output: 
+     * 
+     * ABC => AB, AC, BC
+     * 
+     */
+    public void generateCombinationV2(char[] arr, char[] branch, int idx, int startId, int k) {
+        
+        if (idx == k) {
+            System.out.println(branch);
+            return;
+        }
+        for (int i = startId; i < arr.length; i++) {
+            branch[idx++] = arr[i];
+            generateCombinationV2(arr, branch, idx, i + 1, k);
+            idx --;
+        }
+    }
+    
+    /**
      * Idea: one loop + one recursion + startId, but startId is i while recursing.
      * 
      * Expected output:
@@ -159,7 +180,6 @@ public class CharacterFullPermutation {
     }
     
     
-    
     public static void main(String[] args) {
         
         CharacterFullPermutation cp = new CharacterFullPermutation();
@@ -176,12 +196,28 @@ public class CharacterFullPermutation {
         System.out.println("-------Duplicated permutation----------");
         cp.generatePermutationsWithDuplication(arr, branch, 0, 0);
         
+        System.out.println("-------Duplicated Permutation V2----------");
+        str = "ABC";
+        arr = str.toCharArray();
+        n = str.length();
+        int k = 2;
+        branch = new char[k];
+        cp.generatePermutationWithDuplicationV2(arr, branch, 0, 0, k);
+        
         System.out.println("-------Combination----------");
         str = "ABCD";
-        int k = 3;
+        k = 3;
         arr = str.toCharArray();
         branch = new char[k];
         cp.generateCombination(arr, branch, 0, 0, k);
+        
+        System.out.println("-------Combination V2----------");
+        str = "ABCD";
+        arr = str.toCharArray();
+        n = str.length();
+        k = 3;
+        branch = new char[k];
+        cp.generateCombinationV2(arr, branch, 0, 0, k);
 
         System.out.println("-------Duplicated Combination----------");
         str = "ABC";
@@ -191,12 +227,5 @@ public class CharacterFullPermutation {
         branch = new char[k];
         cp.generateCombinationWithDuplication(arr, branch, 0, 0, k);
         
-        System.out.println("-------Duplicated Permutation V2----------");
-        str = "ABC";
-        arr = str.toCharArray();
-        n = str.length();
-        k = 2;
-        branch = new char[k];
-        cp.generatePermutationWithDuplicationV2(arr, branch, 0, 0, k);
     }
 }

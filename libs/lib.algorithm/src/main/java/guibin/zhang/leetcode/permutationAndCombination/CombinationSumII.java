@@ -31,32 +31,30 @@ public class CombinationSumII {
         // Start typing your Java solution below
         // DO NOT write main() function
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> row = new ArrayList<Integer>();
-        int level = 0;
-        int sum = 0;
+
         Arrays.sort(num);
-        dfs(num, level, sum, target, row, result);
+        combinate(num, target, new ArrayList<Integer>(), 0, result, 0);
+        
         return result;
     }
     
-    public void dfs(int[] num, int level, int sum, int target, ArrayList<Integer> row, ArrayList<ArrayList<Integer>> result) {
+    public void combinate(int[] arr, int target, ArrayList<Integer> branch, int sum,  
+            ArrayList<ArrayList<Integer>> result, int startId) {
         
         if (sum > target) {
             return;
         } else if (sum == target) {
-            result.add(new ArrayList<Integer>(row));
+            result.add(new ArrayList<Integer>(branch));
             return;
         } else {
-            for (int i = level; i < num.length; i++) {
-                sum += num[i];
-                row.add(num[i]);
-                //Note: here is i + 1 instead of level + 1.
-                dfs(num, i + 1, sum, target, row, result);
-                row.remove(row.size() - 1);
-                sum -= num[i];
-                //Ignore the duplicated candidates in num.
-                while (i < num.length - 1 && num[i] == num[i + 1]) {
-                    i++;
+            for (int i = startId; i < arr.length; i++) {
+                sum += arr[i];
+                branch.add(arr[i]);
+                combinate(arr, target, branch, sum, result, i + 1);
+                sum -= arr[i];
+                branch.remove(branch.size() - 1);
+                while(i < arr.length - 1 && arr[i] == arr[i + 1]) {
+                    i ++;
                 }
             }
         }
