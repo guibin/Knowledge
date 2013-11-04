@@ -74,10 +74,41 @@ public class FourSum {
         return result;
     }
     
+    public ArrayList<ArrayList<Integer>> fourSum_v2(int[] num, int target) {
+        // IMPORTANT: Please reset any member data you declared, as
+        // the same Solution instance will be reused for each test case.
+        Arrays.sort(num);
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        combinate(num, target, new ArrayList<Integer>(), 0, 0, 0, result);
+        return result;
+    }
+
+    public void combinate(int[] arr, int target, ArrayList<Integer> branch, int startId, int k, int sum, ArrayList<ArrayList<Integer>> result) {
+        
+        if (k == 4 && sum == target) {
+            //If result doesn't contain branch, then add it.
+            result.add(new ArrayList<Integer>(branch));
+            return;
+        } 
+        
+        if (k > 4 || sum > target) {
+            return;
+        } else {
+            for (int i = startId; i < arr.length; i++) {
+                branch.add(arr[i]);
+                sum += arr[i];
+                combinate(arr, target, branch, ++startId, ++ k, sum, result);
+                branch.remove(branch.size() - 1);
+                sum -= arr[i];
+                k--;
+            }
+        }
+    }
+    
     public static void main(String[] args) {
         FourSum fs = new FourSum();
         int[] num = {1, 1, 0, -1, -1, 2, -2};
-        ArrayList<ArrayList<Integer>> result = fs.fourSum(num, 0);
+        ArrayList<ArrayList<Integer>> result = fs.fourSum_v2(num, 0);
         for (ArrayList<Integer> a : result) {
             for (int i : a) {
                 System.out.print(i + ",");
