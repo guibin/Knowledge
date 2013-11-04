@@ -1,5 +1,7 @@
 package guibin.zhang.leetcode.permutationAndCombination;
 
+import java.util.ArrayList;
+
 /**
  * 
  * The set [1,2,3,…,n] contains a total of n! unique permutations.
@@ -108,5 +110,73 @@ public class PermutationSequence {
             result[i] = result[i - 1] * i;
         }
         return result;
+    }
+    
+    /**
+     * 200 / 200 test cases passed.
+     * Status: Accepted
+     * Runtime: 1844 ms
+     * 
+     * @param n
+     * @param k
+     * @return 
+     */
+    public String getPermutation_v2(int n, int k) {
+        // IMPORTANT: Please reset any member data you declared, as
+        // the same Solution instance will be reused for each test case.
+        
+        char[] arr = new char[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = (char) ('0' + i + 1);
+        }
+        char[] branch = new char[n];
+        boolean[] visited = new boolean[n];
+        ArrayList<String> result = new ArrayList<String>();
+        int[] counter = new int[1];
+        permutate(arr, branch, visited, 0, k, counter, result);
+        if(result.size() > 0)
+            return result.get(0);
+        else {
+            return null;
+        }
+    }
+    
+    /**
+     * 
+     * @param arr
+     * @param branch
+     * @param visited
+     * @param idx
+     * @param k
+     * @param counter int[] Be careful, use array to carry the value into the recursion. Non-collection doesn't work.
+     * @param result 
+     */
+    public void permutate(char[] arr, char[] branch, boolean[] visited, int idx, int k, int[] counter, ArrayList<String> result) {
+        
+        if (idx == arr.length) {
+            counter[0] ++;
+            if (counter[0] == k) {
+                result.add(new String(branch));
+            }
+            return;
+        }
+        if (counter[0] > k) {
+            return;
+        }
+        for (int i = 0; i < arr.length; i++) {
+            if (!visited[i]) {
+                branch[idx++] = arr[i];
+                visited[i] = true;
+                permutate(arr, branch, visited, idx, k, counter, result);
+                idx --;
+                visited[i] = false;
+            }
+        }
+        
+    }
+    
+    public static void main(String[] args) {
+        PermutationSequence ps = new PermutationSequence();
+        System.out.println(ps.getPermutation_v2(2, 2));
     }
 }
