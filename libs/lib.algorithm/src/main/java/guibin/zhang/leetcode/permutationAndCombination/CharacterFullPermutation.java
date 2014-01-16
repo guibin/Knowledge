@@ -11,6 +11,8 @@ package guibin.zhang.leetcode.permutationAndCombination;
  * 
  * http://exceptional-code.blogspot.com/2012/09/generating-all-permutations.html
  * 
+ * ***Permutation doesn't need startID, while combination needs.***
+ * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class CharacterFullPermutation {
@@ -45,7 +47,7 @@ public class CharacterFullPermutation {
     
     /**
      * 
-     * Idea: one loop + one recursion + startId, but startId does NOT self-increase while recursing.
+     * Idea: one loop + one recursion.
      * 
      * Expected output: 
      * 
@@ -66,22 +68,22 @@ public class CharacterFullPermutation {
      * @param idx The index for target array.
      * @param startId Start index to recurse.
      */
-    public void generatePermutationsWithDuplication(char[] arr, char[] branch, int idx, int startId) {
+    public void generatePermutationsWithDuplication(char[] arr, char[] branch, int idx) {
         
         if (idx == arr.length) {
             System.out.println(branch);
             return;
         }
-        for (int i = startId; i < arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) {
             branch[idx++] = arr[i];
-            generatePermutationsWithDuplication(arr, branch, idx, startId);
+            generatePermutationsWithDuplication(arr, branch, idx);
             idx --;
         }
     }
     
     /**
      * 
-     * Idea: one loop + one recursion + startId, but startId does NOT self-increase while recursing.
+     * Idea: one loop + one recursion.
      * 
      * Expected output:
      * 
@@ -93,15 +95,15 @@ public class CharacterFullPermutation {
      * @param startId Start index to recurse.
      * @param k Permutation of k elements from the source array. P(n, k)
      */
-    public void generatePermutationWithDuplicationV2(char[] arr, char[] branch, int idx, int startId, int k) {
+    public void generatePermutationWithDuplicationV2(char[] arr, char[] branch, int idx, int k) {
         
         if (idx == k) {
             System.out.println(branch);
             return;
         }
-        for (int i = startId; i < arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) {
             branch[idx++] = arr[i];
-            generatePermutationWithDuplicationV2(arr, branch, idx, startId, k);
+            generatePermutationWithDuplicationV2(arr, branch, idx, k);
             idx --;
         }
     }
@@ -194,7 +196,7 @@ public class CharacterFullPermutation {
         cp.generatePermutations(arr, branch, 0, visited);
         
         System.out.println("-------Duplicated permutation----------");
-        cp.generatePermutationsWithDuplication(arr, branch, 0, 0);
+        cp.generatePermutationsWithDuplication(arr, branch, 0);
         
         System.out.println("-------Duplicated Permutation V2----------");
         str = "ABC";
@@ -202,7 +204,7 @@ public class CharacterFullPermutation {
         n = str.length();
         int k = 2;
         branch = new char[k];
-        cp.generatePermutationWithDuplicationV2(arr, branch, 0, 0, k);
+        cp.generatePermutationWithDuplicationV2(arr, branch, 0, k);
         
         System.out.println("-------Combination----------");
         str = "ABCD";
