@@ -47,6 +47,13 @@ public class LetterCombinationsOfAPhoneNumber {
         return result;
     }
     
+    /**
+     * 
+     * @param digits The input digits
+     * @param i The position of the digits
+     * @param sb StringBuilder for caching the current branch
+     * @param result 
+     */
     public void letterCombinations(String digits, int i, StringBuilder sb, ArrayList<String> result) {
         
         if (i >= digits.length()) {
@@ -73,7 +80,7 @@ public class LetterCombinationsOfAPhoneNumber {
     public static void main(String[] args) {
         System.out.println("Permutating...");
         LetterCombinationsOfAPhoneNumber lc = new LetterCombinationsOfAPhoneNumber();
-        ArrayList<String> result = lc.letterCombinations("231");
+        ArrayList<String> result = lc.letterCombinations("2314");
         for(String s : result) {
             System.out.println(s);
         }
