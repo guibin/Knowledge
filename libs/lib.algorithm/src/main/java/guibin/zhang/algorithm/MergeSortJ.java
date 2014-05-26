@@ -58,8 +58,8 @@ public class MergeSortJ {
      * http://kosbie.net/cmu/summer-08/15-100/handouts/IterativeMergeSort.java
      * @param array
      * @param aux
-     * @param left
-     * @param right 
+     * @param left inclusive
+     * @param right exclusive
      */
     public void mergeSort2(int[] array, int[] aux, int left, int right) {
         
@@ -90,6 +90,7 @@ public class MergeSortJ {
         if (mid >=  array.length) {
             return;
         }
+        // This condition is for mergeSortIteratively.
         if (right > array.length) {
             right = array.length;
         }
@@ -98,6 +99,7 @@ public class MergeSortJ {
         for (int k = left; k < right; k ++) {
             if (i == mid) {
                 //Merge the remaining right part
+                System.out.println("k=" + k + ", j=" + j);
                 aux[k] = array[j++];
             } else if (j == right) {
                 //Merge the remaining left part
@@ -148,10 +150,12 @@ public class MergeSortJ {
         ms.mergeSort(array);
         ms.printArray(array);
         
+        System.out.println("merge sort 2:");
         int[] array2 = {5, 3, 4, 1, 9, 2, 6, 4, 7, 78};
         ms.mergeSort2(array2, new int[array2.length], 0, array2.length);
         ms.printArray(array2);
         
+        System.out.println("merge sort iteratively:");
         int[] array3 = {5, 3, 4, 1, 9, 2, 6, 4, 7, 78};
         ms.mergeSortIteratively(array3);
         ms.printArray(array3);
