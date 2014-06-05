@@ -2,6 +2,7 @@ package guibin.zhang.leetcode.permutationAndCombination;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 
@@ -128,6 +129,107 @@ public class Permutations {
                 //Swap back
                 swap(num, start, i);
             }
+        }
+    }
+    
+    /**
+     * http://gourabmitra.blogspot.com/2012/05/permutations-of-string-by-recursion.html
+     * https://www.youtube.com/watch?v=MQcwxQK2DPA
+     * 
+     * Assume that you have a function f() which returns the permutations of a given string and 
+     * let’s pass an argument string “abc” to it. 
+     * So for the current argument  string, print the letters one by one and 
+     * make recursive call over rest of the string except the current letter. 
+     * 
+     * The algorithm proceeds as,
+     * 
+     * f(“abc”) = “a” + f(“bc”) and “b” + f(“ac”) and “c” + f(“ab”)
+     * f(“bc”) = “b” + f(“c”) and “c” + f(”b”)
+     * f(“ac”) = “a” + f(“c”) and “c” + f(“a”)
+     * f(“ab”) = “a” + f(“b”) and “b” + f(“a”)
+     * f(“a”) = “a” + f(“”)  ;  f(“b”) = “b” + f(“”) ;  f(“c”) = “c” + f(“”)
+     * f(“”) = base condition. no more recursive calls.
+     * 
+     * n! = n * (n-1)!
+     * 
+     * @param beginning
+     * @param ending
+     */
+    public void permute(String beginning, String ending) {
+        
+        if(ending.length() <= 1) {
+            System.out.println(beginning + ending);
+        } else {
+            for (int i = 0; i < ending.length(); i++) {
+                //Current character is removed from ending in order to generate the new ending, which is pasted to f().
+                String nEnding = ending.substring(0, i) + ending.substring(i + 1);
+                permute(beginning + ending.charAt(i), nEnding);
+            }
+        }
+    }
+    
+    public void permute(String beginning, String ending, List<String> result) {
+        
+        if(ending.length() <= 1) {
+            result.add(beginning + ending);
+        } else {
+            for(int i = 0; i < ending.length(); i++) {
+                String nEnding = ending.substring(0, i) + ending.substring(i + 1);
+                permute(beginning + ending.charAt(i), nEnding, result);
+            }
+        }
+    }
+    
+    public void permute(List<Integer> beginning, List<Integer> ending, List<List<Integer>> result) {
+        if(ending.size() <= 1) {
+            List<Integer> row = new ArrayList<>();
+            row.addAll(new ArrayList<>(beginning));
+            row.addAll(new ArrayList<>(ending));
+            result.add(row);
+        } else {
+            for (int i = 0; i < ending.size(); i++) {
+                List<Integer> nBeginning = new ArrayList<>(beginning);
+                List<Integer> nEnding = new ArrayList<>(ending);
+                nEnding.remove(i);
+                nBeginning.add(ending.get(i));
+                permute(nBeginning, nEnding, result);
+            }
+        }
+    }
+    
+    public static void main(String[] args) {
+        Permutations pt = new Permutations();
+        int[] num = {0, 1, 2, 3};
+        ArrayList<ArrayList<Integer>> result = pt.permute(num);
+        System.out.println("--------");
+        for(ArrayList<Integer> list : result) {
+            for(Integer i : list) {
+                System.out.print(i);
+            }
+            System.out.println();
+        }
+        
+        System.out.println("^^--------^^");
+        List<String> result2 = new ArrayList<String>();
+        pt.permute("", "abcd", result2);
+        for(String str : result2) {
+            System.out.println(str);
+        }
+        
+        List<Integer> ending = new ArrayList<>();
+        ending.add(0);
+        ending.add(1);
+        ending.add(2);
+        ending.add(3);
+        List<Integer> beginning = new ArrayList<>();
+        List<List<Integer>> result3 = new ArrayList<>();
+        pt.permute(beginning, ending, result3);
+        System.out.println("^^^^^^^^^^^^");
+        for(List<Integer> list : result3) {
+            for (int i : list) {
+                System.out.print(i);
+            }
+            System.out.println();
         }
     }
 }
