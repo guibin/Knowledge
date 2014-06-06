@@ -58,6 +58,7 @@ public class Permutations {
         
     }
     
+    //The result is not in order
     public ArrayList<ArrayList<Integer>> perm(Integer[] num, int start, int end) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
         if (start > end) {
@@ -152,6 +153,8 @@ public class Permutations {
      * 
      * n! = n * (n-1)!
      * 
+     * The result is in order.
+     * 
      * @param beginning
      * @param ending
      */
@@ -200,7 +203,7 @@ public class Permutations {
     public static void main(String[] args) {
         Permutations pt = new Permutations();
         int[] num = {0, 1, 2, 3};
-        ArrayList<ArrayList<Integer>> result = pt.permute(num);
+        ArrayList<ArrayList<Integer>> result = pt.permute_v3(num);
         System.out.println("--------");
         for(ArrayList<Integer> list : result) {
             for(Integer i : list) {
