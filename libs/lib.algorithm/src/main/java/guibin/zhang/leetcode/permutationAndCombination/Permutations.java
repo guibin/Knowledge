@@ -30,8 +30,9 @@ public class Permutations {
         return permute(num, num.length - 1);
     }
     
+    //The result is not in order, totally disorder. 
     public ArrayList<ArrayList<Integer>> permute(int[] num, int k) {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
         if (k < 0) {
             result.add(new ArrayList<Integer>());
         } else {
@@ -58,9 +59,9 @@ public class Permutations {
         
     }
     
-    //The result is not in order
+    //The result is not in order, but it is colse to sorted.
     public ArrayList<ArrayList<Integer>> perm(Integer[] num, int start, int end) {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
         if (start > end) {
             result.add(new ArrayList<Integer>(Arrays.asList(num)));
         } else {
@@ -106,14 +107,34 @@ public class Permutations {
         for (int i = 0; i < num.length; i++) {
             n[i] = num[i];
         }
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
         perm(n, 0, num.length - 1, result);
         return result;
         
     }
     
     /**
-     * swap the elements from start to end, one by one.
+     * swap the elements from start to end, one by one. 
+     * Basically it is a recursive swapping algorithm.
+     * 
+     * Actually it is not in order, but it is **close to the sorted order**.
+     * 
+     * How do you permute a three-letter string? Well, the permuations are
+     * 1. The first letter followed by the permutions of the second and third letters.
+     * 2. The second letter followed by the permutions of the first and third letters.
+     * 3. The third letter followed by the permutions of the first and second letters.
+     * 
+     * So the algorithm is:
+     * 1. Keep the first letter constant and do all the permutations of the second and third letters (printing out the entire string each time).
+     * 2. Swap the original first and second letters of the string, and repeat step 1 for the new string.
+     * 3. Swap the original first and third letters of the string, and repeat step 1 for the new string.
+     * 
+     * General algorithm
+     * For an N-letter string it's a bit like:
+     * for (i=0; i < N; ++i)
+     *     Swap letters 0 and i.
+     *     Permute letters 1 to N-1, printing out the entire string each time.
+     * 
      * @param num
      * @param start
      * @param end
@@ -121,7 +142,7 @@ public class Permutations {
      */
     public void perm(Integer[] num, int start, int end, ArrayList<ArrayList<Integer>> result) {
         if (start == end) {
-            result.add(new ArrayList<Integer>(Arrays.asList(num)));
+            result.add(new ArrayList<>(Arrays.asList(num)));
         } else {
             for (int i = start; i <= end; i++) {
                 //Swap the first element with the rest of the element, including itself.
@@ -153,7 +174,7 @@ public class Permutations {
      * 
      * n! = n * (n-1)!
      * 
-     * The result is in order.
+     * The result is **in lexicographic order**.
      * 
      * @param beginning
      * @param ending
@@ -171,6 +192,14 @@ public class Permutations {
         }
     }
     
+    
+    /**
+     * Same algorithm with above. it is also **in lexicographic order**.
+     * 
+     * @param beginning
+     * @param ending
+     * @param result 
+     */
     public void permute(String beginning, String ending, List<String> result) {
         
         if(ending.length() <= 1) {
@@ -202,9 +231,31 @@ public class Permutations {
     
     public static void main(String[] args) {
         Permutations pt = new Permutations();
+        
+        int[] num3 = {0, 1, 2, 3};
+        ArrayList<ArrayList<Integer>> result5 = pt.permute(num3);
+        System.out.println("----permute----");
+        for(ArrayList<Integer> list : result5) {
+            for(Integer i : list) {
+                System.out.print(i);
+            }
+            System.out.println();
+        }
+        
+        
+        int[] num2 = {0, 1, 2, 3};
+        ArrayList<ArrayList<Integer>> result4 = pt.permute_v2(num2);
+        System.out.println("----permute_v2----");
+        for(ArrayList<Integer> list : result4) {
+            for(Integer i : list) {
+                System.out.print(i);
+            }
+            System.out.println();
+        }
+        
         int[] num = {0, 1, 2, 3};
         ArrayList<ArrayList<Integer>> result = pt.permute_v3(num);
-        System.out.println("--------");
+        System.out.println("----permute_v3----");
         for(ArrayList<Integer> list : result) {
             for(Integer i : list) {
                 System.out.print(i);

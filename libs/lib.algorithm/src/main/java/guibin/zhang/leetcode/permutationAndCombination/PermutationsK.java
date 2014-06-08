@@ -30,19 +30,31 @@ public class PermutationsK {
      * @param ending
      * @param k 
      */
-    public void permutate(String beginning, String ending, int k) {
+    public void permutateK(String beginning, String ending, int k) {
         
         if (k == 0) {
           System.out.println(beginning);
         } else {
             for (int i = 0; i < ending.length() && k > 0; i++) {
+                //Current character is removed from ending
                 String nEnding = ending.substring(0, i) + ending.substring(i + 1);
-                permutate(beginning + ending.charAt(i), nEnding, k - 1);
+                permutateK(beginning + ending.charAt(i), nEnding, k - 1);
             }
         }
     }
     
-    public void permutate(char[] input, int len, int k) {
+    /**
+     * 
+     * Enumerates all permutations of size k chosen from N elements.
+     * 
+     * http://introcs.cs.princeton.edu/java/23recursion/
+     * http://introcs.cs.princeton.edu/java/23recursion/PermutationsK.java.html
+     * 
+     * @param input
+     * @param len
+     * @param k 
+     */
+    public void permutateK(char[] input, int len, int k) {
         
         if(k == 0) {
             for (int i = len; i < input.length; i++) {
@@ -51,8 +63,9 @@ public class PermutationsK {
             System.out.println();
         }
         for (int i = 0; i < len; i++) {
+            //From the first element, swap each element with the last one
             swap(input, i, len - 1);
-            permutate(input, len - 1, k - 1);
+            permutateK(input, len - 1, k - 1);
             swap(input, i, len - 1);
         }
     }
@@ -66,6 +79,6 @@ public class PermutationsK {
     public static void main(String[] args) {
         PermutationsK pk = new PermutationsK();
 //        pk.permutate("", "ABCDE", 3);
-        pk.permutate("ABCDE".toCharArray(), 5, 2);
+        pk.permutateK("ABCDE".toCharArray(), 5, 2);
     }
 }
