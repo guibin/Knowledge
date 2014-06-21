@@ -32,12 +32,16 @@ public class SocialNetworkConnectivity implements UnionFind{
     // The number of connected components
     private int numOfConnectedComponent;
     
+    // Keep track of the maxmium node in each connected component **for each root** of connected component
+    private int[] maximum;
+    
     public SocialNetworkConnectivity(int N) {
         // Set id of each object to itself. This need N array accesses.
         ids = new int[N];
         for (int i = 0; i < N; i++) {
             ids[i] = i;
             sz[i] = 1;
+            maximum[i] = i; 
         }
         numOfConnectedComponent = N;
     }
@@ -105,16 +109,22 @@ public class SocialNetworkConnectivity implements UnionFind{
         if (rootP == rootQ) return rootP;
         int rstRoot = 0;
         if (sz[rootP] < sz[rootQ]) {
-            //point parent of i to j, since j is big tree
+            //point parent of p to q, since q is big tree
             ids[rootP] = rootQ;
             //Update cache for # of objects
             sz[rootQ] += sz[rootP];
-            //Update cache for object -> root.
+            //Update the maxium
+            if (maximum[rootQ] < maximum[rootP]) {
+                maximum[rootQ] = maximum[rootP];
+            }
             rstRoot = rootQ;
         } else {
             ids[rootQ] = rootP;
             sz[rootP] += sz[rootQ];
             rstRoot = rootP;
+            if (maximum[rootP] < maximum[rootQ]) {
+                maximum[rootP] = maximum[rootQ];
+            }
         }
         
         numOfConnectedComponent --;
@@ -136,4 +146,18 @@ public class SocialNetworkConnectivity implements UnionFind{
         return numOfConnectedComponent == 1;
     }
     
+    /**
+     * Add a method find() to the union-find data type 
+     * so that find(i) returns the largest element in the connected component containing i. 
+     * The operations, union(), connected(), and find() should all take logarithmic time or better.
+     * 
+     * For example, if one of the connected components is {1,2,6,9}, 
+     * then the find() method should return 9 for each of the four elements in the connected components.
+     * 
+     * @param i
+     * @return
+     */
+    public int findMaxiumInSameComponent(int i) {
+        return maximum[root(i)];
+    }
 }
