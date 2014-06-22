@@ -29,6 +29,9 @@ public class SocialNetworkConnectivity implements UnionFind{
     // Extra space to save the # of objects in the tree rooted at i.
     private int[] sz;
     
+    // Extra space to save the height of root(i)
+    private int[] height;
+    
     // The number of connected components
     private int numOfConnectedComponent;
     
@@ -41,7 +44,8 @@ public class SocialNetworkConnectivity implements UnionFind{
         for (int i = 0; i < N; i++) {
             ids[i] = i;
             sz[i] = 1;
-            maximum[i] = i; 
+            maximum[i] = i;
+            height[i] = 1;
         }
         numOfConnectedComponent = N;
     }
@@ -103,11 +107,11 @@ public class SocialNetworkConnectivity implements UnionFind{
      * @param q
      * @return The root of p and q after union.
      */
-    public int weightedUnion(int p, int q) {
+    public int unionBySize(int p, int q) {
         int rootP = root(p);
         int rootQ = root(q);
         if (rootP == rootQ) return rootP;
-        int rstRoot = 0;
+        int rstRoot;
         if (sz[rootP] < sz[rootQ]) {
             //point parent of p to q, since q is big tree
             ids[rootP] = rootQ;
@@ -128,6 +132,32 @@ public class SocialNetworkConnectivity implements UnionFind{
         }
         
         numOfConnectedComponent --;
+        return rstRoot;
+    }
+    
+    public int unionByHeight(int p, int q) {
+        int rootP = root(p);
+        int rootQ = root(q);
+        if (rootP == rootQ) return rootP;
+        int rstRoot;
+        
+        if (height[rootP] > height[rootQ]) {
+            //point parent of q to p, since p is heigher tree
+            ids[rootQ] = rootP;
+            //Update the height[rootQ] to the highter one
+            height[rootQ] = height[rootP];
+            rstRoot = rootP;
+        } else if (height[rootP] < height[rootQ]) {
+            ids[rootP] = rootQ;
+            height[rootP] = height[rootQ];
+            rstRoot = rootQ;
+        } else {
+            //Link q to p when these two tree are same height.
+            ids[rootP] = rootQ;
+            rstRoot = rootQ;
+            //increase height
+            height[rootQ]++;
+        }
         return rstRoot;
     }
     
