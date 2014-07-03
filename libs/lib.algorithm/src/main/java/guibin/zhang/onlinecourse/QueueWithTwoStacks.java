@@ -9,8 +9,8 @@ import java.util.Stack;
  * @param <T>
  */
 public class QueueWithTwoStacks<T> {
-    Stack<T> stackA = new Stack<>();
-    Stack<T> stackB = new Stack<>();
+    private Stack<T> stackA = new Stack<>();
+    private Stack<T> stackB = new Stack<>();
     
     public void enqueue(T v) {
         stackA.push(v);
