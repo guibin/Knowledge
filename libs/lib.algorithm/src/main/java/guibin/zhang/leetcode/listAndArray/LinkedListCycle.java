@@ -16,8 +16,8 @@ package guibin.zhang.leetcode.listAndArray;
 public class LinkedListCycle {
     
     public class ListNode {
-        int val;
-        ListNode next;
+        public int val;
+        public ListNode next;
         
         public ListNode(int x) {
             this.val = x;
@@ -46,5 +46,55 @@ public class LinkedListCycle {
             }
         }
         return false;
+    }
+    
+    /**
+     * s: slow steps, 2s: fast steps.
+     * r: The perimeter of the cycle.
+     * a: The steps from beginning to the first node on the cycle.
+     * b: The steps from a to the intersection of slow and fast.
+     * L: Total length of the list.
+     * 
+     * s = a + b
+     * 2s = a + nr + b
+     * => 2(a + b) = nr + a + b => nr = a + b => a = nr - b => a = (n-1)r + r - b
+     * 
+     * This means that the distance from beginning to the first node on cycle
+     * is equal to the distance from the intersection of slow and fast to the first node on cycle.
+     * 
+     * @param head
+     * @return 
+     */
+    public ListNode findFistNodeOnCycle(ListNode head) {
+        
+        ListNode curr = head;
+        if (curr == null) {
+            return null;
+        }
+        ListNode fast = curr;
+        while(fast != null) {
+            curr = curr.next;
+            fast = fast.next;
+            if (fast != null) {
+                fast = fast.next;
+            } else {
+                return null;
+            }
+            //Be careful the null test.
+            if (fast != null && curr.val == fast.val) {
+                break;
+            }
+        }
+        
+        ListNode curr2 = head;
+        while(curr2 != null) {
+            curr2 = curr2.next;
+            curr = curr.next;
+            if (curr2.val == curr.val) {
+                return curr2;
+            }
+        }
+        
+        return null;
     }
 }
