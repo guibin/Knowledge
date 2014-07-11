@@ -65,6 +65,15 @@ public class QuickSort {
         return j;
     }
     
+    /**
+     * Defect: If you don't stop partitioning on the equal keys, 
+     * the QuickSort will run into quadratic time.
+     * But SortMerge will always be NlogN.
+     * 
+     * @param a Array to be sorted
+     * @param lo low index inclusive
+     * @param hi high index inclusive
+     */
     public void sort(Comparable[] a, int lo, int hi) {
         
         if (hi <= lo) return;
