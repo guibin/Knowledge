@@ -30,6 +30,8 @@ public class QuickSelect {
     
     public int partition(Comparable[] a, int lo, int hi) {
         
+        if (lo == hi) return lo;//It is ok to add this quick judgement.
+        
         int i = lo, j = hi + 1;
         while(true) {
             while (a[++i].compareTo(a[lo]) <= 0) {
