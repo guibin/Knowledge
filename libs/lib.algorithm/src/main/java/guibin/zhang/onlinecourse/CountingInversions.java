@@ -7,6 +7,7 @@ package guibin.zhang.onlinecourse;
  * 
  * http://stackoverflow.com/questions/337664/counting-inversions-in-an-array
  * https://www.youtube.com/watch?v=Vj5IOD7A6f8
+ * http://www.geeksforgeeks.org/counting-inversions/
  * 
  * @author Guibin Zhang <guibin.beijing@gmail.com>
  */
