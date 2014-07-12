@@ -32,10 +32,10 @@ public class MergeSort {
                 a[k] = aux[j++]; //The left part is consumed
             else if (j > hi)
                 a[k] = aux[i++]; //The right part is consumed
-            else if (aux[j].compareTo(a[i]) < 0) 
-                a[k] = aux[j++]; //The right side is bigger
+            else if (aux[i].compareTo(aux[j]) > 0)
+                a[k] = aux[j++]; //The left side is bigger
             else
-                a[k] = aux[i++]; //The left side is bigger or equal
+                a[k] = aux[i++]; //The right side is bigger or equal
         }
     }
     
