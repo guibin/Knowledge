@@ -10,9 +10,9 @@ public class CharacterPowerSet {
      * Combination, select k items from arr.length items.
      * @param arr
      * @param branch
-     * @param idx
+     * @param idx index of branch
      * @param startId
-     * @param k 
+     * @param k the targeting k items
      */
     public void combine(char[] arr, char[] branch, int idx, int startId, int k) {
         
