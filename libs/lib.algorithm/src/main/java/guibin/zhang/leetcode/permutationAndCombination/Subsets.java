@@ -1,7 +1,7 @@
 package guibin.zhang.leetcode.permutationAndCombination;
 
 import java.util.ArrayList;
-import scala.actors.threadpool.Arrays;
+import java.util.Arrays;
 
 /**
  * Given a set of distinct integers, S, return all possible subsets.
