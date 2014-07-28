@@ -24,8 +24,6 @@ public class TwoSum {
         // Start typing your Java solution below
         // DO NOT write main() function
         int len = numbers.length;
-        int start = 0;
-        int end = len - 1;
         int[] result = new int[2];
         
         //number -> List<index>
@@ -43,11 +41,12 @@ public class TwoSum {
         
         for (int i = 0; i < len; i++) {
             int dest = target - numbers[i];
-            if (map.containsKey(dest) && dest != numbers[i]) {
+            if (map.containsKey(dest) && dest != numbers[i]) {//No duplicated elements
                 result[0] = map.get(numbers[i]).get(0) + 1;
                 result[1] = map.get(dest).get(0) + 1;
                 Arrays.sort(result);
                 return result;
+                //Duplicated elements
             }  else if (map.containsKey(dest) && dest == numbers[i] && map.get(dest).size() > 1) {
                 result[0] = map.get(dest).get(0) + 1;
                 result[1] = map.get(dest).get(1) + 1;
