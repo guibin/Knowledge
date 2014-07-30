@@ -58,11 +58,8 @@ public class CombinationSum {
             ArrayList<ArrayList<Integer>> result, int startId) {
         
         if (sum == target) {
-            result.add(new ArrayList<Integer>(branch));
-            return;
-        } else if (sum > target) {
-            return;
-        } else {
+            result.add(new ArrayList<>(branch));
+        } else if (sum < target) {
             for (int i = startId; i < arr.length; i++) {
                 sum += arr[i];
                 branch.add(arr[i]);
