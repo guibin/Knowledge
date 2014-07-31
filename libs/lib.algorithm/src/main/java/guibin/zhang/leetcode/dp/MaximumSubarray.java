@@ -56,6 +56,8 @@ public class MaximumSubarray {
      * Status: Accepted
      * Runtime: 376 ms
      * 
+     * Keep track the maxSum from sum. If sum < 0, reset sum to 0.
+     * 
      * @param A
      * @return 
      */
