@@ -98,4 +98,55 @@ public class BinaryTreeLevelOrderTraversal {
         dfs(root.left, depth + 1, result);
         dfs(root.right, depth + 1, result);
     }
+    
+    public void levelOrder_v3(TreeNode root) {
+        
+        Queue<TreeNode> q = new LinkedList<>();
+        Queue<Integer> levels = new LinkedList<>();
+        TreeNode curr = null;
+        if (root != null) {
+            q.offer(root);
+            levels.offer(0);
+        }
+        int prevLevel = 0;
+        while (!q.isEmpty()) {
+            if (levels.peek() > prevLevel) {
+                System.out.println();
+            }
+            curr = q.poll();
+            prevLevel = levels.poll();
+            System.out.print(curr.val + ",");
+            
+            if (curr.left != null) {
+                q.offer(curr.left);
+                levels.offer(prevLevel + 1);
+            }
+            if (curr.left != null) {
+                q.offer(curr.right);
+                levels.offer(prevLevel + 1);
+            }
+        }
+        System.out.println();
+    }
+    
+    public static void main(String[] args) {
+         /**
+          *    10
+          *   /  \
+          *  5   15
+          *     /  \
+          *    6    20
+          */
+        BinaryTreeLevelOrderTraversal bst = new BinaryTreeLevelOrderTraversal();
+        TreeNode a = bst.new TreeNode(10);
+        TreeNode b = bst.new TreeNode(5);
+        TreeNode c = bst.new TreeNode(15);
+        a.left = b;
+        a.right = c;
+        TreeNode d = bst.new TreeNode(6);
+        TreeNode e = bst.new TreeNode(20);
+        c.left = d;
+        c.right = e;
+        bst.levelOrder_v3(a);
+    }
 }
