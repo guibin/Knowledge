@@ -10,11 +10,14 @@ public class LongestCommonPrefix {
     
     public String longestCommonPrefix(String[] strs) {
         
-        int arrLen = strs.length;
-        int itemLen = strs[0].length();
-        for (int i = 0; i < itemLen; i ++) {
+        int wordsLength = strs.length;
+        // Initialize prefix length as the length of the first word
+        int prefixLength = strs[0].length();
+        // Iterate each character of the prefix to check if it exists in each word.
+        for (int i = 0; i < prefixLength; i ++) {
             char c = strs[0].charAt(i);
-            for (int j = 1; j < arrLen; j ++) {
+            // Check the prefix character in each word
+            for (int j = 1; j < wordsLength; j ++) {
                 if (i > strs[j].length() - 1 || c != strs[j].charAt(i)) {
                     return strs[0].substring(0, i);
                 }
@@ -25,7 +28,7 @@ public class LongestCommonPrefix {
     }
     
     public static void main(String[] args) {
-        String[] strs = {"q", "qp"};
+        String[] strs = {"abcdef", "abcdxxx", "abcdabcdef", "abyy"};
         LongestCommonPrefix lcp = new LongestCommonPrefix();
         System.out.println(lcp.longestCommonPrefix(strs));
     }
