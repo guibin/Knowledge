@@ -46,9 +46,44 @@ public class WordDecoder {
         }
     }
     
+    /**
+     * Given a function getRandomTripplet() which returns a random triplet of letters from a string. 
+     * 
+     * You don't know the string using calls to this function you have to correctly guess the string. 
+     * the length of the string is also given. 
+     * 
+     * Lets say the string is helloworld the function getRandomTriplet will return things like 
+     * hle, hew, wld, owo 
+     * the function maintains the relative order of the letters. so it will never return 
+     * ohl: since h is before o in the string. 
+     * owe: since w is after e 
+     * 
+     * The string is not known you are only given length of the string.
+     * 
+     * Question link: http://www.careercup.com/question?id=5678056593162240
+     * 
+     */
+    public static void printRandomTripplet(char[] a, char[] branch, int idx, int startId, int k) {
+        
+        if (idx == k) {
+            System.out.println(new String(branch));
+            return;
+        } 
+        for (int i = startId; i < a.length; i ++) {
+            branch[idx++] = a[i];
+            printRandomTripplet(a, branch, idx, i + 1, k);
+            idx --;
+        }
+    }
+    
     public static void main(String[] args) {
         
         decode("", "1234");
         combination("", "abcd");
+        
+        System.out.println("====Ramdon Tripplet====");
+        int k = 3;
+        char[] branch = new char[k];
+        printRandomTripplet("abcd".toCharArray(), branch, 0, 0, k);
     }
 }
