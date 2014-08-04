@@ -1,6 +1,7 @@
 package guibin.zhang.leetcode.matrix;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * 
@@ -58,38 +59,38 @@ public class NQueens {
         return res;
     }
 
-    public void dfs(ArrayList<String[]> res, int[] loc, int curr, int n) {
-        if (curr == n) {
-            printBoard(res, loc, n);
+    public void dfs(ArrayList<String[]> res, int[] branch, int idx, int n) {
+        if (idx == n) {
+            printBoard(res, branch, n);
         } else {
             //Note: 要遍历全部可能性，一个循环加一个递归即可
             for (int i = 0; i < n; i++) {
-                loc[curr] = i;//Index is the row id, the value is the col id
-                if (isValid(loc, curr)) {
-                    dfs(res, loc, curr + 1, n);
+                branch[idx] = i;//Index is the row id, the value is the col id
+                if (isValid(branch, idx)) {
+                    dfs(res, branch, idx + 1, n);
                 }
             }
         }
     }
 
-    public boolean isValid(int[] loc, int curr) {
-        for (int i = 0; i < curr; i++) {
+    public boolean isValid(int[] branch, int idx) {
+        for (int i = 0; i < idx; i++) {
             //Since i != curr, the row id is not same.
             //loc[i] and loc[curr] are the col id, they should not be same.
             //If they are in the same diagonal direction, the diffOfColIds == diffOfRowIds
-            if (loc[i] == loc[curr] || Math.abs(loc[i] - loc[curr]) == curr - i) {
+            if (branch[i] == branch[idx] || Math.abs(branch[i] - branch[idx]) == idx - i) {
                 return false;
             }
         }
         return true;
     }
 
-    public void printBoard(ArrayList<String[]> res, int[] loc, int n) {
+    public void printBoard(ArrayList<String[]> res, int[] branch, int n) {
         String[] ans = new String[n];
         for (int i = 0; i < n; i++) {//i -> row id
             String row = new String();
             for (int j = 0; j < n; j++) {
-                if (j == loc[i]) {//loc[i] -> colid, loc[i] == j is to find the col id
+                if (j == branch[i]) {//loc[i] -> colid, loc[i] == j is to find the col id
                     row += "Q";
                 } else {
                     row += ".";
@@ -98,5 +99,14 @@ public class NQueens {
             }
         }
         res.add(ans);
+    }
+    
+    public static void main(String[] args) {
+        NQueens nq = new NQueens();
+        int i = 1;
+        for(String[] as : nq.solveNQueens(5)) {
+            System.out.println("-----" + (i++) + "-----");
+            Arrays.stream(as).forEach(s -> System.out.println(s));
+        }
     }
 }

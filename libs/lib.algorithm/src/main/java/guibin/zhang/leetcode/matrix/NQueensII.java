@@ -23,17 +23,17 @@ public class NQueensII {
         return result[0];
     }
 
-    public void dfs(int[] result, int[] loc, int curr, int n) {
+    public void dfs(int[] result, int[] branch, int idx, int n) {
 
-        if (curr == n) {
+        if (idx == n) {
             result[0]++;
             return;
         }
         for (int i = 0; i < n; i++) {
             //Note: curr is the row index, i is the cols index.
-            loc[curr] = i;
-            if (isValid(loc, curr)) {
-                dfs(result, loc, curr + 1, n);
+            branch[idx] = i;
+            if (isValid(branch, idx)) {
+                dfs(result, branch, idx + 1, n);
             }
         }
     }
