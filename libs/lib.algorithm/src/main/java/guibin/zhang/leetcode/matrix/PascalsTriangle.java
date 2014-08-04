@@ -1,6 +1,7 @@
 package guibin.zhang.leetcode.matrix;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -20,19 +21,19 @@ import java.util.ArrayList;
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class PascalsTriangle {
-    public ArrayList<ArrayList<Integer>> generate(int numRows) {
+    public List<List<Integer>> generate(int numRows) {
         
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        List<List<Integer>> result = new ArrayList<>();
         if(numRows <= 0) {
             return result;
         } else if(numRows == 1) {
-            ArrayList<Integer> row = new ArrayList<Integer>();
+            List<Integer> row = new ArrayList<>();
             row.add(numRows);
             result.add(row);
             return result;
         } else {
             for(int i = 0; i < numRows; i++) {
-                ArrayList<Integer> row = new ArrayList<Integer>();
+                List<Integer> row = new ArrayList<>();
                 for(int j = 0; j <= i; j++) {
                     if(j == 0) {
                         row.add(1);
@@ -47,5 +48,17 @@ public class PascalsTriangle {
             }
         }
         return result;
+    }
+    
+    public static void main(String[] args) {
+        PascalsTriangle pt = new PascalsTriangle();
+        List<List<Integer>> result = pt.generate(6);
+        result.stream().forEach(list -> {
+            list.stream().forEach((i) -> {
+                System.out.print(i + ",");
+            });
+            System.out.println();
+        });
+
     }
 }
