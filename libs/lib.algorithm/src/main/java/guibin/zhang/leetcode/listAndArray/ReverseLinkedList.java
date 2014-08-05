@@ -132,28 +132,47 @@ public class ReverseLinkedList {
      * a linked list:
      * 0->1->2->3->4->5->6
      * |           |   
-     * pre        next
+     * p1         p2
      * 
      * after call pre = reverse(pre, next)
      * 0->3->2->1->4->5->6
      *          |  |
-     *          pre next
+     *          p1 p2
      * 
-     * @param pre
-     * @param next
+     * @param p1
+     * @param p2
      * @return the reversed list's last node, which is the precedence of parameter next
      */
-    public ListNode reverse(ListNode pre, ListNode next) {
+    public void reverseBetween(ListNode p1, ListNode p2) {
         
-        ListNode last = pre.next; //where first will be doomed "last"
+        ListNode last = p1.next; //where first will be doomed "last"
         ListNode curr = last.next;
-        while(curr != next) {//Note here is the next instead of null.
+        while(curr != p2) {//Note here is the next instead of null.
             last.next = curr.next;
-            curr.next = pre.next;
-            pre.next = curr;
+            curr.next = p1.next;
+            p1.next = curr;
             curr = last.next;
         }
-        return last;
+    }
+    
+    //Use method from ReverseLinkedListII
+    public void reverseBetween_v2(ListNode p1, ListNode p2) {
+        
+        ListNode curr = p1.next;
+        ListNode tailer = curr;//Remember the tailer of the list between p1 and p2
+        ListNode prev = null;
+        ListNode nxt = null;
+        
+        //Reverse the nodes between p1 and p2 normally
+        while (curr != p2) {
+            nxt = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nxt;
+        }
+        //Fix connectivity between the three segments.
+        tailer.next = p2;
+        p1.next = prev;
     }
     
     public void print(ListNode n) {
@@ -191,7 +210,10 @@ public class ReverseLinkedList {
         ListNode q = rl.reverse_v4(p);
         rl.print(q);
         System.out.println("Reversed iterately3 between first and last exclusitively:");
-        ListNode r = rl.reverse(q, q.next.next.next.next);
-        rl.print(q);
+        rl.reverseBetween(q, e);
+        rl.print(a);
+        System.out.println("Reversed iterately3 between first and last exclusitively v2:");
+        rl.reverseBetween_v2(q, e);
+        rl.print(a);
     }
 }
