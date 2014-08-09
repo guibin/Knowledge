@@ -105,6 +105,40 @@ public class RemoveDuplicatesFromSortedListII {
         return head;
     }
     
+    /**
+     * This method is easy to understand.
+     * 1. Use safeguard as the new head.
+     * 2. Use (nxt.next.val == nxt.val) to find out all duplicates.
+     * 3. Use curr.next = nxt.next to skip all duplicates.
+     * 
+     * reference: http://gongxuns.blogspot.com/2012/12/leetcode-remove-duplicates-from-sorted_11.html
+     * 
+     * @param head
+     * @return 
+     */
+    public ListNode deleteDuplicates_v3(ListNode head) {
+        
+        //Add a safeguard as the new head to simplify processing
+        ListNode prev = new ListNode(0);
+        prev.next = head;
+        head = prev;
+        
+        ListNode curr = head;
+        while (curr.next != null) {
+            ListNode nxt = curr.next;
+            while (nxt.next != null && nxt.next.val == nxt.val) {
+                nxt = nxt.next;
+            }
+            if (nxt != curr.next) {//Skip/remove the duplicates
+                curr.next = nxt.next;
+            } else {
+                curr = curr.next;
+            }
+        }
+        
+        return head.next;
+    }
+    
     public static void main(String[] args) {
         RemoveDuplicatesFromSortedListII rd = new RemoveDuplicatesFromSortedListII();
         ListNode a = rd.new ListNode(0);
