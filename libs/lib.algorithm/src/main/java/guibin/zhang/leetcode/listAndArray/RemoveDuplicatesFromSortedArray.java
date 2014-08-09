@@ -18,40 +18,20 @@ package guibin.zhang.leetcode.listAndArray;
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class RemoveDuplicatesFromSortedArray {
+    
     public int removeDuplicates(int[] A) {
         
-        if (A == null) {
-            return 0;
-        } else if (A.length == 0) {
-            return 0;
-        } else if (A.length == 1) {
-            return 1;
+        if (A.length <= 1) {
+            return A.length;
         }
-        int end = 1;
-        int prev = A[0];
-        int curr = A[1];
-        for(int i = 1; i < A.length; i++) {
-            curr = A[i];
-            if(curr != prev) {
-                if(i > end) {
-                    A[end] = curr;
-                }
-                end++;
-            } 
-            prev = curr;
-        }
-        return end;
-    }
-    
-    public int removeDuplicates_v2(int[] A) {
-        int lastI = 0;
-        int realI = 0;
-        for(int i = 0; i <= A.length; i++){
-            if(i > lastI && (i == A.length || A[i] != A[lastI])){
-                A[realI++] = A[lastI];
-                lastI = i;
+        
+        int idx = 0;
+        for (int i = 1; i < A.length; i++) {
+            //If curr is not duplicated with A[idx], copy curr to the **next pos of idx**.
+            if (A[idx] != A[i]) {
+                A[++idx] = A[i];
             }
         }
-        return realI;
+        return idx + 1;
     }
 }
