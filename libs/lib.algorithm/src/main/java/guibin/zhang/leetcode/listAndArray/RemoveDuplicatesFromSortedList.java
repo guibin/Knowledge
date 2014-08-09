@@ -51,4 +51,46 @@ public class RemoveDuplicatesFromSortedList {
         
         return head;
     }
+    
+    //Copy non-duplicated value
+    public ListNode deleteDuplicates_v2(ListNode head) {
+        
+        if (head == null || head.next == null) return head;
+        
+        ListNode idx = head;
+        ListNode curr = head.next;
+        
+        while (curr != null) {
+            if (curr.val != idx.val) {
+                //Copy values from curr to idx.next
+                idx.next.val = curr.val;
+                idx = idx.next;
+            }
+            curr = curr.next;
+        }
+        idx.next = null;
+        return head;
+    }
+    
+    //Remove duplicated node
+    public ListNode deleteDuplicates_v3(ListNode head) {
+        
+        if (head == null || head.next == null) return head;
+        
+        ListNode idx = head;
+        ListNode curr = head.next;
+        
+        while (curr != null) {
+            if (curr.val == idx.val) {
+                ListNode nxt = curr.next;
+                curr.next = null;
+                idx.next = nxt;
+                curr = nxt;
+            } else {
+                curr = curr.next;
+                idx = idx.next;
+            }
+        }
+        return head;
+    }
 }
