@@ -20,12 +20,8 @@ public class RemoveDuplicatesFromSortedArrayII {
     
     public int removeDuplicates(int[] A) {
         
-        if(A == null) {
-            return 0;
-        } else if(A.length == 0) {
-            return 0;
-        }else if( A.length == 1) {
-            return 1;
+        if (A.length <= 2) {
+            return A.length;
         }
         
         int idx = 0;
@@ -39,6 +35,27 @@ public class RemoveDuplicatesFromSortedArrayII {
             } else {
                 A[++idx] = A[i];
                 counter = 1;
+            }
+        }
+        return idx + 1;
+    }
+    
+    public int removeDuplicates_v2(int[] A) {
+
+        if (A.length <= 2) {
+            return A.length;
+        }
+
+        int idx = 0;
+        for (int i = 1; i < A.length; i++) {
+            if (A[idx] != A[i]) {
+                A[++idx] = A[i];
+            } else {
+                if (idx > 0 && A[idx - 1] != A[i]) {
+                    A[++idx] = A[i];
+                } else if (idx == 0 && A[idx] == A[i]) {
+                    A[++idx] = A[i];
+                }
             }
         }
         return idx + 1;
