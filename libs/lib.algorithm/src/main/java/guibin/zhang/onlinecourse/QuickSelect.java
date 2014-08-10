@@ -5,6 +5,16 @@ import java.util.Arrays;
 /**
  * Given an array of N items, find a kth smallest item.
  * 
+ * This issue can be extended to as the distributed kth issue.
+ * http://www.quora.com/Distributed-Algorithms/What-is-the-distributed-algorithm-to-determine-the-median-of-arrays-of-integers-located-on-different-computers
+ * 
+ * Idea:
+ * 1. Have a master node.
+ * 2. master node select a random number as the pivot, and distribute this pivot to all the nodes.
+ * 3. on each node perform the partition, and we can get index of the pivot on each node.
+ * 4. sum(idx) < k, discard all the items that less than a[idx], otherwise discard all the greater than a[idx].
+ * 5. if (sum(idx) == k), then, we get the kth item.
+ * 
  * @author Guibin Zhang <guibin.beijing@gmail.com>
  */
 public class QuickSelect {
