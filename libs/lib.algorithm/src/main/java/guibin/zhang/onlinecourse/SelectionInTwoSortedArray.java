@@ -7,6 +7,8 @@ package guibin.zhang.onlinecourse;
  * 
  * http://leetcode.com/2011/01/find-k-th-smallest-element-in-union-of.html
  * 
+ * Refer to guibin.zhang.leetcode.search.MedianOfTwoSortedArrays
+ * 
  * @author Guibin Zhang <guibin.beijing@gmail.com>
  */
 public class SelectionInTwoSortedArray {

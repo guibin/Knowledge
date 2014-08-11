@@ -41,7 +41,7 @@ public class MedianOfTwoSortedArrays {
             return findKth(b, startB, endB, a, startA, endA, k);
         }
         
-        //Two edige cases
+        //Two edge cases
         if (m == 0) {
             return b[startB + k - 1];
         }
@@ -49,7 +49,7 @@ public class MedianOfTwoSortedArrays {
             return Math.min(a[startA], b[startB]);
         }
         
-        //split k into two part
+        //split k into two parts
         int pa = Math.min(m, k/2);
         int pb = k - pa;
         
@@ -64,5 +64,12 @@ public class MedianOfTwoSortedArrays {
         } else {
             return a[startA + pa - 1];
         }
+    }
+    
+    public static void main(String[] args) {
+        MedianOfTwoSortedArrays mt = new MedianOfTwoSortedArrays();
+        int[] a = {1, 5, 6, 8, 10, 11, 16, 30};
+        int[] b = {2, 9, 13, 15, 17, 18, 20, 22, 25};
+        System.out.println(mt.findMedianSortedArrays(a, b));
     }
 }
