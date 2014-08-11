@@ -64,6 +64,7 @@ public class CloneLinkedListOfTwoPointers {
             copyCurr.next = nxt.next;
             
             curr = nxt;
+            copyCurr = copyCurr.next;
         }
         return copiedHead;
     }
