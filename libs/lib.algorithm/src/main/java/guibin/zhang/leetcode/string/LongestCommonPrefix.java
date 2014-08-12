@@ -4,6 +4,8 @@ package guibin.zhang.leetcode.string;
  *
  * Write a function to find the longest common prefix string amongst an array of strings.
  * 
+ * Question link: http://www.careercup.com/question?id=5162680650301440
+ * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class LongestCommonPrefix {

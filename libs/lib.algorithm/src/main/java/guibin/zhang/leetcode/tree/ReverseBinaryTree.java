@@ -25,6 +25,13 @@ public class ReverseBinaryTree {
    /**
     * Reverse the alternate level nodes of the binary tree. 
     * 
+    * Add null as the delimiter of each line.
+    * 
+    * Use two queue and one stack to reverse the tree alternately.
+    * One queue is used as the normal working queue.
+    * The other queue is used to save as the non-flip node.
+    * Stack is used to save the flip values.
+    * 
     * Question link: http://www.careercup.com/question?id=5068704572243968
     * 
     *        a 

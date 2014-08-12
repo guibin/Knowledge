@@ -26,7 +26,8 @@ public class SearchNumbers {
         
         // configured for positive, single digit integers per sample input.
         final int DIGITS = 1;
-        int[] counters = new int[10 * DIGITS];
+        //This is a map to computing the times of show.
+        int[] counters = new int[12 * DIGITS];
         
         for (int i = 0; i < data.length; i++) {
             int index = data[i];
@@ -46,6 +47,7 @@ public class SearchNumbers {
         // 0 means not encountered
         // +1 means odd
         // -2 means even (one's complement of 1 = -2 and vice versa)
+        // a ^ -1 = b, b ^ -1 = a, it is symmetrical. So choose any number can distinguish the odd and even
         for (int i = 0; i < counters.length; i ++) {
             if (counters[i] == -2) {
                 System.out.print(i + ",");
@@ -55,7 +57,7 @@ public class SearchNumbers {
     }
     
     public static void main(String[] args) {
-        int[] data = { 1, 6, 4, 1, 4, 5, 8, 8, 4, 6, 8, 8, 9, 7, 9, 5, 9, 5};
+        int[] data = { 1, 6, 4, 1, 4, 5, 8, 8, 4, 6, 8, 8, 9, 7, 9, 5, 9, 5, 11};
         searchNumbersOccurEventTimes(data);
     }
 }

@@ -54,7 +54,6 @@ public class NumbersWithAGivenSum {
      * 
      * 
      * @param nums
-     * @param sum
      * @return
      */
     public boolean sumToZero(int[] nums) {
