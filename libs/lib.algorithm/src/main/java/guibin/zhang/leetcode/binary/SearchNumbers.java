@@ -1,7 +1,5 @@
 package guibin.zhang.leetcode.binary;
 
-import java.util.Arrays;
-
 /**
  *
  * You have an array of integers(size N), such that each integer is present an odd number of time, 
