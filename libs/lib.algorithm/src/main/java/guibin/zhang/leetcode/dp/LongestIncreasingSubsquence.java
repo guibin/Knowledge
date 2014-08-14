@@ -76,7 +76,7 @@ public class LongestIncreasingSubsquence {
         // Initialize counter values for all index as 1.
         for (int i = 0; i < counter.length; i++) {
             counter[i] = 1;
-            paths[i] = i + " ";
+            paths[i] = arr[i] + " ";
         }
         
         // Compute optimized lis value in bottom up manner
