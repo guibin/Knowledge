@@ -1,4 +1,4 @@
-package guibin.zhang.onlinecourse;
+package guibin.zhang.leetcode.random;
 
 import java.util.Arrays;
 
