@@ -88,23 +88,50 @@ public class MinimumPathSum {
         
         int[][] minCost = new int[cost.length][cost[0].length];
         
+        String[][] minCostPath = new String[cost.length][cost[0].length];
+        for (int i = 0; i < cost.length; i++) {
+            for (int j = 0; j < cost[0].length; j++) {
+                minCostPath[i][j] = cost[i][j] + ", ";
+            }
+        }
+        
         //Base case
         minCost[0][0] = cost[0][0];
         //The first colomn case, each cell can only be computed from previous one.
         for (int i = 1; i < cost.length; i++) {
             minCost[i][0] = minCost[i - 1][0] + cost[i][0];
+            minCostPath[i][0] = minCostPath[i - 1][0] + cost[i][0] + ", ";
         }
         //The first row case, each cell can only be computed from previous one.
         for (int j = 1; j < cost[0].length; j++) {
             minCost[0][j] = minCost[0][j - 1] + cost[0][j];
+            minCostPath[0][j] = minCostPath[0][j - 1] + cost[0][j] + ", " ;
         }
+        
         for (int i = 1; i < cost.length; i++) {
             for (int j = 1; j < cost[0].length; j++) {
                 //minCost(m, n) = min (minCost(m-1, n-1), minCost(m-1, n), minCost(m, n-1)) + cost[m][n]
                 minCost[i][j] = min(minCost[i - 1][j - 1], minCost[i - 1][j], minCost[i][j - 1]) + cost[i][j];
+                
+                
+                minCostPath[i][j] = minCostPath[i - 1][j - 1];
+                if (minCost[i - 1][j] < minCost[i - 1][j - 1]) {
+                    if (minCost[i][j - 1] < minCost[i - 1][j]) {
+                        minCostPath[i][j] = minCostPath[i][j - 1] + cost[i][j] + ", ";
+                    } else {
+                        minCostPath[i][j] = minCostPath[i - 1][j] + cost[i][j] + ", ";
+                    }
+                } else {
+                    if (minCost[i][j - 1] < minCost[i - 1][j - 1]) {
+                        minCostPath[i][j] = minCostPath[i][j - 1] + cost[i][j] + ", ";
+                    } else {
+                        minCostPath[i][j] = minCostPath[i - 1][j - 1] + cost[i][j] + ", ";
+                    }
+                }
             }
         }
         
+        System.out.println("Path: " + minCostPath[cost.length - 1][cost[0].length - 1]);
         return minCost[cost.length - 1][cost[0].length - 1];
     }
     
