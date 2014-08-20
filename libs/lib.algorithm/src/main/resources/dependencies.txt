@@ -1,0 +1,4 @@
+common=spring,slf4j
+domain=common,hibernate
+api=domain,common,slf4j
+spring=cglib,commons-util,logback

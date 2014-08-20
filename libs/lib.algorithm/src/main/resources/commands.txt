@@ -1,0 +1,7 @@
+LIST_DEPENDENTS=common
+LIST_DEPENDENTS=api
+LIST_DEPENDENTS=slf4j
+INSTALL=slf4j,domain
+INSTALL=slf4j,common
+INSTALL=slf4j,logback,commons-util,cglib,spring,common
+INSTALL=slf4j,logback,commons-util,cglib,spring,common,hibernate,domain,api
