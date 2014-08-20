@@ -59,6 +59,8 @@ public class BinaryTreeLevelOrderTraversal {
         while(!queue.isEmpty()) {
             curr = queue.poll();
             int m = level.poll();
+            
+            //Judge the result based on depth and result.size
             if(result.size() < m + 1) {
                 row = new ArrayList<Integer>();
                 result.add(row);
@@ -88,12 +90,11 @@ public class BinaryTreeLevelOrderTraversal {
             return;
         }
         
-        ArrayList<Integer> row = null;
+        //Judge the result based on depth and result.size
         if(result.size() < depth + 1) {
             result.add(new ArrayList<Integer>());
         }
-        row = result.get(depth);
-        row.add(root.val);
+        result.get(depth).add(root.val);
         
         dfs(root.left, depth + 1, result);
         dfs(root.right, depth + 1, result);
@@ -148,5 +149,11 @@ public class BinaryTreeLevelOrderTraversal {
         c.left = d;
         c.right = e;
         bst.levelOrder_v3(a);
+        
+        System.out.println("level order travel v2");
+        ArrayList<ArrayList<Integer>> ret = bst.levelOrder_v2(a);
+        ret.forEach(row -> 
+        {row.forEach(i -> System.out.print(i + ","));
+        System.out.println();});
     }
 }
