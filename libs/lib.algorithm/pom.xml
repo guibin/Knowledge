@@ -32,15 +32,24 @@
                 <artifactId>maven-scala-plugin</artifactId>
                 <configuration>
                     <launchers>
-<!--mvn scala:run -Dlauncher=hellojava-->
+                        <!--mvn scala:run -Dlauncher=CardShuffle-->
                         <launcher>
-                            <id>BinaryOneCounter</id>
-                            <mainClass>guibin.zhang.algorithm.Factorial</mainClass>
-<!--                            <jvmArgs>
-                                <jvmArg>-Xmx1024m</jvmArg>
-                            </jvmArgs>-->
+                            <id>CardShuffle</id>
+                            <mainClass>guibin.zhang.algorithm.test.CardShuffle</mainClass>
+                            <args>
+                                <arg>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</arg>
+                            </args>
                         </launcher>
                     </launchers>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
