@@ -31,28 +31,29 @@ public class BinaryTreeMaximumPathSum {
         }
     }
     
-    private int maxSum;
+//    private int maxSum;
     
     private int maxPathSum(TreeNode root) {
         
         if(root == null) return 0;
         
-        maxSum = Integer.MIN_VALUE;
-        maxSinglePathSum(root);
-        return maxSum;
+        int[] maxSum = {Integer.MIN_VALUE};
+        maxSinglePathSum(root, maxSum);
+        return maxSum[0];
         
     }
     /**
      * Compute the max sum up to root: Max(left, right) + root.val
      * @param root
+     * @param maxSum int[] to store the maxSum
      * @return 
      */
-    public int maxSinglePathSum(TreeNode root) {
+    public int maxSinglePathSum(TreeNode root, int[] maxSum) {
         
         if(root == null) return 0;
         
-        int leftSum = maxSinglePathSum(root.left);
-        int rightSum = maxSinglePathSum(root.right);
+        int leftSum = maxSinglePathSum(root.left, maxSum);
+        int rightSum = maxSinglePathSum(root.right, maxSum);
         /**
          * For each node like following, there should be four ways existing for max path:
          * 1. Node only
@@ -69,8 +70,7 @@ public class BinaryTreeMaximumPathSum {
          *  ...
          */   
         int pathSum = root.val + Math.max(leftSum, 0) + Math.max(rightSum, 0);
-        
-        maxSum = pathSum > maxSum ? pathSum : maxSum;
+        maxSum[0] = pathSum > maxSum[0] ? pathSum : maxSum[0];
         
         //Here is to compute the max sum up to root.
         return Math.max(Math.max(leftSum, rightSum), 0) + root.val;
