@@ -130,6 +130,31 @@ public class BinaryTreeLevelOrderTraversal {
         System.out.println();
     }
     
+    public void levelOrder_v4(TreeNode root) {
+        
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode curr = null;
+        queue.add(root);
+        queue.add(null);
+        
+        while (!queue.isEmpty()) {
+            curr = queue.remove();
+            if (curr == null) {
+                System.out.println();
+                if (queue.isEmpty()) {
+                    break;
+                }
+                queue.add(null);
+            } else {
+                System.out.print((curr.val == -99 ? "#" : curr.val) + ", ");
+                if (curr.left != null || curr.right != null) {
+                    queue.add(curr.left == null ? new TreeNode(-99) : curr.left);
+                    queue.add(curr.right == null ? new TreeNode(-99) : curr.right);
+                }
+            }
+        }
+    }
+    
     public static void main(String[] args) {
          /**
           *    10
@@ -155,5 +180,8 @@ public class BinaryTreeLevelOrderTraversal {
         ret.forEach(row -> 
         {row.forEach(i -> System.out.print(i + ","));
         System.out.println();});
+        
+        System.out.println("level order travel v4");
+        bst.levelOrder_v4(a);
     }
 }
