@@ -60,6 +60,15 @@ public class BalancedBinaryTree {
         }
     }
     
+    public int heightOf(TreeNode root) {
+        
+        if(root == null) return 0;
+        
+        int leftHeight = heightOf(root.left);
+        int rightHeight = heightOf(root.right);
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+    
     /**
      * Need to be debugged.
      * @param root
