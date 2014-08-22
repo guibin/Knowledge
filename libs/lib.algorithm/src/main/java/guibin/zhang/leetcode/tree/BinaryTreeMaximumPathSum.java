@@ -70,9 +70,9 @@ public class BinaryTreeMaximumPathSum {
          *  ...
          */   
         int pathSum = root.val + Math.max(leftSum, 0) + Math.max(rightSum, 0);
-        maxSum[0] = pathSum > maxSum[0] ? pathSum : maxSum[0];
+        maxSum[0] = Math.max(maxSum[0], pathSum);//Compute the max sum
         
-        //Here is to compute the max sum up to root.
+        //Here is to compute the max sum up to root. We only need one child, refer to http://www.cnblogs.com/shawnhue/archive/2013/06/08/leetcode_124.html
         return Math.max(Math.max(leftSum, rightSum), 0) + root.val;
     }
     
