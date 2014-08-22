@@ -30,29 +30,24 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversal {
         return buildTree(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1);
     }
     
-    public TreeNode buildTree(int[] inorder, int ins, int ine, int[] postorder, int pos, int poe) {
+    public TreeNode buildTree(int[] inorder, int inStart, int inEnd, int[] postorder, int poStart, int poEnd) {
         
-        if(pos <= poe && pos >= 0 && ins >=0 && ins <= ine) {
-            int root = postorder[poe];
-            TreeNode node = new TreeNode(root);
+        if(poStart <= poEnd && poStart >= 0 && inStart >=0 && inStart <= inEnd) {
             
-            int indexInorder = indexOf(inorder, ins, ine, root);
-            if(indexInorder < 0) {
-                return null;
-            }
-            int leftLength = indexInorder - ins;//leftlength is the most important
-            TreeNode left = buildTree(inorder, ins, indexInorder - 1, postorder, pos, pos + leftLength - 1);
-            TreeNode right = buildTree(inorder, indexInorder + 1, ine, postorder, pos + leftLength , poe - 1);
-            node.left = left;
-            node.right = right;
+            TreeNode node = new TreeNode(postorder[poEnd]);
+            int indexInorder = indexOf(inorder, inStart, inEnd, postorder[poEnd]);
+            int leftLength = indexInorder - inStart;//leftlength is the most important
+            
+            node.left = buildTree(inorder, inStart, indexInorder - 1, postorder, poStart, poStart + leftLength - 1);
+            node.right = buildTree(inorder, indexInorder + 1, inEnd, postorder, poStart + leftLength , poEnd - 1);
             
             return node;
         }
         return null;
     }
     
-    private int indexOf(int[] inorder, int ins, int ine, int value) {
-        for(int i = ins; i <= ine; i++) {
+    private int indexOf(int[] inorder, int inStart, int inEnd, int value) {
+        for(int i = inStart; i <= inEnd; i++) {
             if(inorder[i] == value) {
                 return i;
             }

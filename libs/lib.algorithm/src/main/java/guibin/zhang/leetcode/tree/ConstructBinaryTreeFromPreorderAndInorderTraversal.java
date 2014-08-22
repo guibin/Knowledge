@@ -76,26 +76,29 @@ public class ConstructBinaryTreeFromPreorderAndInorderTraversal {
     
     public TreeNode buildTree_v2(int[] preorder, int[] inorder) {
         
-        return buildTree(inorder, 0, inorder.length, preorder, 0, preorder.length);
+        return buildTree(inorder, 0, inorder.length - 1, preorder, 0, preorder.length - 1);
     }
     
-    private TreeNode buildTree(int [] in, int is, int ie, int[] pre, int ps, int pe){
-        if(is == ie){
-            return null;
+    public TreeNode buildTree(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd) {
+        
+        if (preStart <= preEnd && preStart >=0 && inStart <= inEnd && inStart >=0) {
+            TreeNode root = new TreeNode(preorder[preStart]);
+            int idx = indexOf(inorder, preorder[preStart]);
+            int len = idx - inStart;
+            root.left = buildTree(preorder, preStart + 1, preStart + len, inorder, inStart, idx - 1);
+            root.right = buildTree(preorder, preStart + len + 1, preEnd, inorder, idx + 1, inEnd);
+            return root;
         }
-        int val = pre[ps];
-        TreeNode node = new TreeNode(val);
-        int index = -1;
-        for(int i = is; i < ie; i++){
-            if(in[i] == val){
-                index = i;
-                break;
+        return null;
+    }
+    
+    public int indexOf(int[] inorder, int v) {
+        for (int i = 0; i < inorder.length; i++) {
+            if (inorder[i] == v) {
+                return i;
             }
         }
-        int lenl = index - is;
-        node.left = buildTree(in, is, index, pre, ps + 1, ps + lenl + 1);
-        node.right = buildTree(in, index + 1, ie, pre, ps + lenl + 1, pe);
-        return node;
+        return -1;
     }
     
     public static void main(String[] args) {
