@@ -146,7 +146,9 @@ public class BinaryTreeLevelOrderTraversal {
                 }
                 queue.add(null);
             } else {
+                //Access the elements here.
                 System.out.print((curr.val == -99 ? "#" : curr.val) + ", ");
+                
                 if (curr.left != null || curr.right != null) {
                     queue.add(curr.left == null ? new TreeNode(-99) : curr.left);
                     queue.add(curr.right == null ? new TreeNode(-99) : curr.right);
