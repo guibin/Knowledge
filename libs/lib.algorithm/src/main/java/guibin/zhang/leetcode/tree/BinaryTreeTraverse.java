@@ -76,6 +76,8 @@ public class BinaryTreeTraverse {
      * Use two stacks, one for walk through the tree, 
      * the other is for saving the result in reversed order.
      * 
+     * http://leetcode.com/2010/10/binary-tree-post-order-traversal.html
+     * 
      * @param root 
      */
     public void postorder(TreeNode root) {
