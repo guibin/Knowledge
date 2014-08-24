@@ -45,22 +45,24 @@ public class ConvertSortedListToBinarySearchTree {
             p2 = p2.next.next;
         }
         
-        ListNode left = head;
-        if (preP != null) {
+        if (preP != null) {//To avoid the NullPointerException
             preP.next = null;
         }
         
-        ListNode right = p.next;
-
-        TreeNode node = new TreeNode(p.val);
-        
-        if (preP != null) {
-            node.left = sortedListToBST(left);
+        TreeNode root = new TreeNode(p.val);
+        if (preP != null) {//To avoid StackOverflowException in the case that the List has ony single node
+            root.left = sortedListToBST(head);
         }
-        node.right = sortedListToBST(right);
-        return node;
+        root.right = sortedListToBST(p.next);
+        
+        return root;
     }
     
+    /**
+     * Convert the list to array, then use sortedArrayToBST.
+     * @param head
+     * @return 
+     */
     public TreeNode sortedListToBST_v2(ListNode head) {
         
         ListNode n = head;
