@@ -1,5 +1,7 @@
 package guibin.zhang.leetcode.tree;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -25,20 +27,18 @@ public class BinaryTreeTraverse {
      */
     public void preorder(TreeNode root) {
 
-        Stack<TreeNode> stack = new Stack<>();
+        Stack<TreeNode> s = new Stack<>();
         TreeNode curr = root;
 
-        while (curr != null || !stack.isEmpty()) {
+        while (curr != null || !s.isEmpty()) {
             if (curr != null) {
                 //Access the curr firstly
                 System.out.print(curr.val + ",");
 
-                if (curr.right != null) {
-                    stack.push(curr.right);//Save curr.right to be accessed later
-                }
+                if (curr.right != null) s.push(curr.right);//Save curr.right to be accessed later
                 curr = curr.left;//Then move to curr.left
             } else {
-                curr = stack.pop();
+                curr = s.pop();
             }
         }
         
@@ -53,16 +53,16 @@ public class BinaryTreeTraverse {
      */
     public void inorder(TreeNode root) {
         
-        Stack<TreeNode> stack = new Stack<>();
+        Stack<TreeNode> s = new Stack<>();
         TreeNode curr = root;
         
-        while (curr != null || !stack.isEmpty()) {
+        while (curr != null || !s.isEmpty()) {
             while (curr != null) {
-                stack.push(curr);
+                s.push(curr);
                 curr = curr.left;
             }
-            if (!stack.isEmpty()) {
-                curr = stack.pop();
+            if (!s.isEmpty()) {
+                curr = s.pop();
                 //Access the curr
                 System.out.print(curr.val + ",");
                 curr = curr.right;
@@ -82,27 +82,44 @@ public class BinaryTreeTraverse {
         
         if (root == null) return;
         
-        Stack<TreeNode> stack = new Stack<>();
-        Stack<TreeNode> output = new Stack<>();
-        stack.push(root);
+        Stack<TreeNode> s = new Stack<>();
+        Stack<TreeNode> out = new Stack<>();
+        s.push(root);
         
-        while (!stack.isEmpty()) {
-            TreeNode curr = stack.pop();
-            output.push(curr);//push the node into stack to be accessed in reversed order.
+        while (!s.isEmpty()) {
+            TreeNode curr = s.pop();
+            out.push(curr);//push the node into stack to be accessed in reversed order.
             
-            if (curr.left != null) {
-                stack.push(curr.left);
-            }
-            if (curr.right != null) {
-                stack.push(curr.right);
-            }
+            if (curr.left != null) s.push(curr.left);
+            if (curr.right != null) s.push(curr.right);
         }
-        while (!output.isEmpty()) {
-            System.out.print(output.pop().val + ",");
+        while (!out.isEmpty()) {
+            System.out.print(out.pop().val + ",");
         }
         System.out.println();
     }
     
+    /**
+     * Use one queue, access curr, then track left and right in the queue.
+     * 
+     * @param root 
+     */
+    public void levelorder(TreeNode root) {
+        
+        if (root == null) return;
+        
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        
+        while (!q.isEmpty()) {
+            TreeNode curr = q.remove();
+            System.out.print(curr.val + ",");
+            
+            if (curr.left != null) q.add(curr.left);
+            if (curr.right != null) q.add(curr.right);
+        }
+        System.out.println();
+    }
     
     /**
      * Design an algorithm to perform inorder traversal of a binary search tree 
@@ -195,5 +212,8 @@ public class BinaryTreeTraverse {
         
         System.out.println("postorder traverse:");
         bst.postorder(a);
+        
+        System.out.println("levelorder traverse:");
+        bst.levelorder(a);
     }
 }
