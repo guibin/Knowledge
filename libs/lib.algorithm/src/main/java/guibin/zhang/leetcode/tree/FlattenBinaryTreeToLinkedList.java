@@ -105,11 +105,43 @@ public class FlattenBinaryTreeToLinkedList {
         }
     }
     
+    /**
+     * Use preorder traverse. Use prev to save the previous access, to link to curr as a linkedlist.
+     * 
+     * @param root 
+     */
+    public void flatten_v3(TreeNode root) {
+        
+        TreeNode curr = root;
+        TreeNode prev = null;
+        Stack<TreeNode> s = new Stack<>();
+        
+        while (curr != null || !s.isEmpty()) {
+            if (curr != null) {
+                
+                //Access curr preorder
+                if (prev == null) {
+                    prev = curr;
+                } else {
+                    prev.left = null;//Cut off left
+                    prev.right = curr;//Connect to curr on right
+                    prev = prev.right;//Move prev to curr
+                }
+                
+                if (curr.right != null) s.push(curr.right);
+                curr = curr.left;
+            } else {
+                curr = s.pop();
+            }
+        }
+    }
+    
     public void printLinkedList(TreeNode root) {
         if(root != null) {
             System.out.print(root.val + ", ");
             printLinkedList(root.right);
         }
+        System.out.println();
     }
     
     public static void main(String[] args) {
@@ -127,7 +159,8 @@ public class FlattenBinaryTreeToLinkedList {
         b.right = d;
         f.right = g;
         
-        fbt.flatten_v2(a);
+//        fbt.flatten_v2(a);
+        fbt.flatten_v3(a);
         fbt.printLinkedList(a);
         
     }
