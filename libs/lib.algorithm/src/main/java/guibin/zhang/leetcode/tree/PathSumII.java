@@ -48,49 +48,27 @@ public class PathSumII {
         return result;
     }
     
-    public void sum(TreeNode root, int sum, ArrayList<Integer> path, ArrayList<ArrayList<Integer>> result) {
-        
-        if(root == null) {
-            return;
-        }
-        
-        if(root.left == null && root.right == null && root.val == sum) {
-            ArrayList<Integer> nPath = new ArrayList<Integer>(path);
-            nPath.add(root.val);
-            result.add(nPath);
-        }
-        
-        /**
-         * The reason to create the new ArrayList as nPath is to avoid the interference with other invoke.
-         */
-        ArrayList<Integer> nPath = new ArrayList<Integer>(path);
-        nPath.add(root.val);
-        
-        sum(root.left, sum - root.val, nPath, result);
-        sum(root.right, sum - root.val, nPath, result);
-    }
     
-    public void sum_v2(TreeNode root, int sum, ArrayList<Integer> path, ArrayList<ArrayList<Integer>> result) {
+    public void sum(TreeNode root, int target, ArrayList<Integer> branch, ArrayList<ArrayList<Integer>> result) {
         
-        if(root == null) {
-            return;
-        }
+        if(root == null) return;
         
-        if(root.left == null && root.right == null && root.val == sum) {
-            ArrayList<Integer> nPath = new ArrayList<Integer>(path);
+        //Firstly create nPath, then add root.val to nPath.
+        //Instead of adding root.val to branch
+        if(root.left == null && root.right == null && root.val == target) {
+            ArrayList<Integer> nPath = new ArrayList<Integer>(branch);
             nPath.add(root.val);
             result.add(nPath);
             
         }
-        
-        path.add(root.val);
+        branch.add(root.val);
         
         /**
          * Here we reuse the path, but note to remove the last one element.
          */
-        sum(root.left, sum - root.val, path, result);
-        sum(root.right, sum - root.val, path, result);
-        path.remove(path.size() - 1);
+        sum(root.left, target - root.val, branch, result);
+        sum(root.right, target - root.val, branch, result);
+        branch.remove(branch.size() - 1);
     }
     
 }
