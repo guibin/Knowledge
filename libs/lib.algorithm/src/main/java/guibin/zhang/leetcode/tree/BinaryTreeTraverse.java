@@ -18,6 +18,11 @@ public class BinaryTreeTraverse {
         }
     }
     
+    /**
+     * Use one stack to save right, access the curr and left.
+     * 
+     * @param root 
+     */
     public void preorder(TreeNode root) {
 
         Stack<TreeNode> stack = new Stack<>();
@@ -40,6 +45,12 @@ public class BinaryTreeTraverse {
         System.out.println();
     }
     
+    /**
+     * Use one stack to track all the curr and left, 
+     * then pop to access, and move curr to right.
+     * 
+     * @param root 
+     */
     public void inorder(TreeNode root) {
         
         Stack<TreeNode> stack = new Stack<>();
@@ -61,8 +72,35 @@ public class BinaryTreeTraverse {
         System.out.println();
     }
     
+    /**
+     * Use two stacks, one for walk through the tree, 
+     * the other is for saving the result in reversed order.
+     * 
+     * @param root 
+     */
     public void postorder(TreeNode root) {
         
+        if (root == null) return;
+        
+        Stack<TreeNode> stack = new Stack<>();
+        Stack<TreeNode> output = new Stack<>();
+        stack.push(root);
+        
+        while (!stack.isEmpty()) {
+            TreeNode curr = stack.pop();
+            output.push(curr);//push the node into stack to be accessed in reversed order.
+            
+            if (curr.left != null) {
+                stack.push(curr.left);
+            }
+            if (curr.right != null) {
+                stack.push(curr.right);
+            }
+        }
+        while (!output.isEmpty()) {
+            System.out.print(output.pop().val + ",");
+        }
+        System.out.println();
     }
     
     
@@ -154,5 +192,8 @@ public class BinaryTreeTraverse {
         
         System.out.println("inorder traverse:");
         bst.inorder(a);
+        
+        System.out.println("postorder traverse:");
+        bst.postorder(a);
     }
 }
