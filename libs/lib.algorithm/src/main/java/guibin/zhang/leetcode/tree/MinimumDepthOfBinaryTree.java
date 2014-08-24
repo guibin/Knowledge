@@ -50,7 +50,7 @@ public class MinimumDepthOfBinaryTree {
         if(root == null) {
             return 0;
         } else {
-            return depth(root);
+            return depth(root);//No plus one
         }
     }
     
