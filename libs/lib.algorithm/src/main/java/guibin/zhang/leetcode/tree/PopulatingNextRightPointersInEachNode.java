@@ -54,8 +54,8 @@ public class PopulatingNextRightPointersInEachNode {
 
     /**
      * Key point: Breadth first traverse. 
-     * When changed the level, last.next = null, 
-     * when in same level, last.next = curr;
+     * When changed the level, prev.next = null, 
+     * when in same level, prev.next = curr;
      * 
      * This version uses O(n) space, not constant space
      * 
@@ -63,35 +63,35 @@ public class PopulatingNextRightPointersInEachNode {
      */
     public void connect(TreeLinkNode root) {
         
-        if(root == null) return;
+        if (root == null) return;
         
-        Queue<TreeLinkNode> queue = new LinkedList<TreeLinkNode>();
-        Queue<Integer> level = new LinkedList<Integer>();
+        Queue<TreeLinkNode> q = new LinkedList<>();
+        q.add(root);
+        q.add(null);
+        TreeLinkNode prev = null;
         
-        queue.add(root);
-        level.add(0);
-        
-        TreeLinkNode last = null;
-        int connectingLevel = -1;
-        while(!queue.isEmpty()) {
-            TreeLinkNode curr = queue.poll();
-            int m = level.poll();
-            if(last != null && connectingLevel == m) {
-                last.next = curr;
-            } else if(last != null) {
-                last.next = null;
-            }
-            
-            last = curr;
-            connectingLevel = m;
-            
-            if(curr.left != null) {
-                queue.add(curr.left);
-                level.add(m + 1);
-            }
-            if(curr.right != null) {
-                queue.add(curr.right);
-                level.add(m + 1);
+        while (!q.isEmpty()) {
+            TreeLinkNode curr = q.remove();
+            if (curr == null) {
+                //Change level, point prev.next to null
+                if (prev != null) {
+                    prev.next = null;
+                    prev = prev.next;
+                }
+                
+                if (q.isEmpty()) break;
+                q.add(null);
+            } else {
+                //Save level, prev.next = curr
+                if (prev == null) {
+                    prev = curr;
+                } else {
+                    prev.next = curr;
+                    prev = prev.next;
+                }
+                
+                if (curr.left != null) q.add(curr.left);
+                if (curr.right != null) q.add(curr.right);
             }
         }
     }
@@ -101,6 +101,7 @@ public class PopulatingNextRightPointersInEachNode {
      * 
      * https://github.com/rffffffff007/leetcode/blob/master/Populating%20Next%20Right%20Pointers%20in%20Each%20Node.java
      * http://blog.csdn.net/guixunlong/article/details/8851276
+     * http://www.geeksforgeeks.org/connect-nodes-at-same-level-with-o1-extra-space/
      * 
      * @param root 
      */
