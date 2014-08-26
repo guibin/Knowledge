@@ -103,74 +103,6 @@ public class ReverseBinaryTree {
             }
         }
     }
-    
-    //Buggy
-    public void reverseByAlternatelyLevel_buggy(TreeNode root) {
-
-        if (root == null) return;
-
-        Queue<TreeNode> workingQ = new LinkedList<>();
-        Stack<TreeNode> stack = new Stack<>();
-        Queue<TreeNode> queue = new LinkedList<>();
-        Queue<TreeNode> queue2 = new LinkedList<>();
-        
-        boolean flip = true;
-        TreeNode curr = root;
-        workingQ.add(curr);
-        workingQ.add(null);
-        queue.add(curr);
-        
-        while (!workingQ.isEmpty()) {
-            curr = workingQ.remove();
-            if (curr == null) {
-                if (flip) {
-                    //reverse all the values in queue
-                    while (!queue.isEmpty()) {
-                        curr = queue.remove();
-                        if (!stack.isEmpty()) {
-                            curr.left = stack.pop();
-                        }
-                        if (!stack.isEmpty()) {
-                            curr.right = stack.pop();
-                        }
-                    }
-                } else {
-                    while (!queue.isEmpty()) {
-                        curr = queue.remove();
-                        if (!queue2.isEmpty()) {
-                            curr.left = queue2.remove();
-                        }
-                        if (!queue2.isEmpty()) {
-                            curr.right = queue2.remove();
-                        }
-                    }
-                }
-                flip = !flip;
-                if (workingQ.isEmpty()) {
-                    break;
-                }
-                workingQ.add(null);
-            } else {
-                if (curr.left != null) {
-                    workingQ.add(curr.left);
-                    if (flip) {
-                        stack.push(curr.left);
-                    } else {
-                        queue2.add(curr.left);
-                    }
-                }
-                if (curr.right != null) {
-                    workingQ.add(curr.right);
-                    if (flip) {
-                        stack.push(curr.right);
-                    } else {
-                        queue2.add(curr.right);
-                    }
-                }
-                queue.add(curr);
-            }
-        }
-    }
    
    /**
     * Original tree:
@@ -328,8 +260,5 @@ public class ReverseBinaryTree {
        System.out.println("print tree v2:");
        rb.printTree_v2(a);
        
-       rb.reverseByAlternatelyLevel_buggy(a);
-       System.out.println("print tree v3:");
-       rb.printTree_v2(a);
    }
 }
