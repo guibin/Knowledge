@@ -69,34 +69,6 @@ public class BalancedBinaryTree {
         return Math.max(leftHeight, rightHeight) + 1;
     }
     
-    /**
-     * Need to be debugged.
-     * @param root
-     * @return 
-     */
-    public boolean isBalanced_error(TreeNode root) {
-        
-        if(root == null || root.left == null && root.right == null) {
-            return true;
-        } else if(root.left != null && root.right != null) {
-            return Math.abs(maxDepth(root.left) - maxDepth(root.right)) <= 1;
-        } else if(root.left != null) {
-            return maxDepth(root.left) <= 1;
-        } else {
-            return maxDepth(root.right) <= 1;
-        }
-    }
-    
-    public int maxDepth(TreeNode root) {
-        if(root == null) {
-            return Integer.MIN_VALUE;
-        } else if(root.left == null && root.right == null) {
-            return 1;
-        } else {
-            return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
-        }
-    }
-    
     public static void main(String[] args) {
         /**
           *          1
