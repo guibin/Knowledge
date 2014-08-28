@@ -30,16 +30,40 @@ public class CharacterPowerSet {
     
     public void powerSet(char[] arr) {
         
-        for (int i = 1; i < arr.length; i++) {
+        for (int i = 1; i <= arr.length; i++) {
             char[] branch = new char[i];
             combine(arr, branch, 0,  0, i);
         }
     }
     
+    
+    /**
+     * Input "ABCD", the expected power set looks like:
+     * 
+     * Actually it is the combination.
+     * 
+     * A
+     * B
+     * C
+     * D
+     * AB
+     * AC
+     * AD
+     * BC
+     * BD
+     * CD
+     * ABC
+     * ABD
+     * ACD
+     * BCD
+     * ABCD
+     * 
+     * @param args 
+     */
     public static void main(String[] args) {
         
         CharacterPowerSet cps = new CharacterPowerSet();
-        char[] arr = "ABCDE".toCharArray();
+        char[] arr = "ABCD".toCharArray();
         cps.powerSet(arr);
     }
 }
