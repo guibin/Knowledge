@@ -3,7 +3,9 @@ package guibin.zhang.leetcode.permutationAndCombination;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 
@@ -29,6 +31,7 @@ public class Anagrams {
         // Start typing your Java solution below
         // DO NOT write main() function
         
+        //Sorted str -> idx, use idx to query the original str.
         Map<String, Integer> map = new HashMap<String, Integer>();
         ArrayList<String> res = new ArrayList<String>();
         
