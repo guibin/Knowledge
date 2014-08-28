@@ -2,6 +2,7 @@ package guibin.zhang.leetcode.permutationAndCombination;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import scala.Array;
 
 /**
  *
@@ -78,6 +79,9 @@ public class FourSum {
         // IMPORTANT: Please reset any member data you declared, as
         // the same Solution instance will be reused for each test case.
         Arrays.sort(num);
+        //TODO: Filter out the duplicated elements, then invoke combinate
+        Arrays.stream(num).forEach( k -> System.out.print(k + ","));
+        System.out.println();
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
         combinate(num, target, new ArrayList<Integer>(), 0, 0, 0, result);
         return result;
@@ -88,12 +92,8 @@ public class FourSum {
         if (k == 4 && sum == target) {
             //If result doesn't contain branch, then add it.
             result.add(new ArrayList<Integer>(branch));
-            return;
-        } 
-        
-        if (k > 4 || sum > target) {
-            return;
-        } else {
+            
+        } else if (k < 4 && sum <= target) {//Here is less than and equal
             for (int i = startId; i < arr.length; i++) {
                 branch.add(arr[i]);
                 sum += arr[i];
