@@ -40,7 +40,7 @@ public class CombinationSum {
 
         Arrays.sort(candidates);
         
-        combinate(candidates, target, new ArrayList<Integer>(), 0, results, 0);
+        combinate(candidates, target, 0, new ArrayList<Integer>(), results, 0);
         return results;
     }
 
@@ -49,12 +49,12 @@ public class CombinationSum {
      * 
      * @param arr
      * @param target
-     * @param branch
      * @param sum
+     * @param branch
      * @param result
      * @param startId 
      */
-    public void combinate(int[] arr, int target, ArrayList<Integer> branch, int sum,  
+    public void combinate(int[] arr, int target, int sum, ArrayList<Integer> branch,   
             ArrayList<ArrayList<Integer>> result, int startId) {
         
         if (sum == target) {
@@ -63,7 +63,7 @@ public class CombinationSum {
             for (int i = startId; i < arr.length; i++) {
                 sum += arr[i];
                 branch.add(arr[i]);
-                combinate(arr, target, branch, sum, result, i);
+                combinate(arr, target, sum, branch, result, i);
                 sum -= arr[i];
                 branch.remove(branch.size() - 1);
             }
