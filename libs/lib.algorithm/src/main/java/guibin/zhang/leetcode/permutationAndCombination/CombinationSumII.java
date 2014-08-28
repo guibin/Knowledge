@@ -41,18 +41,17 @@ public class CombinationSumII {
     public void combinate(int[] arr, int target, ArrayList<Integer> branch, int sum,  
             ArrayList<ArrayList<Integer>> result, int startId) {
         
-        if (sum > target) {
-            return;
-        } else if (sum == target) {
+        if (sum == target) {
             result.add(new ArrayList<Integer>(branch));
-            return;
-        } else {
+        } else if (sum < target){
             for (int i = startId; i < arr.length; i++) {
                 sum += arr[i];
                 branch.add(arr[i]);
+                //i + 1 to avoid duplicately pick the elements
                 combinate(arr, target, branch, sum, result, i + 1);
                 sum -= arr[i];
                 branch.remove(branch.size() - 1);
+                //while loop is to avoid duplicated elements exists in candidates
                 while(i < arr.length - 1 && arr[i] == arr[i + 1]) {
                     i ++;
                 }
