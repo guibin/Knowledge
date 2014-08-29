@@ -1,5 +1,8 @@
 package guibin.zhang.leetcode.permutationAndCombination;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Generating all permutations of a string (of characters).
  * 
@@ -157,6 +160,41 @@ public class PermutationAndCombination {
     }
     
     /**
+     * 
+     * Expected output:
+     * 
+     * ABC =>
+     * A,
+     * A,B,
+     * A,B,C,
+     * A,B,C,D,
+     * A,B,D,
+     * A,C,
+     * A,C,D,
+     * A,D,
+     * B,
+     * B,C,
+     * B,C,D,
+     * B,D,
+     * C,
+     * C,D,
+     * D,
+     */
+    public void generateFullCombination(char[] arr, List<Character> branch, List<List<Character>> result, int startId) {
+        
+        for (int i = startId; i < arr.length; i++) {
+            branch.add(arr[i]);
+            result.add(new ArrayList<>(branch));
+            branch.forEach(item -> System.out.print(item + ","));
+            System.out.println();
+            
+//            generateFullCombination(arr, branch, result, ++startId);// ++startId is same with i + 1
+            generateFullCombination(arr, branch, result, i + 1);
+            branch.remove(branch.size() - 1);
+        }
+    }
+    
+    /**
      * Idea: one loop + one recursion + startId, but startId is i while recursing.
      * 
      * Expected output:
@@ -222,6 +260,12 @@ public class PermutationAndCombination {
         branch = new char[k];
         cp.generateCombinationV2(arr, branch, 0, 0, k);
 
+        System.out.println("-------Full Combination----------");
+        char[] arr2 = "ABC".toCharArray();
+        List<Character> branch2 = new ArrayList<>();
+        List<List<Character>> result2 = new ArrayList<>();
+        cp.generateFullCombination(arr2, branch2, result2, 0);
+        
         System.out.println("-------Duplicated Combination----------");
         str = "ABC";
         arr = str.toCharArray();
