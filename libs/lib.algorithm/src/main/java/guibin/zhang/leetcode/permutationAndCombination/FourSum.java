@@ -2,6 +2,9 @@ package guibin.zhang.leetcode.permutationAndCombination;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import scala.Array;
 
 /**
@@ -75,13 +78,55 @@ public class FourSum {
         return result;
     }
     
+    public static List<List<Integer>> zeroSumInSortedArray(int[] a, int begin, int count, int target) {
+        
+        List<List<Integer>> result = new ArrayList<>();
+        Set<Integer> visited = new HashSet<>();
+        //Base case, Two sum.
+        if (count == 2) {
+            int i = begin, j = a.length - 1;
+            while (i < j) {
+                int sum = a[i] + a[j];
+                if (sum == target && !visited.contains(a[i])) {
+                    visited.add(a[i]);
+                    visited.add(a[j]);
+                    List<Integer> branch = new ArrayList<>();
+                    branch.add(a[i]);
+                    branch.add(a[j]);
+                    result.add(branch);
+                    i ++; j --;
+                } else if (sum < target) {
+                    i ++;
+                } else { //sum > target
+                    j --;
+                }
+            }
+        } else {//Normal case, recursivly invoke
+            for (int i = begin; i < a.length; i++) {
+                if (!visited.contains(a[i])) {
+                    visited.add(a[i]);
+                    List<List<Integer>> subResult = zeroSumInSortedArray(a, i + 1, count - 1, target - a[i]);
+                    if (subResult.size() > 0) {
+                        for (int j = 0; j < subResult.size(); j ++) {
+                            subResult.get(j).add(0, a[i]);//Prepend is to make the result in asending order.
+                        }
+                        result.addAll(subResult);
+                    }
+                }
+            }
+        }
+        
+        return result;
+    }
+    
+    
     public ArrayList<ArrayList<Integer>> fourSum_v2(int[] num, int target) {
         // IMPORTANT: Please reset any member data you declared, as
         // the same Solution instance will be reused for each test case.
         Arrays.sort(num);
         //TODO: Filter out the duplicated elements, then invoke combinate
-        Arrays.stream(num).forEach( k -> System.out.print(k + ","));
-        System.out.println();
+//        Arrays.stream(num).forEach( k -> System.out.print(k + ","));
+//        System.out.println();
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
         combinate(num, target, new ArrayList<Integer>(), 0, 0, 0, result);
         return result;
@@ -97,10 +142,9 @@ public class FourSum {
             for (int i = startId; i < arr.length; i++) {
                 branch.add(arr[i]);
                 sum += arr[i];
-                combinate(arr, target, branch, ++startId, ++ k, sum, result);
+                combinate(arr, target, branch, ++startId, k + 1, sum, result);
                 branch.remove(branch.size() - 1);
                 sum -= arr[i];
-                k--;
             }
         }
     }
@@ -115,5 +159,13 @@ public class FourSum {
             }
             System.out.println();
         }
+        
+        System.out.println("zeroSumInSortedArray");
+        Arrays.sort(num);
+        List<List<Integer>> result2 = zeroSumInSortedArray(num, 0, 4, 0);
+        result.stream().forEach(
+                (lt) -> {lt.stream().forEach(
+                        (i) -> {System.out.print(i + ",");});
+                System.out.println();});
     }
 }
