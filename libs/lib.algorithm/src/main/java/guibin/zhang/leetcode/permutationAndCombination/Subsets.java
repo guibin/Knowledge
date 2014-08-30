@@ -28,18 +28,18 @@ import java.util.Arrays;
  */
 public class Subsets {
     
-    public ArrayList<ArrayList<Integer>> subsets(int[] S) {
+    public ArrayList<ArrayList<Integer>> subsets(int[] a) {
         
-        Arrays.sort(S);
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        result.add(new ArrayList<Integer>());
+        Arrays.sort(a);
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        result.add(new ArrayList<>());
         //Select each item from S
-        for(int i = 0; i < S.length; i ++) {
+        for(int i = 0; i < a.length; i ++) {
             int size = result.size();
             //Pick up the existing result, add the item to it.
             for(int j = 0; j < size; j++) {
-                ArrayList<Integer> subset = new ArrayList<Integer>(result.get(j));
-                subset.add(S[i]);
+                ArrayList<Integer> subset = new ArrayList<>(result.get(j));
+                subset.add(a[i]);
                 result.add(subset);
             }
         }
@@ -55,26 +55,26 @@ public class Subsets {
     public ArrayList<ArrayList<Integer>> subsets_v2(int[] S) {
         
         Arrays.sort(S);
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> tmp = new ArrayList<Integer>();
-        result.add(tmp);
-        dfs(result, tmp, S, 0);
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        ArrayList<Integer> branch = new ArrayList<>();
+        result.add(branch);
+        fullCombination(result, branch, S, 0);
         return result;
     }
     
-    public void dfs(ArrayList<ArrayList<Integer>> res, ArrayList<Integer> tmp, int[] S, int pos) {
-        for(int i = pos; i < S.length; i ++) {
-            tmp.add(S[i]);
-            res.add(new ArrayList<Integer>(tmp));
-            dfs(res, tmp, S, i + 1);
-            tmp.remove(tmp.size() - 1);
+    public void fullCombination(ArrayList<ArrayList<Integer>> res, ArrayList<Integer> branch, int[] a, int startId) {
+        for(int i = startId; i < a.length; i ++) {
+            branch.add(a[i]);
+            res.add(new ArrayList<>(branch));
+            fullCombination(res, branch, a, i + 1);//i + 1 or ++startId
+            branch.remove(branch.size() - 1);
         }
     }
     
     public static void main(String[] args) {
         Subsets s = new Subsets();
         int[] set = {1, 2, 3};
-        ArrayList<ArrayList<Integer>> result = s.subsets_v2(set);
+        ArrayList<ArrayList<Integer>> result = s.subsets(set);
         System.out.println("size=" + result.size());
         for(ArrayList<Integer> row : result) {
             for(int i : row) {

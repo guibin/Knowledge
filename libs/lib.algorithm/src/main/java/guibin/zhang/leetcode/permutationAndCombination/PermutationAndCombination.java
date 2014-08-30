@@ -1,6 +1,7 @@
 package guibin.zhang.leetcode.permutationAndCombination;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -161,6 +162,8 @@ public class PermutationAndCombination {
     
     /**
      * 
+     * One loop + one recursion + (i+1) or (++startId) generate the full combination.
+     * 
      * Expected output:
      * 
      * ABC =>
@@ -180,7 +183,8 @@ public class PermutationAndCombination {
      * C,D,
      * D,
      */
-    public void generateFullCombination(char[] arr, List<Character> branch, List<List<Character>> result, int startId) {
+    public void generateFullCombination(char[] arr, List<Character> branch, 
+                                        List<List<Character>> result, int startId) {
         
         for (int i = startId; i < arr.length; i++) {
             branch.add(arr[i]);
@@ -192,6 +196,31 @@ public class PermutationAndCombination {
             generateFullCombination(arr, branch, result, i + 1);
             branch.remove(branch.size() - 1);
         }
+    }
+    
+    /**
+     * Iteration version of full combination.
+     * @param arr 
+     */
+    public void generateFullCombinationIteration(char[] arr) {
+        Arrays.sort(arr);
+        List<List<Character>> result = new ArrayList<>();
+        result.add(new ArrayList<>());
+        //**Select each item from arr**.
+        for (int i = 0; i < arr.length; i++) {
+            //**Pick up the existing result, add the item to it**.
+            //Cannot use result.size() directly, since in each iteration, 
+            //size of result is increasing, which will cause the dead loop.
+            int size = result.size();
+            for (int j = 0; j < size; j ++) {
+                List<Character>  branch = new ArrayList<>(result.get(j));
+                branch.add(arr[i]);
+                result.add(branch);
+            }
+        }
+        
+        result.forEach(list -> {list.forEach(i -> System.out.print(i + ", "));
+                                System.out.println();});
     }
     
     /**
@@ -265,6 +294,9 @@ public class PermutationAndCombination {
         List<Character> branch2 = new ArrayList<>();
         List<List<Character>> result2 = new ArrayList<>();
         cp.generateFullCombination(arr2, branch2, result2, 0);
+        
+        System.out.println("-------Full Combination Iteration----------");
+        cp.generateFullCombinationIteration(arr2);
         
         System.out.println("-------Duplicated Combination----------");
         str = "ABC";
