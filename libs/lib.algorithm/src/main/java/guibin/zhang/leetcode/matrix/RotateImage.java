@@ -75,4 +75,42 @@ public class RotateImage {
             }
         }
     }
+    
+    /**
+     * http://joycelearning.blogspot.com/2013/10/leetcode-rotate-image.html
+     * 
+     * @param matrix 
+     */
+    public void rotate_v3(int[][] matrix) {
+        
+        if (matrix == null) return;
+        int n = matrix.length;
+        if (n <= 1) return;
+        
+        // rule: i = j'; j = n-1 - i';
+        // that is: i' = n-1 -j; j' = i;
+        // loop through 1/4 of the matrix
+        // a | b
+        // c | d
+        // four parts
+        // 
+        // a = matrix[i][j]; d = matrix[n - 1 - i][n - 1 - j]
+        // b = matrix[j][n - 1 - i];
+        // c = matrix[n - 1 - j][i]
+        //
+        // Math.ceil : returns the smallest integer >= a number.
+        for (int i = 0; i < n/2; i++) {
+            for (int j = 0; j < Math.ceil(((double)n)/2.0); j++) {
+                int tmp = matrix[i][j];
+                //c -> a
+                matrix[i][j] = matrix[n - 1 - j][i];
+                //d -> c
+                matrix[n - 1 - j][i] = matrix[n - 1 - i][n - 1 - j];
+                //b -> d
+                matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i];
+                //a -> b
+                matrix[j][n - 1 - i] = tmp;
+            }
+        }
+    }
 }
