@@ -41,7 +41,7 @@ public class MatrixLongestSequence {
      * @param visited
      * @return 
      */
-    public static int printSequence(int r, int c, int[][] matrix, boolean[][] visited) {
+    public static int countSequence(int r, int c, int[][] matrix, boolean[][] visited) {
         
         int X = matrix.length;
         int Y = matrix[0].length;
@@ -49,7 +49,7 @@ public class MatrixLongestSequence {
         // Look up
         if (r - 1 >= 0 && matrix[r - 1][c] == matrix[r][c] + 1 && !visited[r - 1][c]) {
             visited[r - 1][c] = true;
-            int count =  1 + printSequence(r - 1, c, matrix, visited);
+            int count =  1 + countSequence(r - 1, c, matrix, visited);
             visited[r - 1][c] = false;
             return count;
         }
@@ -57,7 +57,7 @@ public class MatrixLongestSequence {
         // Look down
         if (r + 1 < X && matrix[r + 1][c] == matrix[r][c] + 1 && !visited[r + 1][c]) {
             visited[r + 1][c] = true;
-            int count = 1 + printSequence(r + 1, c, matrix, visited);
+            int count = 1 + countSequence(r + 1, c, matrix, visited);
             visited[r + 1][c] = false;
             return count;
         }
@@ -65,7 +65,7 @@ public class MatrixLongestSequence {
         // Look left
         if (c - 1 >= 0 && matrix[r][c - 1] == matrix[r][c] + 1 && !visited[r][c - 1]) {
             visited[r][c - 1] = true;
-            int count =  1 + printSequence(r, c - 1, matrix, visited);
+            int count =  1 + countSequence(r, c - 1, matrix, visited);
             visited[r][c - 1] = false;
             return count;
         }
@@ -73,7 +73,7 @@ public class MatrixLongestSequence {
         // Look right
         if (c + 1 < Y && matrix[r][c + 1] == matrix[r][c] + 1 && !visited[r][c + 1]) {
             visited[r][c + 1] = true;
-            int count =  1 + printSequence(r, c + 1, matrix, visited);
+            int count =  1 + countSequence(r, c + 1, matrix, visited);
             visited[r][c + 1] = false;
             return count;
         }
@@ -93,37 +93,40 @@ public class MatrixLongestSequence {
      * @param c column index of start point
      * @return 
      */
-    public static List<Integer> getLogestSeq(int[][] matrix, int r, int c) {
+    public static List<Integer> getSequence(int[][] matrix, int r, int c) {
         
         List<Integer> result = new ArrayList<>();
         if (r >= matrix.length || c >= matrix[0].length) {
             return result;
         }
         
+        //Access the start point matrix[r][c]
         result.add(matrix[r][c]);
+        
+        //Try four directions to find out the qualified nabour.
         boolean done = false;
         while (!done) {
             done = true;
-            //Move right to search bigger one
-            if (r < matrix.length - 1 && matrix[r][c] + 1 == matrix[r + 1][c]) {
+            //Move down to search bigger one
+            if (r + 1 < matrix.length && matrix[r][c] + 1 == matrix[r + 1][c]) {
                 result.add(matrix[r + 1][c]);
                 r += 1;
                 done = false;
             }
-            //Move left to search bigger one
-            if (r > 0 && matrix[r][c] + 1 == matrix[r - 1][c]) {
+            //Move up to search bigger one
+            if (r - 1 >= 0 && matrix[r][c] + 1 == matrix[r - 1][c]) {
                 result.add(matrix[r - 1][c]);
                 r -= 1;
                 done = false;
             }
-            //Move up to search bigger one
-            if (c < matrix[0].length - 1 && matrix[r][c] + 1 == matrix[r][c + 1]) {
+            //Move right to search bigger one
+            if (c + 1 < matrix[0].length && matrix[r][c] + 1 == matrix[r][c + 1]) {
                 result.add(matrix[r][c + 1]);
                 c += 1;
                 done = false;
             }
-            //Move down to search bigger one
-            if (c > 0 && matrix[r][c] + 1 == matrix[r][c - 1]) {
+            //Move left to search bigger one
+            if (c - 1 >= 0 && matrix[r][c] + 1 == matrix[r][c - 1]) {
                 result.add(matrix[r][c - 1]);
                 c -= 1;
                 done = false;
@@ -132,6 +135,42 @@ public class MatrixLongestSequence {
                 
         return result;
     }
+    
+    public static void getSequence_v2(int[][] matrix, boolean[][] visited, int r, int c, List<Integer> result) {
+        
+        result.add(matrix[r][c]);
+        int X = matrix.length;
+        int Y = matrix[0].length;
+        
+        //Look up
+        if (r - 1 >= 0 && !visited[r - 1][c] && matrix[r][c] + 1 == matrix[r - 1][c]) {
+            visited[r - 1][c] = true;
+            getSequence_v2(matrix, visited, r - 1, c, result);
+            visited[r - 1][c] = false;
+        }
+        
+        //Look down
+        if (r + 1 < X && !visited[r + 1][c] && matrix[r][c] + 1 == matrix[r + 1][c]) {
+            visited[r + 1][c] = true;
+            getSequence_v2(matrix, visited, r + 1, c, result);
+            visited[r + 1][c] = false;
+        }
+        
+        //Look left
+        if (c - 1 >= 0 && !visited[r][c - 1] && matrix[r][c] + 1 == matrix[r][c - 1]) {
+            visited[r][c - 1] = true;
+            getSequence_v2(matrix, visited, r, c - 1, result);
+            visited[r][c - 1] = false;
+        }
+        
+        //Look right
+        if (c + 1 < Y && !visited[r][c + 1] && matrix[r][c] + 1 == matrix[r][c + 1]) {
+            visited[r][c + 1] = true;
+            getSequence_v2(matrix, visited, r, c + 1, result);
+            visited[r][c + 1] = false;
+        }
+    }
+    
     
     public static void printLogestSequence(int[][] matrix) {
         
@@ -142,7 +181,7 @@ public class MatrixLongestSequence {
         //Iterate all posible start point to get the maxSeq
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j ++) {
-                List<Integer> currSeq = getLogestSeq(matrix, i, j);
+                List<Integer> currSeq = getSequence(matrix, i, j);
                 if (currSeq.size() > maxSeq.size()) {
                     maxSeq = currSeq;
                 }
@@ -154,6 +193,32 @@ public class MatrixLongestSequence {
     }
     
     
+    public static void printLogestSequence_v2(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return;
+        }
+        
+        int X = matrix.length;
+        int Y = matrix[0].length;
+        List<Integer> maxSeq = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
+        
+        boolean[][] visited = new boolean[X][Y];
+        result.clear();
+        for (int i = 0; i < X; i++) {
+            for (int j = 0; j < Y; j++) {
+                result.clear();
+                 getSequence_v2(matrix, visited, i, j, result);
+                
+                if(result.size() > maxSeq.size()) {
+                    maxSeq = new ArrayList<>(result);
+                }
+            }
+        }
+        maxSeq.forEach(i -> System.out.print(i + ", "));
+        System.out.println();
+    }
+    
     public static void main(String[] args) {
         
         int[][] matrix = {{1, 5, 9},
@@ -163,15 +228,12 @@ public class MatrixLongestSequence {
         int Y = matrix[0].length;
         boolean[][] visited = new boolean[X][Y];
         int max = 0;
-        List<Integer> result = new ArrayList<>();
-        List<Integer> maxSequence = null;
         for (int i = 0; i < X; i++) {
             for (int j = 0; j < Y; j++) {
-                int m = printSequence(i, j, matrix, visited);
+                int m = countSequence(i, j, matrix, visited);
                 System.out.println("[" + i + "][" + j + "]" + " is " + m);
                 if (m > max) {
                     max = m;
-                    maxSequence = new ArrayList<>(result);
                 }
             }
         }
@@ -179,5 +241,8 @@ public class MatrixLongestSequence {
         
         System.out.println("----print longest sequence------");
         printLogestSequence(matrix);
+        
+        System.out.println("----print longest sequence v2------");
+        printLogestSequence_v2(matrix);
     }
 }
