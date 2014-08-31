@@ -24,35 +24,26 @@ public class PascalsTriangle {
     public List<List<Integer>> generate(int numRows) {
         
         List<List<Integer>> result = new ArrayList<>();
-        if(numRows <= 0) {
-            return result;
-        } else if(numRows == 1) {
+        for(int i = 0; i < numRows; i++) {
             List<Integer> row = new ArrayList<>();
-            row.add(numRows);
-            result.add(row);
-            return result;
-        } else {
-            for(int i = 0; i < numRows; i++) {
-                List<Integer> row = new ArrayList<>();
-                for(int j = 0; j <= i; j++) {
-                    if(j == 0) {
-                        row.add(1);
-                    } else if(j == i) {
-                        row.add(1);
-                    } else {
-                        //current_node = previous_level(j-1) + previous_level(j)
-                        row.add(result.get(i - 1).get(j - 1) + result.get(i - 1).get(j));
-                    }
+            for(int j = 0; j <= i; j++) {
+                if(j == 0) {
+                    row.add(1);//The first col is always 1
+                } else if(j == i) {
+                    row.add(1);//The diagonal line, the last element is always 1
+                } else {
+                    //current_node = previous_level(j-1) + previous_level(j)
+                    row.add(result.get(i - 1).get(j - 1) + result.get(i - 1).get(j));
                 }
-                result.add(row);
             }
+            result.add(row);
         }
         return result;
     }
     
     public static void main(String[] args) {
         PascalsTriangle pt = new PascalsTriangle();
-        List<List<Integer>> result = pt.generate(6);
+        List<List<Integer>> result = pt.generate(5);
         result.stream().forEach(list -> {
             list.stream().forEach((i) -> {
                 System.out.print(i + ",");
