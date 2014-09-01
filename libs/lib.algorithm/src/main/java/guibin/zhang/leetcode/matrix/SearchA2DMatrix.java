@@ -52,6 +52,7 @@ public class SearchA2DMatrix {
     }
     
     //Note the method to compute the x,y by the position of the element
+    //This is the key point of this question
     private int valueOf(int mid, int[][] matrix, int cols) {
         int x = (mid -1 )/ cols;
         int y = (mid - 1) % cols;
