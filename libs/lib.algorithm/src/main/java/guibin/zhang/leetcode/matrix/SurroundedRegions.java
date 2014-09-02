@@ -114,6 +114,87 @@ public class SurroundedRegions {
         }
     }
     
+    /****************************
+     * 
+     * 1. Start from those boundary cells, use BFS or DFS to traverse all non-flipable 'O' cells, 
+     *    and mark them with a special sign, say 'N'.
+     * 2. Revisit the board, flip all remaining 'O' cells to 'X' and also flip back 'N' cells to 'O'.
+     * 
+     * @param board 
+     * **************************
+     */
+    public void solve_bfs(char[][] board) {
+        
+        if(board.length <= 0 || board[0].length <= 0) return;
+        int rows = board.length;
+        int columns = board[0].length;
+        
+        // Start from 'O's on the edge and mark connected ones as non-flipable.  
+        // first and last column
+        for(int i = 0; i < rows; i++) {
+            markBFS_std(board, i, 0);
+            if(columns > 1) markBFS_std(board, i, columns - 1);
+        }
+        
+        // first and last row
+        for(int j = 0; j < columns; j++) {
+            markBFS_std(board, 0, j);
+            if(rows > 1) markBFS_std(board, rows - 1, j);
+        }
+        
+        System.out.println("--------N-------");
+        printlnResult(board);
+        
+        // Then flip and flip again
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < columns; j++) {
+                if(board[i][j]  == 'O') {
+                    board[i][j] = 'X';
+                }
+                else if(board[i][j] == 'N') {
+                    board[i][j] = 'O';
+                }
+            }
+        }
+        
+    }
+    
+    /**
+     * Standard BFS traverse.
+     * 
+     * @param board
+     * @param row
+     * @param col 
+     */
+    private void markBFS_std(char[][] board, int row, int col) {
+        
+        int rows = board.length;
+        int columns = board[0].length;
+        Queue<Integer> q = new LinkedList<>();
+        
+        if (board[row][col] == 'O') {//Here only add candidates to queue
+            q.add(row * columns + col);    
+        }
+        
+        while(!q.isEmpty()) {
+            //Access
+            int cell = q.remove();
+            int x = cell/columns;
+            int y = cell%columns;
+            
+            //Only find the 'O' cell to mark, others are ignored.
+            if (board[x][y] == 'O') {
+                //Mark '0' cess as 'N'
+                board[x][y] = 'N';
+                //Add down/up/right/left to queue
+                if (x + 1 < rows) q.add((x + 1) * columns + y);
+                if (x - 1 >= 0) q.add((x - 1) * columns + y);
+                if (y + 1 < columns) q.add(x * columns + y + 1);
+                if (y - 1 >= 0) q.add(x * columns + y - 1);
+            }
+        }
+    }
+    
     /**
      * Solved by mark DFS
      * 
@@ -144,6 +225,9 @@ public class SurroundedRegions {
             }
         }
         
+        System.out.println("--------N-------");
+        printlnResult(board);
+        
         for (int i = 0; i < rows; i++) {
             for(int j = 0; j < columns; j++) {
                 if(board[i][j] == 'N') {
@@ -159,18 +243,18 @@ public class SurroundedRegions {
         int rows = board.length;
         int columns = board[0].length;
         
-        if(x < 0 || x >= rows || y < 0 || y>= columns || board[x][y] != 'O') {
-            return;
+        if (board[x][y] == 'O') {
+            //mark current node
+            board[x][y] = 'N';
+            
+            //mark its neighbour if needed
+            if (x - 1 >= 0) markDFS(board, x - 1, y);
+            if (x + 1 < rows) markDFS(board, x + 1, y);
+            if (y - 1 >= 0) markDFS(board, x, y - 1);
+            if (y + 1 < columns) markDFS(board, x, y + 1);
         }
-        
-        //mark current node
-        board[x][y] = 'N';
-        //mark its neighbour if needed
-        markDFS(board, x - 1, y);
-        markDFS(board, x + 1, y);
-        markDFS(board, x, y - 1);
-        markDFS(board, x, y + 1);
     }
+    
     
     
     public void printlnResult(char[][] board) {
@@ -192,24 +276,46 @@ public class SurroundedRegions {
     public static void main(String[] args) {
         SurroundedRegions sr = new SurroundedRegions();
         
-        char[][] board1 = {"XOXX".toCharArray(), 
+//        char[][] board1 = {"XOXX".toCharArray(), 
+//                           "OXOX".toCharArray(), 
+//                           "XOXO".toCharArray(), 
+//                           "OXOX".toCharArray()};
+        
+//        char[][] board2 = {"OXXOX".toCharArray(), 
+//                           "XOOXO".toCharArray() ,
+//                           "XOXOX".toCharArray() ,
+//                           "OXOOO".toCharArray() ,
+//                           "XXOXO".toCharArray()};
+        
+        char[][] board2 = {"XOXX".toCharArray(), 
                            "OXOX".toCharArray(), 
                            "XOXO".toCharArray(), 
                            "OXOX".toCharArray()};
         
-        char[][] board2 = {"OXXOX".toCharArray(), 
-                           "XOOXO".toCharArray() ,
-                           "XOXOX".toCharArray() ,
-                           "OXOOO".toCharArray() ,
-                           "XXOXO".toCharArray()};
+//        char[][] board3 = {"XOXX".toCharArray(), 
+//                           "OXOX".toCharArray(), 
+//                           "XOXO".toCharArray(), 
+//                           "OXOX".toCharArray()};
+        char[][] board1 = {"OOO".toCharArray(), 
+                           "OOO".toCharArray(), 
+                           "OOO".toCharArray()};
+        
+        char[][] board3 = {"OOO".toCharArray(), 
+                           "OOO".toCharArray(), 
+                           "OOO".toCharArray()};
         
         sr.printlnResult(board1);
         sr.solve_v1(board1);
         sr.printlnResult(board1);
 
-        System.out.println("----------------------");
+        System.out.println("-----------bfs standard-----------");
+        sr.printlnResult(board3);
+        sr.solve_bfs(board3);
+        sr.printlnResult(board3);
+        
+        System.out.println("-------------v2---------");
         sr.printlnResult(board2);
-        sr.solve_v1(board2);
+        sr.solve_v2(board2);
         sr.printlnResult(board2);
     }
 }
