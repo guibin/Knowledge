@@ -35,15 +35,15 @@ public class PalindromePartition {
     public ArrayList<ArrayList<String>> partition_v1(String s) {
         
         ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
-        doPartition_v1(result, new ArrayList<String>(), s);
+        doCombination(result, new ArrayList<String>(), s);
         
         return result;
     }
     
-    public void doPartition_v1(ArrayList<ArrayList<String>> result, ArrayList<String> buff, String s) {
+    public void doCombination(ArrayList<ArrayList<String>> result, ArrayList<String> branch, String s) {
         
         if(s.length() == 0) {
-            result.add(buff);
+            result.add(new ArrayList<>(branch));
             return;
         }
         
@@ -53,9 +53,10 @@ public class PalindromePartition {
         for(int i = 1; i <= s.length(); i ++) {
             String prefix = s.substring(0, i);
             if(isPalindrome(prefix)) {
-                ArrayList<String> nBuff = new ArrayList<String>(buff);
-                nBuff.add(prefix);
-                doPartition_v1(result, nBuff, s.substring(i));
+                branch.add(prefix);
+                //Here it is the standard combination. Use the remaining part of s is same with ++startId
+                doCombination(result, branch, s.substring(i));
+                branch.remove(branch.size() - 1);
             }
         }
     }
