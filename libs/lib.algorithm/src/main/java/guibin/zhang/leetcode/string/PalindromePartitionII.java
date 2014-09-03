@@ -139,12 +139,14 @@ public class PalindromePartitionII {
          * j - i < 2 ====>>>>>> j - 1 < i + 1, that is when s[j - 1] is on the left of s[i + 1]
          * 
          * i = length - 2 means start from the last element but one.
-         * Since the last element is s[length - 1], so the last but one is s[length - 2]
+         * Since the last element is s[length - 1], so the last but one is s[length - 2].
+         * The reason to start from the last element is that we do know cut 1 element needs 1 cuts.
          */
         for(int i = length - 2; i >= 0; i--) {
             for(int j = i; j < length; j++) {
-                //This condition below is to to judge whether s[i,j] is palindrome.
-                //Question, why when j-1 < i+1, it is palindorme???
+                //i + 1 == j - 1 => i和j间隔一个元素
+                //i + 1 > j - 1 => i和j相邻或者i==j
+                //This condition below means that when (i is equal to j) && ((i is next to j) || ([i + 1, j - 1] is palindrome)),
                 if(s.charAt(i) == s.charAt(j) && (j - 1 < i + 1 || palindrome[i + 1][j - 1])) {
                     palindrome[i][j] = true;
                     /**
