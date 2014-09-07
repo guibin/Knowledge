@@ -7,6 +7,10 @@ package guibin.zhang.onlinecourse;
  * 
  * Eg: In this array: [2, 4, 1, 3, 5], there are three inversions: 2,1; 4,1; 4,3
  * 
+ * Inversion Count for an array indicates – how far (or close) the array is from being sorted. 
+ * If array is already sorted then inversion count is 0. 
+ * If array is sorted in reverse order that inversion count is the maximum.
+ * 
  * http://stackoverflow.com/questions/337664/counting-inversions-in-an-array
  * https://www.youtube.com/watch?v=Vj5IOD7A6f8
  * http://www.geeksforgeeks.org/counting-inversions/
@@ -30,6 +34,7 @@ public class CountingInversions {
             aux[k] = a[k];
         }
         
+        //i: idx of left part, j: idx of right part, k: idx of the merged one.
         int i = lo, j = mid + 1, count = 0;
         for (int k = lo; k <= hi; k++) {
             if (i > mid)//Left part is consumed
