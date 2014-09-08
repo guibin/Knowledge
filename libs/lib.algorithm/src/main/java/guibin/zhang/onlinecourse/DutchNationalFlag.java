@@ -17,7 +17,7 @@ package guibin.zhang.onlinecourse;
 public class DutchNationalFlag {
     
     
-    
+    //It is very smiliar with the QuickSort3Way
     public void sort(Character[] flags) {
         
         int red = 0;// Initial index for red
@@ -35,8 +35,6 @@ public class DutchNationalFlag {
                 i ++;
             }
         }
-        
-        
     }
     
     public void swap(Character[] t, int i, int j) {
