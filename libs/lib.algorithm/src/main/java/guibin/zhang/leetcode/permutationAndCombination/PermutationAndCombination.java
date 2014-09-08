@@ -51,6 +51,52 @@ public class PermutationAndCombination {
     }
     
     /**
+     * Permutation iterate version.
+     * 
+     * Expected output:
+     * ABC => CBA, BCA, BAC, CAB, ACB, ABC
+     * 
+     * http://www.programcreek.com/2013/02/leetcode-permutations-java/
+     * 
+     * @param arr
+     * @return 
+     */
+    public List<List<Character>> generatePermutations(char[] arr) {
+        
+        List<List<Character>> result = new ArrayList<>();
+        
+        //Start from an empty list
+        result.add(new ArrayList<>());
+        
+        for (int i = 0; i < arr.length; i++) {
+            //list of list in current iteration of the array arr
+            List<List<Character>> curr = new ArrayList<>();
+            for (List<Character> list : result) {
+                // # of locations to insert is largest index + 1
+                for (int j = 0; j < list.size() + 1; j++) {
+                    // + add num[i] to different locations
+                    list.add(j, arr[i]);
+                    
+                    curr.add(new ArrayList<>(list));
+//                    list.forEach(c -> System.out.print(c));
+//                    System.out.println();
+                    
+                    // - remove num[i] add
+                    list.remove(j);
+                }
+            }
+            result = new ArrayList<>(curr);
+        }
+        
+        System.out.println("----------");
+        System.out.println("Full permutation Result:");
+        result.forEach(item -> {item.forEach(it -> System.out.print(it)); System.out.println();});
+        System.out.println("----------");
+            
+        return result;
+    }
+    
+    /**
      * 
      * Idea: one loop + one recursion.
      * 
@@ -262,6 +308,9 @@ public class PermutationAndCombination {
         
         System.out.println("-------Full permutation----------");
         cp.generatePermutations(arr, branch, 0, visited, n);
+        
+        System.out.println("-------Full permutation Iteration verion----------");
+        cp.generatePermutations(arr);
         
         System.out.println("-------Duplicated permutation----------");
         cp.generatePermutationsWithDuplication(arr, branch, 0, n);
