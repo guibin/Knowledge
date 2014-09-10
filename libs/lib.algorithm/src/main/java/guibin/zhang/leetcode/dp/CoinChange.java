@@ -47,7 +47,7 @@ public class CoinChange {
      * 
      * @param S The coin set.
      * @param m The mth coin that is included or excluded in the solution.
-     * @param n The target count
+     * @param n The target value
      * @return 
      */
     public int countNaive(int[] S, int m, int n) {
@@ -60,11 +60,17 @@ public class CoinChange {
         if (m <= 0 && n > 0) return 0;
         
         //count is sum of solutions 
-        //(i) including the coin S[m-1] 
-        //(ii) excluding excluding S[m-1]
+        //(i) excluding excluding S[m-1]
+        //(ii) including the coin S[m-1] 
         return countNaive(S, m - 1, n) + countNaive(S, m, n - S[m - 1]);
     }
     
+    /**
+     * 
+     * @param S The coin set.
+     * @param n The target value.
+     * @return 
+     */
     public int count(int[] S, int n) {
         
         int m = S.length;
@@ -73,7 +79,7 @@ public class CoinChange {
         // the base case 0 value case (n = 0)
         int[][] dp = new int[n + 1][m];
         
-        // Fill the enteries for case n = 0, 
+        // Fill the enteries for case n = 0, if n equals 0, then there is one solution which is don't include any coin.
         for (int i = 0; i < m; i++) {
             dp[0][i] = 1;
         }
@@ -91,9 +97,14 @@ public class CoinChange {
         return dp[n][m - 1];
     }
     
+    /**
+     * 
+     * @param S The coin set.
+     * @param n The target value.
+     * @return 
+     */
     public int count_v2(int[] S, int n) {
         
-        int coins = S.length;
         int[] dp = new int[n + 1];
         
         // Base case (If given value is 0)
