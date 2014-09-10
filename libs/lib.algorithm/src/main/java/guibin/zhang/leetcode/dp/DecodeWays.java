@@ -90,6 +90,8 @@ public class DecodeWays {
             //When s[i - 1] is valid
             if(s.charAt(i - 1) != '0') {
                 c[i] = c[i - 1];
+            } else {//Else if s[i - 1] is invalid
+                c[i] = 0;
             }
             //When s[i - 2] is valid
             if(s.charAt(i - 2) == '1' || s.charAt(i - 2) == '2' && s.charAt(i - 1) <= '6') {
