@@ -15,6 +15,8 @@ package guibin.zhang.leetcode.dp;
 public class ClimbingStairs {
     
     /**
+     * ways[i] means # of ways to climb i stairs.
+     * 
      * When climbing n stairs, there are two ways:
      * A) Climbing the last two stairs + ways[n-2]
      * B) Climbing the last one stairs + ways[n-1]
@@ -41,8 +43,8 @@ public class ClimbingStairs {
         if (n == 1) return 1;
         if (n == 2) return 2;
         
-        int second = 1;
-        int first = 2;
+        int second = 1;//There is only 1 ways for the second step, 1 stair or nothing.
+        int first = 2;//There is two ways for the first step, 1 stair or two stairs.
         int result = 0;
         
         for (int i = 3; i <= n; i++) {
