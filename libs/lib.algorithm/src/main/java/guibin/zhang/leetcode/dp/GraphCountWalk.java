@@ -6,8 +6,11 @@ package guibin.zhang.leetcode.dp;
  * count all possible walks from ‘u’ to ‘v’ with exactly k edges on the walk.
  * 
  * The graph is given as adjacency matrix representation where value of graph[i][j] as 1 
- * indicates that there is an edge from vertex i to vertex j 
+ * indicates that there is an **edge** from vertex i to vertex j.
  * and a value 0 indicates no edge from i to j.
+ * 
+ * 1. Any matrix non-zero point(x, y) represent one edge from vertex x to vertex y.
+ * 2. The matrix must be length == width.
  * 
  * For example consider the following graph. 
  * Let source ‘u’ be vertex 0, destination ‘v’ be 3 and k be 2. 
@@ -70,11 +73,11 @@ public class GraphCountWalk {
      * 
      * Like other Dynamic Programming problems, we fill the 3D table in bottom up manner.
      * 
-     * @param graph
-     * @param u
-     * @param v
-     * @param k
-     * @return 
+     * @param graph 
+     * @param u start point
+     * @param v end point
+     * @param k k steps required
+     * @return Possible ways of path from u to v with k steps.
      */
     public static int countWalks(int[][] graph, int u, int v, int k) {
         
@@ -86,17 +89,21 @@ public class GraphCountWalk {
         for (int e = 0; e <= k; e++) {
             for (int i = 0; i < graph.length; i ++) {//for source
                 for (int j = 0; j < graph.length; j++) {//for destination
-                    //initialize value
-                    count[i][j][e] = 0;
                     
-                    //from base cases
+                    //Base cases: 
+                    //start vetex is same as end vetex, and e == 0, this means we already get the desitination.
+                    //So the possible ways from i to j with 0 steps required is 1.
                     if (e == 0 && i == j) count[i][j][e] = 1;
+                    //graph[i][j] == 1 means there is an way from vetex i to vetex j. At this time with 1 required step,
+                    //So the possible ways from i to j with 1 step requied is 1.
                     if (e == 1 && graph[i][j] == 1) count[i][j][e] = 1;
                     
                     //Go the adjancent only when number of edges is more than 1
                     if (e > 1) {
                         for (int a = 0; a < graph.length; a ++) {// adjacent of source i
                             if (graph[i][a] == 1) {//There is a path from i to a
+                                //(i,j) -> (i,a) + (a,j)
+                                //Inorder to get to j from i, we can firstly get to a from i, then from a to j.
                                 count[i][j][e] += count[a][j][e - 1];
                             }
                         }
