@@ -61,7 +61,7 @@ public class DecodeWays {
         
     }
     
-    public int numDecodings_v2(String s, int start) {
+    public int numDecodings_v2(String s) {
         
         if(s.length() == 0) {
             return 0;
@@ -69,12 +69,11 @@ public class DecodeWays {
         
         //c[i]: The # of decoding for s whose **length** is i;
         int[] c = new int[s.length() + 1];
-        c[0] = 1;//s's length is 0, empty string, has one decoding means nothing.
-        if(s.charAt(0) != '0') {//s's length is 1, so if the character is not '0', it has one decoding just as c[0]
-            c[1] = c[0];
-        } else {//otherwise, it is invalid and has 0 decodings.
-            c[1] = 0;
-        }
+        //s's length is 0, empty string, has one decoding means nothing.
+        c[0] = 1;
+        //s's length is 1, so if the character is not '0', it has one decoding
+        c[1] = s.charAt(0) != '0' ? 1 : 0;
+        
         /**
          * The base idea is same with climbing stairs, but has more limitation.
          * 
@@ -88,11 +87,11 @@ public class DecodeWays {
          * 
          */
         for(int i = 2; i <= s.length(); i++) {
-            if(s.charAt(i - 1) == '0') {
-                c[i] = 0;
-            } else {
+            //When s[i - 1] is valid
+            if(s.charAt(i - 1) != '0') {
                 c[i] = c[i - 1];
             }
+            //When s[i - 2] is valid
             if(s.charAt(i - 2) == '1' || s.charAt(i - 2) == '2' && s.charAt(i - 1) <= '6') {
                 c[i] += c[i - 2];
             }
