@@ -1,4 +1,4 @@
-package guibin.zhang.leetcode;
+package guibin.zhang.leetcode.dp;
 
 /**
  *
@@ -15,11 +15,10 @@ package guibin.zhang.leetcode;
  * 
  * The number of ways decoding "12" is 2.
  * 
- * http://fenghaolw.blogspot.com/2012/11/decode-ways.html
+ * http://fenghaolw.blogspot.com/2013/03/decode-ways.html?q=decode-ways
  * http://besttony.wordpress.com/2013/06/27/decode-ways-dynamic-programming-dp/
  * http://fisherlei.blogspot.com/2013/01/leetcode-decode-ways-solution.html
- * https://github.com/mengli/leetcode/blob/master/Decode%20Ways.java
- * http://discuss.leetcode.com/questions/266/decode-ways
+ * http://blog.csdn.net/worldwindjp/article/details/19938131
  * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
@@ -77,9 +76,16 @@ public class DecodeWays {
             c[1] = 0;
         }
         /**
+         * The base idea is same with climbing stairs, but has more limitation.
+         * 
          * Transformation function as:
          * Count[i] = Count[i-1]  if S[i-1] is a valid char
          *     or   = Count[i-1]+ Count[i-2]  if S[i-1] and S[i-2] together is still a valid char.
+         * 
+         * The string looks like:
+         * 
+         * ...S[i-2] S[i-1] S[i] S[i+1]...
+         * 
          */
         for(int i = 2; i <= s.length(); i++) {
             if(s.charAt(i - 1) == '0') {
