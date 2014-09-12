@@ -33,30 +33,24 @@ public class CountAndSay {
     }
 
     public String countAndSay(String s) {
-
+        
+        if (s.length() == 0) return "";
+        if (s.length() == 1) return "1" + s;
+        
+        int count = 1;
         StringBuilder sb = new StringBuilder();
-        int counter = 1;
-        if (s.length() == 1) {
-            sb.append(counter).append(s.charAt(0));
-            return sb.toString();
-        } else if (s.length() == 0) {
-            return "";
-        }
-
-        for (int i = 0; i < s.length() - 1; i++) {
-            if (s.charAt(i) != s.charAt(i + 1)) {
-                sb.append(counter).append(s.charAt(i));
-                counter = 1;
+        
+        //Start from 1
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i - 1) != s.charAt(i)) {
+                sb.append(count).append(s.charAt(i - 1));
+                count = 1;
             } else {
-                counter++;
+                count ++;
             }
         }
-        //Note the last one, when last one is not equal to previous one
-        if (s.charAt(s.length() - 1) != s.charAt(s.length() - 2)) {
-            counter = 1;
-        }
-        sb.append(counter).append(s.charAt(s.length() - 1));
-
+        sb.append(count).append(s.charAt(s.length() - 1));
+        
         return sb.toString();
     }
     
