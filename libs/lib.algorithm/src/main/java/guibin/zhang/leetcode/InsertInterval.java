@@ -48,11 +48,14 @@ public class InsertInterval {
         ArrayList<Interval> res = new ArrayList<Interval>();
         Interval temp = newInterval;
         for (Interval v : intervals) {
+            //No overlap
             if(v.end < temp.start) {
                 res.add(v);
+            //No overlap
             } else if (v.start > temp.end) {
                 res.add(temp);
                 temp = v;
+            //Overlap
             } else {
                 temp = new Interval(Math.min(v.start, temp.start), Math.max(v.end, temp.end));
             }
