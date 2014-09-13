@@ -67,7 +67,7 @@ public class DecodeWays {
             return 0;
         }
         
-        //c[i]: The # of decoding for s whose **length** is i;
+        //c[i]: means # of decoding ways for the string s[0...i-1]
         int[] c = new int[s.length() + 1];
         //s's length is 0, empty string, has one decoding means nothing.
         c[0] = 1;
@@ -89,9 +89,7 @@ public class DecodeWays {
         for(int i = 2; i <= s.length(); i++) {
             //When s[i - 1] is valid
             if(s.charAt(i - 1) != '0') {
-                c[i] = c[i - 1];
-            } else {//Else if s[i - 1] is invalid
-                c[i] = 0;
+                c[i] += c[i - 1];
             }
             //When s[i - 2] is valid
             if(s.charAt(i - 2) == '1' || s.charAt(i - 2) == '2' && s.charAt(i - 1) <= '6') {
@@ -102,5 +100,10 @@ public class DecodeWays {
         return c[s.length()];
     }
     
-    
+    public static void main(String[] args) {
+        DecodeWays dw = new DecodeWays();
+        System.out.println(dw.numDecodings_v2("1"));
+        System.out.println(dw.numDecodings_v2("12"));
+        System.out.println(dw.numDecodings_v2("123"));
+    }
 }
