@@ -85,7 +85,7 @@ public class PermutationAndCombination {
                     list.remove(j);
                 }
             }
-            result = new ArrayList<>(curr);
+            result = curr;
         }
         
         System.out.println("----------");
