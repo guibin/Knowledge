@@ -42,8 +42,7 @@ public class PermutationsII {
         return result;
     }
 
-    
-    public boolean isSwap(int start, int i, Integer[] num) {
+    public boolean swapable(Integer[] num, int start, int i) {
         for (int j = start; j < i; j++) {
             if (num[j] == num[i]) {
                 return false;
@@ -52,19 +51,18 @@ public class PermutationsII {
         return true;
     }
 
-    public void perm(Integer[] num, int start, int end, ArrayList<ArrayList<Integer>> result) {
+    public void perm(Integer[] branch, int start, int end, ArrayList<ArrayList<Integer>> result) {
         if (start == end) {
-            result.add(new ArrayList<Integer>(Arrays.asList(num)));
+            result.add(new ArrayList<>(Arrays.asList(branch)));
         } else {
             for (int i = start; i <= end; i++) {
-                //Before swaping, judge is there any identical emelent with element i in [start, i)
-                if (!isSwap(start, i, num)) {
-                    continue;
+                //Before swaping, check if there any identical emelent with element i in [start, i)
+                if (swapable(branch, start, i)) {
+                    //Swap the first element with the rest of the element, including itself.
+                    swap(branch, start, i);
+                    perm(branch, start + 1, end, result);
+                    swap(branch, start, i);
                 }
-                //Swap the first element with the rest of the element, including itself.
-                swap(num, start, i);
-                perm(num, start + 1, end, result);
-                swap(num, start, i);
             }
         }
     }
