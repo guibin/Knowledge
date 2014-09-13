@@ -21,66 +21,6 @@ import java.util.List;
  */
 public class Permutations {
     
-    public ArrayList<ArrayList<Integer>> permute(int[] num) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        if (num == null) {
-            return null;
-        }
-        return permute(num, num.length - 1);
-    }
-    
-    //The result is not in order, totally disorder. 
-    public ArrayList<ArrayList<Integer>> permute(int[] num, int k) {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
-        if (k < 0) {
-            result.add(new ArrayList<Integer>());
-        } else {
-            for (ArrayList<Integer> x : permute(num, k - 1)) {
-                for (int i = 0; i <= x.size(); i++) {
-                    ArrayList<Integer> tmp = (ArrayList<Integer>) x.clone();
-                    tmp.add(i, num[k]);
-                    result.add(tmp);
-                }
-            }
-        }
-        return result;
-    }
-    
-    public ArrayList<ArrayList<Integer>> permute_v2(int[] num) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        if(num == null) return null;
-        Integer[] n = new Integer[num.length];
-        for (int i = 0; i < num.length; i++) {
-            n[i] = num[i];
-        }
-        return perm(n, 0, num.length - 1);
-        
-    }
-    
-    //The result is not in order, but it is colse to sorted.
-    public ArrayList<ArrayList<Integer>> perm(Integer[] num, int start, int end) {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
-        if (start > end) {
-            result.add(new ArrayList<Integer>(Arrays.asList(num)));
-        } else {
-            for (int i = start; i <= end; i++) {
-                swap(num, start, i);
-                result.addAll(perm(num, start + 1, end));
-                swap(num, start, i);
-            }
-        }
-        
-        return result;
-    }
-    
-    public void swap(Integer[] num, int i, int j) {
-        int temp = num[i];
-        num[i] = num[j];
-        num[j] = temp;
-    }
-    
     /**
      * The idea of this classic problem is to use backtracking.
      * We want to get permutations, which is mainly about swap values in the list.
@@ -99,22 +39,27 @@ public class Permutations {
      * @param num
      * @return 
      */
-    public ArrayList<ArrayList<Integer>> permute_v3(int[] num) {
+    public List<List<Integer>> permute_v3(int[] num) {
         // Start typing your Java solution below
         // DO NOT write main() function
         if(num == null) return null;
-        Integer[] n = new Integer[num.length];
+        
+        //Initialize the branch to be permuted.
+        Integer[] branch = new Integer[num.length];
         for (int i = 0; i < num.length; i++) {
-            n[i] = num[i];
+            branch[i] = num[i];
         }
-        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
-        perm(n, 0, num.length - 1, result);
+        
+        List<List<Integer>> result = new ArrayList<>();
+        perm(branch, 0, num.length - 1, result);
         return result;
         
     }
     
     /**
      * swap the elements from start to end, one by one. 
+     * 
+     * Permutation swap version
      * Basically it is a recursive swapping algorithm.
      * 
      * Actually it is not in order, but it is **close to the sorted order**.
@@ -135,23 +80,29 @@ public class Permutations {
      *     Swap letters 0 and i.
      *     Permute letters 1 to N-1, printing out the entire string each time.
      * 
-     * @param num
-     * @param start
-     * @param end
+     * @param branch The input array to be permuted.
+     * @param start The start position to be permuted.
+     * @param end The end position to be permuted.
      * @param result 
      */
-    public void perm(Integer[] num, int start, int end, ArrayList<ArrayList<Integer>> result) {
+    public void perm(Integer[] branch, int start, int end, List<List<Integer>> result) {
         if (start == end) {
-            result.add(new ArrayList<>(Arrays.asList(num)));
+            result.add(new ArrayList<>(Arrays.asList(branch)));
         } else {
             for (int i = start; i <= end; i++) {
                 //Swap the first element with the rest of the element, including itself.
-                swap(num, start, i);
-                perm(num, start + 1, end, result);
+                swap(branch, start, i);
+                perm(branch, start + 1, end, result);
                 //Swap back
-                swap(num, start, i);
+                swap(branch, start, i);
             }
         }
+    }
+    
+    private void swap(Integer[] num, int i, int j) {
+        int temp = num[i];
+        num[i] = num[j];
+        num[j] = temp;
     }
     
     /**
@@ -229,6 +180,32 @@ public class Permutations {
         }
     }
     
+    public ArrayList<ArrayList<Integer>> permute(int[] num) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if (num == null) {
+            return null;
+        }
+        return permute(num, num.length - 1);
+    }
+    
+    //The result is not in order, totally disorder. 
+    public ArrayList<ArrayList<Integer>> permute(int[] num, int k) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        if (k < 0) {
+            result.add(new ArrayList<Integer>());
+        } else {
+            for (ArrayList<Integer> x : permute(num, k - 1)) {
+                for (int i = 0; i <= x.size(); i++) {
+                    ArrayList<Integer> tmp = (ArrayList<Integer>) x.clone();
+                    tmp.add(i, num[k]);
+                    result.add(tmp);
+                }
+            }
+        }
+        return result;
+    }
+    
     public static void main(String[] args) {
         Permutations pt = new Permutations();
         
@@ -243,20 +220,10 @@ public class Permutations {
         }
         
         
-        int[] num2 = {0, 1, 2, 3};
-        ArrayList<ArrayList<Integer>> result4 = pt.permute_v2(num2);
-        System.out.println("----permute_v2----");
-        for(ArrayList<Integer> list : result4) {
-            for(Integer i : list) {
-                System.out.print(i);
-            }
-            System.out.println();
-        }
-        
         int[] num = {0, 1, 2, 3};
-        ArrayList<ArrayList<Integer>> result = pt.permute_v3(num);
+        List<List<Integer>> result = pt.permute_v3(num);
         System.out.println("----permute_v3----");
-        for(ArrayList<Integer> list : result) {
+        for(List<Integer> list : result) {
             for(Integer i : list) {
                 System.out.print(i);
             }
