@@ -79,6 +79,8 @@ public class WordDecoder {
     public static void main(String[] args) {
         
         decode("", "1234");
+        
+        System.out.println("====Combination====");
         combination("", "abcd");
         
         System.out.println("====Ramdon Tripplet====");
