@@ -21,7 +21,7 @@ public class ThreeSumClosest {
         int len = num.length;
         if(len < 3) return 0;
         
-        int closet = num[0] + num[1] + num[2];
+        int closest = num[0] + num[1] + num[2];
         Arrays.sort(num);
         
         for (int i = 0; i < len - 2; i++) {
@@ -31,11 +31,11 @@ public class ThreeSumClosest {
                 int sum = num[i] + num[j] + num[m];
                 int delta = sum - target;
                 if (delta == 0) {
-                    closet = sum;
-                    return closet;
+                    closest = sum;
+                    return closest;
                 } else {
-                    if (Math.abs(delta) < Math.abs(closet - target)) {
-                        closet = sum;
+                    if (Math.abs(delta) < Math.abs(closest - target)) {
+                        closest = sum;
                     }
                     if (delta > 0) {
                         m --;
@@ -45,7 +45,7 @@ public class ThreeSumClosest {
                 }
             }
         }
-        return closet;
+        return closest;
     }
     
     public static void main(String[] args) {
