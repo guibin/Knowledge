@@ -1,6 +1,7 @@
 package guibin.zhang.leetcode.permutationAndCombination;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -50,24 +51,24 @@ public class LetterCombinationsOfAPhoneNumber {
     /**
      * 
      * @param digits The input digits
-     * @param i The position of the digits
+     * @param idx The position of the digits
      * @param sb StringBuilder for caching the current branch
      * @param result 
      */
-    public void letterCombinations(String digits, int i, StringBuilder sb, ArrayList<String> result) {
+    public void letterCombinations(String digits, int idx, StringBuilder sb, List<String> result) {
         
-        if (i >= digits.length()) {
+        if (idx == digits.length()) {
             result.add(sb.toString());
         } else {
-            char[] candidates = map[digits.charAt(i) - '0'];
+            char[] candidates = map[digits.charAt(idx) - '0'];
             //Otherwise, when digits contains 0 and 1, the result will be empty.
             //Because letterCombinations cannot be involked, and finally the i < digits.length();
             if (candidates.length == 0) {
-                letterCombinations(digits, i + 1, sb, result);
+                letterCombinations(digits, idx + 1, sb, result);
             } else {
-                for (int j = 0; j < candidates.length; j++) {
-                    sb.append(candidates[j]);
-                    letterCombinations(digits, i + 1, sb, result);
+                for (int i = 0; i < candidates.length; i++) {
+                    sb.append(candidates[i]);
+                    letterCombinations(digits, idx + 1, sb, result);
                     //Because each digit maps to multiple candidate characers, 
                     //only one is needed in each combination.
                     //So delete it.
@@ -80,7 +81,7 @@ public class LetterCombinationsOfAPhoneNumber {
     public static void main(String[] args) {
         System.out.println("Permutating...");
         LetterCombinationsOfAPhoneNumber lc = new LetterCombinationsOfAPhoneNumber();
-        ArrayList<String> result = lc.letterCombinations("2314");
+        List<String> result = lc.letterCombinations("2314");
         for(String s : result) {
             System.out.println(s);
         }
