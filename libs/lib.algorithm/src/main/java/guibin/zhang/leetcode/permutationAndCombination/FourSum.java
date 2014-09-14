@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import scala.Array;
 
 /**
  *
@@ -30,11 +29,11 @@ import scala.Array;
  */
 public class FourSum {
     
-    public ArrayList<ArrayList<Integer>> fourSum(int[] num, int target) {
+    public List<List<Integer>> fourSum(int[] num, int target) {
         // Start typing your Java solution below
         // DO NOT write main() function
         Arrays.sort(num);
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        List<List<Integer>> result = new ArrayList<>();
         int len = num.length;
         
         for (int i = 0; i < len - 3; i++) {
@@ -42,24 +41,24 @@ public class FourSum {
             if (i > 0 && num[i] == num[i - 1]) continue;
             for (int j = i + 1; j < len - 2; j++) {
                 //To avoid the duplicated result
-                if (j > i + 1 && num[j] == num[j - 1]) continue;
+                if (j - 1 > i && num[j] == num[j - 1]) continue;
                 int m = j + 1;
                 int n = len - 1;
                 while (m < n) {
                     //To avoid the duplicated result
-                    if (m > j + 1 && num[m] == num[m - 1]) {
+                    if (m - 1> j && num[m] == num[m - 1]) {
                         m ++;
                         continue;
                     }
                     //To avoid the duplicated result
-                    if (n < len - 1 && num[n] == num[n + 1]) {
+                    if (n + 1< len && num[n] == num[n + 1]) {
                         n --;
                         continue;
                     }
                     
                     int delta = num[i] + num[j] + num[m] + num[n] - target;
                     if (delta == 0) {
-                        ArrayList<Integer> row = new ArrayList<Integer>();
+                        List<Integer> row = new ArrayList<Integer>();
                         row.add(num[i]);
                         row.add(num[j]);
                         row.add(num[m]);
@@ -78,6 +77,14 @@ public class FourSum {
         return result;
     }
     
+    /**
+     * 
+     * @param a The source array
+     * @param begin The start index
+     * @param count How many numbers to be summed.
+     * @param target The target value
+     * @return 
+     */
     public static List<List<Integer>> zeroSumInSortedArray(int[] a, int begin, int count, int target) {
         
         List<List<Integer>> result = new ArrayList<>();
@@ -89,7 +96,6 @@ public class FourSum {
                 int sum = a[i] + a[j];
                 if (sum == target && !visited.contains(a[i])) {
                     visited.add(a[i]);
-                    visited.add(a[j]);
                     List<Integer> branch = new ArrayList<>();
                     branch.add(a[i]);
                     branch.add(a[j]);
@@ -106,8 +112,10 @@ public class FourSum {
                 if (!visited.contains(a[i])) {
                     visited.add(a[i]);
                     List<List<Integer>> subResult = zeroSumInSortedArray(a, i + 1, count - 1, target - a[i]);
+
                     if (subResult.size() > 0) {
                         for (int j = 0; j < subResult.size(); j ++) {
+                            //Add back the a[i] which is subtracted previously.
                             subResult.get(j).add(0, a[i]);//Prepend is to make the result in asending order.
                         }
                         result.addAll(subResult);
@@ -120,19 +128,19 @@ public class FourSum {
     }
     
     
-    public ArrayList<ArrayList<Integer>> fourSum_v2(int[] num, int target) {
+    public List<List<Integer>> fourSum_v2(int[] num, int target) {
         // IMPORTANT: Please reset any member data you declared, as
         // the same Solution instance will be reused for each test case.
         Arrays.sort(num);
         //TODO: Filter out the duplicated elements, then invoke combinate
 //        Arrays.stream(num).forEach( k -> System.out.print(k + ","));
 //        System.out.println();
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        combinate(num, target, new ArrayList<Integer>(), 0, 0, 0, result);
+        List<List<Integer>> result = new ArrayList<>();
+        combinate(num, target, new ArrayList<>(), 0, 0, 0, result);
         return result;
     }
 
-    public void combinate(int[] arr, int target, ArrayList<Integer> branch, int startId, int k, int sum, ArrayList<ArrayList<Integer>> result) {
+    public void combinate(int[] arr, int target, List<Integer> branch, int startId, int k, int sum, List<List<Integer>> result) {
         
         if (k == 4 && sum == target) {
             //If result doesn't contain branch, then add it.
@@ -152,8 +160,8 @@ public class FourSum {
     public static void main(String[] args) {
         FourSum fs = new FourSum();
         int[] num = {1, 1, 0, -1, -1, 2, -2};
-        ArrayList<ArrayList<Integer>> result = fs.fourSum_v2(num, 0);
-        for (ArrayList<Integer> a : result) {
+        List<List<Integer>> result = fs.fourSum(num, 0);
+        for (List<Integer> a : result) {
             for (int i : a) {
                 System.out.print(i + ",");
             }
@@ -163,7 +171,7 @@ public class FourSum {
         System.out.println("zeroSumInSortedArray");
         Arrays.sort(num);
         List<List<Integer>> result2 = zeroSumInSortedArray(num, 0, 4, 0);
-        result.stream().forEach(
+        result2.stream().forEach(
                 (lt) -> {lt.stream().forEach(
                         (i) -> {System.out.print(i + ",");});
                 System.out.println();});
