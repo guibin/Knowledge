@@ -27,12 +27,12 @@
 
     <build>
         <plugins>
-            <plugin>
+<!--            <plugin>
                 <groupId>org.scala-tools</groupId>
                 <artifactId>maven-scala-plugin</artifactId>
                 <configuration>
                     <launchers>
-                        <!--mvn scala:run -Dlauncher=CardShuffle-->
+                        mvn scala:run -Dlauncher=CardShuffle
                         <launcher>
                             <id>CardShuffle</id>
                             <mainClass>guibin.zhang.algorithm.test.CardShuffle</mainClass>
@@ -42,7 +42,7 @@
                         </launcher>
                     </launchers>
                 </configuration>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
