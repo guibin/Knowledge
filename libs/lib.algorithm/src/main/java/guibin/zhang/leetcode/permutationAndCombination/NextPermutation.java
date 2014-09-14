@@ -1,5 +1,7 @@
 package guibin.zhang.leetcode.permutationAndCombination;
 
+import java.util.Arrays;
+
 /**
  *
  * Implement next permutation, which rearranges numbers into the lexicographically 
@@ -24,6 +26,13 @@ package guibin.zhang.leetcode.permutationAndCombination;
  * 3. Swap the Partition Number and Change Number.
  * 4. Reverse all the digits on the right of partition index.
  * 
+ * eg. 
+ * 6, 8, 7, 4, 3, 2 -> 7, 2, 3, 4, 6, 8:
+ * 1. find pivot 6.
+ * 2. find change number 7.
+ * 3. swap 6, 7 => 7, 8, 6, 4, 3, 2
+ * 4. Reverse all the elements after pivot => 7, 2, 3, 4, 6, 8
+ * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class NextPermutation {
@@ -32,24 +41,24 @@ public class NextPermutation {
         // Start typing your Java solution below
         // DO NOT write main() function
         int n = num.length;
-        int descI = n - 1;
+        int pivot = n - 1;
         // find the top index of the last desc sub array .
-         while(descI > 0 && num[descI - 1] >= num[descI]) {
-            descI --;
+         while(pivot > 0 && num[pivot] <= num[pivot - 1]) {
+            pivot --;
         }
-        // find the min value in sub array which is bigger than num[descI - 1]
+        // find the min value in sub array which is bigger than num[pivot - 1]
         // and swap them.
-        if (descI > 0) {
-            for (int i = n - 1; i >= descI; i--) {
-                if (num[i] > num[descI - 1]) {
-                    swap(num, i, descI - 1);
+        if (pivot > 0) {
+            for (int i = n - 1; i >= pivot; i--) {
+                if (num[i] > num[pivot - 1]) {
+                    swap(num, i, pivot - 1);
                     break;
                 }
             }
         }
 
         // reverse the sub array.
-        reverse(num, descI, n - 1);
+        reverse(num, pivot, n - 1);
     }
 
     private void reverse(int[] n, int a, int b) {
@@ -63,5 +72,22 @@ public class NextPermutation {
         tmp = n[b];
         n[b] = n[a];
         n[a] = tmp;
+    }
+    
+    public static void main(String[] args) {
+
+        NextPermutation np = new NextPermutation();
+        int[] num = {1, 2, 3};
+        Arrays.stream(num).forEach(i -> System.out.print(i + ","));
+        System.out.print("=> ");
+        np.nextPermutation(num);
+        Arrays.stream(num).forEach(i -> System.out.print(i + ","));
+        System.out.println();
+        
+        Arrays.stream(num).forEach(i -> System.out.print(i + ","));
+        System.out.print("=> ");
+        np.nextPermutation(num);
+        Arrays.stream(num).forEach(i -> System.out.print(i + ","));
+        System.out.println();
     }
 }
