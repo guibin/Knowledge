@@ -46,8 +46,21 @@ public class ReverseNodesInKGroup {
         while (curr != null) {
             i++;
             if (i % k == 0) {
-                reverse_v2(p1, curr.next);
-                p1 = curr;
+                /**
+                 * After reverse, the linked list looks like below
+                 * 
+                 * |-------------|
+                 * |             V
+                 * p1  1 <- 2 <- 3  p2
+                 *     |            ^
+                 *     |____________|
+                 *    p11
+                 * 
+                 * So we need to set p11 as the tail of reversed list, say 1, curr as p1.next.
+                 * 
+                 */
+                p1 = reverse_v2(p1, curr.next);
+                curr = p1.next;
             } else {
                 curr = curr.next;
             }
@@ -59,8 +72,9 @@ public class ReverseNodesInKGroup {
      * Reverse list between p1 and p2 exclusively.
      * @param p1
      * @param p2 
+     * @return  The tail of the reversed linked list
      */
-    public void reverse_v2(ListNode p1, ListNode p2) {
+    public ListNode reverse_v2(ListNode p1, ListNode p2) {
         
         ListNode curr = p1.next;
         ListNode tail = curr;
@@ -75,6 +89,8 @@ public class ReverseNodesInKGroup {
         }
         tail.next = p2;
         p1.next = prev;
+        
+        return tail;
     }
     
     
@@ -138,7 +154,7 @@ public class ReverseNodesInKGroup {
         a.next = b;
         b.next = c;
         c.next = d;
-        ListNode res = rn.reverseKGroup_v2(a, 2);
+        ListNode res = rn.reverseKGroup_v2(a, 4);
         
         while(res != null) {
             System.out.print(res.val + ",");
