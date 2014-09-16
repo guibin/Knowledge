@@ -32,7 +32,7 @@ public class RotateList {
             return head;
         }
         ListNode curr = head;
-        ListNode leftTail = head;
+        ListNode slow = head;
         int i = 0;
         
         //Adance n steps.
@@ -53,12 +53,13 @@ public class RotateList {
         }
         
         while (curr.next != null) {
-            leftTail = leftTail.next;
+            slow = slow.next;
             curr = curr.next;
         }
         curr.next = head;
-        ListNode rightHead = leftTail.next;
-        leftTail.next = null;
+        ListNode rightHead = slow.next;
+        slow.next = null;
+        
         return rightHead;
     }
     
