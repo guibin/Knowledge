@@ -58,6 +58,28 @@ public class ReverseLinkedList {
         return remaining;
     }
     
+    //Use method from ReverseLinkedListII
+    public void reverseBetween_v2(ListNode p1, ListNode p2) {
+        
+        ListNode curr = p1.next;
+        ListNode tailer = curr;//Remember the tailer of the list between p1 and p2
+        ListNode prev = null;
+        ListNode nxt = null;
+        
+        //Reverse the nodes between p1 and p2 normally
+        while (curr != p2) {
+            nxt = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nxt;
+        }
+        //Fix connectivity between the three segments.
+        tailer.next = p2;
+        p1.next = prev;
+    }
+    
+    
+    
     public ListNode reverse_v3(ListNode prev, ListNode curr) {
         if(curr == null) {
             return curr;
@@ -153,26 +175,6 @@ public class ReverseLinkedList {
             p1.next = curr;
             curr = last.next;
         }
-    }
-    
-    //Use method from ReverseLinkedListII
-    public void reverseBetween_v2(ListNode p1, ListNode p2) {
-        
-        ListNode curr = p1.next;
-        ListNode tailer = curr;//Remember the tailer of the list between p1 and p2
-        ListNode prev = null;
-        ListNode nxt = null;
-        
-        //Reverse the nodes between p1 and p2 normally
-        while (curr != p2) {
-            nxt = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = nxt;
-        }
-        //Fix connectivity between the three segments.
-        tailer.next = p2;
-        p1.next = prev;
     }
     
     public void print(ListNode n) {
