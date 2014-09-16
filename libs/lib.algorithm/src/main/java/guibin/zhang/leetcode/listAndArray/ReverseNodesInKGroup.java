@@ -34,6 +34,49 @@ public class ReverseNodesInKGroup {
         }
     }
     
+    public ListNode reverseKGroup_v2(ListNode head, int k) {
+        
+        if(head == null || k == 1) return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        
+        ListNode curr = head;
+        ListNode p1 = dummy;
+        int i = 0;
+        while (curr != null) {
+            i++;
+            if (i % k == 0) {
+                reverse_v2(p1, curr.next);
+                p1 = curr;
+            } else {
+                curr = curr.next;
+            }
+        }
+        return dummy.next;
+    }
+    
+    /**
+     * Reverse list between p1 and p2 exclusively.
+     * @param p1
+     * @param p2 
+     */
+    public void reverse_v2(ListNode p1, ListNode p2) {
+        
+        ListNode curr = p1.next;
+        ListNode tail = curr;
+        ListNode prev = p1;
+        ListNode nxt = null;
+        
+        while (curr != p2) {
+            nxt = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nxt;
+        }
+        tail.next = p2;
+        p1.next = prev;
+    }
+    
     
     public ListNode reverseKGroup(ListNode head, int k) {
         
@@ -75,62 +118,15 @@ public class ReverseNodesInKGroup {
      */
     public ListNode reverse(ListNode pre, ListNode next) {
         
-        ListNode last = pre.next; //where first will be doomed "last"
-        ListNode curr = last.next;
+        ListNode tail = pre.next; //where first will be doomed "last"
+        ListNode curr = tail.next;
         while(curr != next) {//Note here is the next instead of null.
-            last.next = curr.next;
+            tail.next = curr.next;
             curr.next = pre.next;
             pre.next = curr;
-            curr = last.next;
+            curr = tail.next;
         }
-        return last;
-    }
-    
-    public ListNode reverseKGroup_buggy(ListNode head, int k) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        ListNode curr = head;
-        ListNode nxt = null;
-        ListNode prev = null;
-        ListNode tail = null;
-        ListNode res = null;
-        int i = 0;
-        
-        while(curr != null) {
-            if(i == 0) {
-                tail = curr;
-                ListNode t = curr;
-                int n = 0;
-                while (t != null && n < k) {
-                    t = t.next;
-                    n ++;
-                }
-                if (n != k) {
-                    break;
-                } else {
-                    prev = null;
-                }
-            }
-            if (i < k) {
-                nxt = curr.next;
-                curr.next = prev;
-                prev = curr;
-                curr = nxt;
-                i ++;
-            } else {
-                if(res == null) {
-                    res = prev;
-                }
-                tail.next = curr;
-                tail = null;
-                i = 0;
-            }
-        }
-        
-        if (i == k && res == null) {
-            res = prev;
-        }
-        return res == null ? head : res;
+        return tail;
     }
     
     public static void main(String[] args) {
@@ -142,7 +138,7 @@ public class ReverseNodesInKGroup {
         a.next = b;
         b.next = c;
         c.next = d;
-        ListNode res = rn.reverseKGroup_buggy(a, 2);
+        ListNode res = rn.reverseKGroup_v2(a, 2);
         
         while(res != null) {
             System.out.print(res.val + ",");
