@@ -71,14 +71,14 @@ public class MaxPriorityQueue<T extends Comparable> {
        } 
     }
     
-    public void insert(T x) throws Exception {
+    public void add(T x) throws Exception {
         if (N >= capacity) throw new Exception("Exceed capacity.");
         
         pq[++N] = x;
         swim(N);
     }
     
-    public T delMax() throws Exception {
+    public T remove() throws Exception {
         if (N == 0) throw new Exception("Delete the empty heap.");
         
         T max = pq[1];
