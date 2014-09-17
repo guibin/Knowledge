@@ -28,20 +28,16 @@ public class LinkedListCycle {
         // IMPORTANT: Please reset any member data you declared, as
         // the same Solution instance will be reused for each test case.
         ListNode curr = head;
-        if (curr == null) {
-            return false;
-        }
-        ListNode fast = curr;
+        ListNode fast = head;
+        
         while(fast != null) {
             curr = curr.next;
             fast = fast.next;
             if (fast != null) {
                 fast = fast.next;
-            } else {
-                return false;
             }
             //Be careful the null test.
-            if (fast != null && curr.val == fast.val) {
+            if (fast != null && curr == fast) {
                 return true;
             }
         }
@@ -66,32 +62,28 @@ public class LinkedListCycle {
      * @return 
      */
     public ListNode findFistNodeOnCycle(ListNode head) {
-        
+
         ListNode curr = head;
-        if (curr == null) {
-            return null;
-        }
-        ListNode fast = curr;
-        while(fast != null) {
+        ListNode fast = head;
+        while (fast != null) {
             curr = curr.next;
             fast = fast.next;
             if (fast != null) {
                 fast = fast.next;
-            } else {
-                return null;
             }
             //Be careful the null test.
-            if (fast != null && curr.val == fast.val) {
-                break;
-            }
-        }
-        
-        ListNode curr2 = head;
-        while(curr2 != null) {
-            curr2 = curr2.next;
-            curr = curr.next;
-            if (curr2.val == curr.val) {
-                return curr2;
+            if (fast != null && curr == fast) {
+                
+                // There is cycle on the linkedlist, here start to figure out the cross node.
+                ListNode curr2 = head;
+                while (curr2 != null) {
+                    curr2 = curr2.next;
+                    curr = curr.next;
+                    if (curr2 == curr) {
+                        return curr2;
+                    }
+                }
+                
             }
         }
         
