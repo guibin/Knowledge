@@ -1,4 +1,4 @@
-package guibin.zhang.datastructure.tree;
+package guibin.zhang.leetcode.tree;
 
 /**
  *
@@ -30,19 +30,21 @@ public class MaxPriorityQueue<T extends Comparable<T>> {
     
     private T[] pq;
     private int N;
+    private int capacity;
     
     public MaxPriorityQueue(int capacity) {
-        pq = (T[]) new Comparable[capacity + 1];
+        pq = (T[]) new Comparable[capacity + 1];//Since the heap index starts from 1 instead of 0;
+        this.capacity = capacity;
     }
     
     /**
      * Eliminate the violation from children to parent, from bottom up.
-     * @param K 
+     * @param K
      */
     private void swim(int K) {
         //When parent less than child, exchange root with child. K/2 is parent, K is child
         while (K > 1 && pq[K/2].compareTo(pq[K]) < 0) {
-            exch(K/2, K);
+            swap(K/2, K);
             K = K/2;
         }
     }
@@ -60,7 +62,7 @@ public class MaxPriorityQueue<T extends Comparable<T>> {
            //If root < children
            if (pq[K].compareTo(pq[j]) < 0) {
                //Exchange root with the bigger child
-               exch(K, j);
+               swap(K, j);
                //Keep on sink down
                K = j;
            } else {
@@ -69,15 +71,19 @@ public class MaxPriorityQueue<T extends Comparable<T>> {
        } 
     }
     
-    public void insert(T x) {
+    public void insert(T x) throws Exception {
+        if (N >= capacity) throw new Exception("Exceed capacity.");
+        
         pq[++N] = x;
         swim(N);
     }
     
-    public T delMax() {
+    public T delMax() throws Exception {
+        if (N == 0) throw new Exception("Delete the empty heap.");
+        
         T max = pq[1];
         //Move the last element to the root
-        exch(1, N --);
+        swap(1, N --);
         sink(1);
         //Prevent memroy leak
         pq[N + 1] = null;
@@ -88,7 +94,7 @@ public class MaxPriorityQueue<T extends Comparable<T>> {
         return N == 0;
     }
     
-    private void exch(int i, int j) {
+    private void swap(int i, int j) {
         T tmp = pq[i];
         pq[i] = pq[j];
         pq[j] = tmp;
