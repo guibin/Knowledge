@@ -46,16 +46,15 @@ public class RemoveNthNodeFromEndOfList {
             //If i == n && p2 == null that means this list only has n nodes, just remove the head.
             if (p2 == null) {
                 return head.next;
-                
-            } else {
-                while (p2.next != null) {
-                    p2 = p2.next;
-                    p1 = p1.next;
-                }
-                ListNode tmp = p1.next;
-                p1.next = tmp.next;
-                tmp.next = null;
+            } 
+            while (p2.next != null) {
+                p2 = p2.next;
+                p1 = p1.next;
             }
+            //Delete the node p1
+            ListNode del = p1.next;
+            p1.next = del.next;
+            del.next = null;
             
         }
         return head;
