@@ -1,6 +1,10 @@
 package guibin.zhang.leetcode.listAndArray;
 
+import guibin.zhang.leetcode.tree.MaxPriorityQueue;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  * Merge k sorted linked lists and return it as one sorted list. Analyze and
@@ -14,7 +18,7 @@ import java.util.ArrayList;
  */
 public class MergeKSortedLists {
 
-    public class ListNode {
+    public class ListNode implements Comparable {
 
         int val;
         ListNode next;
@@ -22,6 +26,13 @@ public class MergeKSortedLists {
         ListNode(int x) {
             val = x;
             next = null;
+        }
+
+        @Override
+        public int compareTo(Object o) {
+            if (this.val < ((ListNode)o).val) return -1;
+            else if (this.val > ((ListNode)o).val) return 1;
+            else return 0;
         }
     }
 
@@ -57,5 +68,94 @@ public class MergeKSortedLists {
         }
 
         return head.next;
+    }
+    
+    /**
+     * This class is for merging the sorted array lists.
+     */
+    public class HeapNode implements Comparable{
+        
+        int from;//Which list it comes from
+        int val;//Value of this HeapNode
+        int currPos;//Current position on the source array
+        
+        public HeapNode(int from, int value, int currPos) {
+            this.from = from;
+            this.val = value;
+            this.currPos = currPos;
+        }
+
+        @Override
+        public int compareTo(Object o) {
+            if (this.val > ((HeapNode)o).val) return 1;
+            else if (this.val < ((HeapNode)o).val) return -1;
+            else return 0;
+        }
+    }
+    
+    public ListNode mergeKLists_v2(List<ListNode> list) throws Exception {
+        
+        //The heap is buggy
+//        MaxPriorityQueue<ListNode> maxHeap = new MaxPriorityQueue<>(list.size());
+        Queue<ListNode> maxHeap = new PriorityQueue<>(list.size());
+        ListNode head = new ListNode(0);
+        
+        //Build a maxHeap from each head of the input list
+        for (ListNode h : list) {
+            maxHeap.add(h);
+        }
+        
+        ListNode curr = head;//The head of the new merged list.
+        while (!maxHeap.isEmpty()) {
+            //Get the max one in the heap
+            ListNode h = maxHeap.remove();
+            //Add the next node to the maxheap
+            if (h.next != null) {
+                maxHeap.add(h.next);
+            }
+            
+            curr.next = h;
+            h.next = null;
+            curr = curr.next;
+        }
+        
+        return head.next;
+    }
+    
+    public static void main(String[] args) throws Exception {
+        MergeKSortedLists mks = new MergeKSortedLists();
+        ListNode a = mks.new ListNode(1);
+        ListNode b = mks.new ListNode(3);
+        ListNode c = mks.new ListNode(6);
+        ListNode d = mks.new ListNode(10);
+        a.next = b;
+        b.next = c;
+        c.next = d;
+        
+        ListNode e = mks.new ListNode(2);
+        ListNode f = mks.new ListNode(3);
+        ListNode g = mks.new ListNode(8);
+        e.next = f;
+        f.next = g;
+        
+        ListNode h = mks.new ListNode(4);
+        ListNode i = mks.new ListNode(6);
+        ListNode j = mks.new ListNode(6);
+        h.next = i;
+        i.next = j;
+        
+        List<ListNode> list = new ArrayList<>();
+        list.add(a);
+        list.add(e);
+        list.add(h);
+        ListNode head = mks.mergeKLists_v2(list);
+        
+        System.out.println("After merge:");
+        ListNode curr = head;
+        while (curr != null) {
+            System.out.print(curr.val + ", ");
+            curr = curr.next;
+        }
+        System.out.println();
     }
 }
