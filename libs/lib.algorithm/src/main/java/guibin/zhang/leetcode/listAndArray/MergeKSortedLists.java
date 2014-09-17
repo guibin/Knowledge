@@ -95,8 +95,7 @@ public class MergeKSortedLists {
     
     public ListNode mergeKLists_v2(List<ListNode> list) throws Exception {
         
-        //The heap is buggy
-//        MaxPriorityQueue<ListNode> maxHeap = new MaxPriorityQueue<>(list.size());
+//        MaxPriorityQueue<ListNode> maxHeap = new MaxPriorityQueue<>(list.size());//The heap is buggy
         Queue<ListNode> maxHeap = new PriorityQueue<>(list.size());
         ListNode head = new ListNode(0);
         
