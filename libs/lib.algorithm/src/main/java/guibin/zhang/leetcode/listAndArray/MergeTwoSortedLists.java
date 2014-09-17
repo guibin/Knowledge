@@ -33,18 +33,8 @@ public class MergeTwoSortedLists {
             return L1;
         }
 
-        ListNode head = null;
-        ListNode curr = null;
-        if (L1.val < L2.val) {
-            head = L1;
-            curr = head;
-            L1 = L1.next;
-        } else {
-            head = L2;
-            curr = head;
-            L2 = L2.next;
-        }
-        head.next = null;
+        ListNode head = new ListNode(0);
+        ListNode curr = head;
 
         while (L1 != null && L2 != null) {
             if (L1.val < L2.val) {
@@ -54,15 +44,13 @@ public class MergeTwoSortedLists {
                 curr.next = L2;
                 L2 = L2.next;
             }
+            
             curr = curr.next;
         }
 
-        if (L1 != null) {
-            curr.next = L1;
-        } else if (L2 != null) {
-            curr.next = L2;
-        }
+        if (L1 != null) curr.next = L1;
+        if (L2 != null) curr.next = L2;
 
-        return head;
+        return head.next;
     }
 }
