@@ -1,6 +1,7 @@
 package guibin.zhang.leetcode.listAndArray;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -32,28 +33,57 @@ public class ReorderList {
     public void reorderList(ListNode head) {
         // IMPORTANT: Please reset any member data you declared, as
         // the same Solution instance will be reused for each test case.
-        HashMap<Integer, ListNode> map = new HashMap<Integer, ListNode>();
+        List<ListNode> list = new ArrayList<>();
         ListNode curr = head;
         int i = 0;
-        while(curr != null) {
-            map.put(i, curr);
-            i++;
+        while (curr != null) {
+            list.add(i++, curr);
             curr = curr.next;
         }
-        int len = map.size();
-        
+        int len = list.size();
         if (len <= 2) return;
         
-        for (int j = 0; j < len/2; j++) {
-            if (j + 1 < len - 1 - j) {//To avoid the adjacent case. if dest is next to src, skip swap.
-                ListNode src = map.get(j);
-                ListNode dest = map.get(len - 1 - j);
-                ListNode prev = map.get(len - 2 - j);
-                ListNode nxt = src.next;
+        for (int j = 0; j < len / 2; j++) {
+            ListNode src = list.get(j);
+            ListNode dest = list.get(len - 1 - j);
+            ListNode prev = list.get(len - 2 - j);
+            ListNode nxt = src.next;
+            //To avoid the adjacent src and dest case.
+            //Otherwise after prev.next = null, one node will be lost.
+            if (prev != src) {
                 src.next = dest;
                 dest.next = nxt;
                 prev.next = null;
             }
         }
+    }
+    
+    public static void main(String[] args) {
+        ReorderList r = new ReorderList();
+        ListNode a = r.new ListNode(1);
+        ListNode b = r.new ListNode(2);
+        ListNode c = r.new ListNode(3);
+        ListNode d = r.new ListNode(4);
+        a.next = b;
+        b.next = c;
+        c.next = d;
+        
+        System.out.println("Before re-order:");
+        ListNode curr = a;
+        while (curr != null) {
+            System.out.print(curr.val + " -> ");
+            curr = curr.next;
+        }
+        System.out.println();
+        
+        r.reorderList(a);
+        
+        System.out.println("After re-order:");
+        curr = a;
+        while (curr != null) {
+            System.out.print(curr.val + " -> ");
+            curr = curr.next;
+        }
+        System.out.println();
     }
 }
