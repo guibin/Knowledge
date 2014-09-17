@@ -72,7 +72,6 @@ public class MaxPriorityQueue<T extends Comparable> {
     }
     
     public void add(T x) throws Exception {
-        if (N >= capacity) throw new Exception("Exceed capacity.");
         
         pq[++N] = x;
         swim(N);
