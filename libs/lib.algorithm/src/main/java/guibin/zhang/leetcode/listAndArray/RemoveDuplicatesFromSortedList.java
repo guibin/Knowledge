@@ -27,28 +27,28 @@ public class RemoveDuplicatesFromSortedList {
         }
     }
     
+    //Remove duplicated node
     public ListNode deleteDuplicates(ListNode head) {
         
         ListNode curr = head;
         ListNode prev = null;
         
-        while(curr != null) {
-            if(prev == null) {
+        while (curr != null) {
+            if (prev == null) {
                 prev = curr;
                 curr = curr.next;
             } else {
-                if(curr.val == prev.val) {
-                    ListNode tmp = curr;
-                    curr = curr.next;
-                    tmp.next = null;//To avoid the memory leak
-                    prev.next = curr;
+                if (prev.val == curr.val) {
+                    ListNode nxt = curr.next;
+                    prev.next = nxt;
+                    curr.next = null;
+                    curr = nxt;
                 } else {
                     prev = curr;
                     curr = curr.next;
                 }
             }
         }
-        
         return head;
     }
     
@@ -69,28 +69,6 @@ public class RemoveDuplicatesFromSortedList {
             curr = curr.next;
         }
         idx.next = null;
-        return head;
-    }
-    
-    //Remove duplicated node
-    public ListNode deleteDuplicates_v3(ListNode head) {
-        
-        if (head == null || head.next == null) return head;
-        
-        ListNode idx = head;
-        ListNode curr = head.next;
-        
-        while (curr != null) {
-            if (curr.val == idx.val) {
-                ListNode nxt = curr.next;
-                curr.next = null;
-                idx.next = nxt;
-                curr = nxt;
-            } else {
-                curr = curr.next;
-                idx = idx.next;
-            }
-        }
         return head;
     }
 }
