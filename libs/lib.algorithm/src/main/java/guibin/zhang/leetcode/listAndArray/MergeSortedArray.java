@@ -16,6 +16,33 @@ package guibin.zhang.leetcode.listAndArray;
  */
 public class MergeSortedArray {
     
+    /**
+     * 
+     * @param A
+     * @param m Actual number of elements in A
+     * @param B
+     * @param n 
+     */
+    public void merge_v2(int A[], int m, int B[], int n) {
+        
+        if (A.length < B.length) {
+            merge(B, n, A, m);
+        }
+        
+        int end = m + n - 1;
+        int a = m - 1;
+        int b = n - 1;
+        
+        while (a >= 0 && b >= 0) {
+            A[end --] = A[a] > B[b] ? A[a --] : B[b --];
+        }
+        
+        while (b >= 0) {
+            A[end--] = B[b--];
+        }
+    }
+    
+    
     public void merge(int A[], int m, int B[], int n) {
         if (n == 0) {
             return;
@@ -47,22 +74,6 @@ public class MergeSortedArray {
                 endA--;
             }
             end--;
-        }
-    }
-    
-    public void merge_v2(int A[], int m, int B[], int n) {
-        int end = m + n - 1;
-        int a = m - 1;
-        int b = n - 1;
-        while (a >= 0 && b >= 0) {
-            if (A[a] >= B[b]) {
-                A[end--] = A[a--];
-            } else {
-                A[end--] = B[b--];
-            }
-        }
-        while (b >= 0) {
-            A[end--] = B[b--];
         }
     }
 }
