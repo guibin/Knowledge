@@ -83,22 +83,6 @@ public class QuickSort {
         sort(a, j + 1, hi);
     }
     
-    /**
-     * Knuth shuffle.
-     * In iteration i, pick integer r between i and N-1 uniformly at random,
-     * Or between 0 to i uniformly at random
-     * Swap a[i] and a[r]
-     * @param a 
-     */
-    public void shuffle(Object[] a) {
-        int N = a.length;
-        for (int i = 0; i < N; i++) {
-            //uniformly random number between i and n-1 inclusive
-            int r = i + (int)(Math.random() * (N - i));
-            swap(a, i, r);
-        }
-    }
-    
     private void swap(Object[] a, int i, int j) {
         Object tmp = a[i];
         a[i] = a[j];
@@ -128,9 +112,5 @@ public class QuickSort {
         Arrays.stream(a).forEach((c) -> {System.out.print(c + ",");});
         System.out.println();
         
-        System.out.println("After shffule");
-        s.shuffle(a);
-        Arrays.stream(a).forEach((c) -> System.out.print(c + ","));
-        System.out.println();
     }
 }
