@@ -31,6 +31,42 @@ public class ReverseLinkedListII {
     }
     
     
+    public ListNode reverseBetween_v2(ListNode head, int m, int n) {
+        
+        if (head == null || head.next == null || m == n) return head;
+        
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode curr = dummy;
+        ListNode prev = dummy;
+        ListNode nxt = null;
+        int i = 0;
+        
+        //Search for p1, save tail
+        while (i < m) {
+            i++;
+            prev = curr;
+            curr = curr.next;
+        }
+        ListNode p1 = prev;
+        ListNode tail = p1.next;
+        
+        //Search for p2. Here is i <= n instead of i < n.
+        while (i <= n) {
+            i++;
+            nxt = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nxt;
+        }
+        ListNode p2 = curr;
+        
+        p1.next = prev;
+        tail.next = p2;
+        
+        return dummy.next;
+    }
+    
     public ListNode reverseBetween(ListNode head, int m, int n) {
 
         ListNode curr = head;
@@ -116,8 +152,8 @@ public class ReverseLinkedListII {
         rl.print(a);
         System.out.println("Reversed iterately:");
         System.out.println("m = 2, n = 4");
-        rl.print(rl.reverseBetween(a, 2, 4));
+        rl.print(rl.reverseBetween_v2(a, 2, 4));
         System.out.println("m = 1, n = 2");
-        rl.print(rl.reverseBetween(a, 1, 2));
+        rl.print(rl.reverseBetween_v2(a, 1, 2));
     }
 }
