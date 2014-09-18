@@ -70,4 +70,35 @@ public class SortedList {
         
         return head.next;
     }
+    
+    public static void main(String[] args) {
+        SortedList mks = new SortedList();
+        
+        ListNode a = mks.new ListNode(103);
+        ListNode b = mks.new ListNode(33);
+        ListNode c = mks.new ListNode(6);
+        ListNode d = mks.new ListNode(101);
+        ListNode e = mks.new ListNode(21);
+        ListNode f = mks.new ListNode(3);
+        ListNode g = mks.new ListNode(86);
+        ListNode h = mks.new ListNode(41);
+        ListNode i = mks.new ListNode(6);
+        ListNode j = mks.new ListNode(65);
+        a.next = b;
+        b.next = c;
+        c.next = d;
+        d.next = e;
+        e.next = f;
+        f.next = g;
+        g.next = h;
+        h.next = i;
+        i.next = j;
+        
+        ListNode curr = mks.sortList(a);
+        while (curr != null) {
+            System.out.print(curr.val + ", ");
+            curr = curr.next;
+        }
+        System.out.println();
+    }
 }
