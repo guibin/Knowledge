@@ -18,6 +18,9 @@ public class Shuffle {
         int N = a.length;
         for (int i = 0; i < N; i++) {
             //uniformly random number between i and n-1 inclusive
+            //random() -> [0, 1)
+            //random() * (N - i) -> [0, N - i)
+            //i + random() * (N - i) -> [i, N)
             int r = i + (int)(Math.random() * (N - i));
             swap(a, i, r);
         }
