@@ -12,6 +12,10 @@ public class Shuffle {
      * In iteration i, pick integer r between i and N-1 uniformly at random,
      * Or between 0 to i uniformly at random
      * Swap a[i] and a[r]
+     * 
+     * While traveling through the array, swap the current item with a random 
+     * item after current.
+     * 
      * @param a 
      */
     public void shuffle(Object[] a) {
