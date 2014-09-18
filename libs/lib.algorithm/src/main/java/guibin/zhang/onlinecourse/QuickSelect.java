@@ -40,17 +40,20 @@ public class QuickSelect {
     
     public int partition(Comparable[] a, int lo, int hi) {
         
-        if (lo == hi) return lo;//It is ok to add this quick judgement.
-        
-        int i = lo, j = hi + 1;
-        while(true) {
-            while (a[++i].compareTo(a[lo]) <= 0) {
-                if (i == hi) break;
+        int i = lo + 1;
+        int j = hi;
+        while (true) {
+            //Scan from lo to hi to reach the first element that is greater than pivot
+            while (i < hi && a[i].compareTo(a[lo]) <= 0) {
+                i++;
             }
-            while (a[--j].compareTo(a[lo]) >= 0) {
-                if (j == lo) break;
+            //Scan from hi to lo to reach the first element that is less than pivot
+            while (j > lo && a[j].compareTo(a[lo]) >= 0) {
+                j--;
             }
-            if(i >= j) break;
+            
+            if (i >= j) break;
+            
             swap(a, i, j);
         }
         swap(a, lo, j);
