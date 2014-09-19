@@ -66,11 +66,9 @@ public class BinaryTreeZigzagLevelOrderTraversal {
                     queue.add(dummy);
                 }
             } else {
-                if (flip) {
-                    row.add(0, curr.val);//Access it and save it in reverse order
-                } else {
-                    row.add(curr.val);//Access it
-                }
+                if (flip) row.add(0, curr.val);//Access it and save it in reverse order
+                else row.add(curr.val);//Access it
+                
                 if (curr.left != null) queue.add(curr.left);
                 if (curr.right != null) queue.add(curr.right);
             }
