@@ -24,12 +24,9 @@ public class DutchNationalFlag {
         int blue = flags.length - 1;//Initial index for blue
         for (int i = 0; i < flags.length && i <= blue;) {
             if (flags[i] == 'r') {
-                swap(flags, red, i);
-                red ++;
-                i ++;
+                swap(flags, red++, i++);
             } else  if (flags[i] == 'b') {
-                swap(flags, blue, i);
-                blue --;
+                swap(flags, blue--, i);
                 //Here don't increase i, since after swap, the flags[i] has not been checked.
             } else {
                 i ++;
