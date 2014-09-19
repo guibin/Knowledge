@@ -45,6 +45,8 @@ public class BinaryTreeLevelOrderTraversal {
     
     public void levelOrder_v4(TreeNode root) {
         
+        if (root == null) return;
+        
         Queue<TreeNode> queue = new LinkedList<>();
         TreeNode dummy = new TreeNode(0);//For return line
         TreeNode dummy2 = new TreeNode(0);//For append #
@@ -56,10 +58,9 @@ public class BinaryTreeLevelOrderTraversal {
             curr = queue.remove();
             if (curr == dummy) {
                 System.out.println();
-                if (queue.isEmpty()) {
-                    break;
+                if (!queue.isEmpty()) {
+                    queue.add(dummy);
                 }
-                queue.add(dummy);
             } else {
                 //Access the elements here.
                 System.out.print((curr == dummy2 ? "#" : curr.val) + ", ");
