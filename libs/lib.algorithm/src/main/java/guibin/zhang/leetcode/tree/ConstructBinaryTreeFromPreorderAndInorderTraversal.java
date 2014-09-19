@@ -25,6 +25,25 @@ public class ConstructBinaryTreeFromPreorderAndInorderTraversal {
         }
     }
     
+    public TreeNode buildTree_v2(int[] preorder, int[] inorder) {
+        
+        return buildTree(inorder, 0, inorder.length - 1, preorder, 0, preorder.length - 1);
+    }
+    
+    public TreeNode buildTree(int[] iOrder, int iStart, int iEnd, int[] pOrder, int pStart, int pEnd) {
+        
+        if (pStart <= pEnd && pStart >=0 && iStart <= iEnd && iStart >=0) {
+            TreeNode root = new TreeNode(pOrder[pStart]);
+            int idx = indexOf(iOrder, pOrder[pStart]);
+            int len = idx - iStart;
+            root.left = buildTree(iOrder, iStart, idx - 1, pOrder, pStart + 1, pStart + len);
+            root.right = buildTree(iOrder, idx + 1, iEnd, pOrder, pStart + len + 1, pEnd);
+            return root;
+        }
+        return null;
+    }
+    
+    
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         
         if(preorder.length <= 0) {
@@ -74,24 +93,6 @@ public class ConstructBinaryTreeFromPreorderAndInorderTraversal {
     }
     
     
-    public TreeNode buildTree_v2(int[] preorder, int[] inorder) {
-        
-        return buildTree(inorder, 0, inorder.length - 1, preorder, 0, preorder.length - 1);
-    }
-    
-    public TreeNode buildTree(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd) {
-        
-        if (preStart <= preEnd && preStart >=0 && inStart <= inEnd && inStart >=0) {
-            TreeNode root = new TreeNode(preorder[preStart]);
-            int idx = indexOf(inorder, preorder[preStart]);
-            int len = idx - inStart;
-            root.left = buildTree(preorder, preStart + 1, preStart + len, inorder, inStart, idx - 1);
-            root.right = buildTree(preorder, preStart + len + 1, preEnd, inorder, idx + 1, inEnd);
-            return root;
-        }
-        return null;
-    }
-    
     public int indexOf(int[] inorder, int v) {
         for (int i = 0; i < inorder.length; i++) {
             if (inorder[i] == v) {
@@ -107,7 +108,7 @@ public class ConstructBinaryTreeFromPreorderAndInorderTraversal {
         int[] a = {1, 2, 3};
         int[] b = {2, 1, 3};
         
-        cb.buildTree(a, b);
+        cb.buildTree_v2(a, b);
         
         for(int i : cb.subarray(a, 0, 1)) {
             System.out.print(i + ",");
