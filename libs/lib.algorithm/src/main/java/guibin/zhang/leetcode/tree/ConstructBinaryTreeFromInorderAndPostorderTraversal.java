@@ -30,16 +30,16 @@ public class ConstructBinaryTreeFromInorderAndPostorderTraversal {
         return buildTree(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1);
     }
     
-    public TreeNode buildTree(int[] inorder, int inStart, int inEnd, int[] postorder, int poStart, int poEnd) {
+    public TreeNode buildTree(int[] iOrder, int iStart, int iEnd, int[] pOrder, int pStart, int pEnd) {
         
-        if(poStart <= poEnd && poStart >= 0 && inStart >=0 && inStart <= inEnd) {
+        if(pStart <= pEnd && pStart >= 0 && iStart <= iEnd && iStart >=0) {
             
-            TreeNode node = new TreeNode(postorder[poEnd]);
-            int indexInorder = indexOf(inorder, inStart, inEnd, postorder[poEnd]);
-            int leftLength = indexInorder - inStart;//leftlength is the most important
+            TreeNode node = new TreeNode(pOrder[pEnd]);
+            int iIdx = indexOf(iOrder, iStart, iEnd, pOrder[pEnd]);
+            int len = iIdx - iStart;//leftlength is the most important
             
-            node.left = buildTree(inorder, inStart, indexInorder - 1, postorder, poStart, poStart + leftLength - 1);
-            node.right = buildTree(inorder, indexInorder + 1, inEnd, postorder, poStart + leftLength , poEnd - 1);
+            node.left = buildTree(iOrder, iStart, iIdx - 1, pOrder, pStart, pStart + len - 1);
+            node.right = buildTree(iOrder, iIdx + 1, iEnd, pOrder, pStart + len , pEnd - 1);
             
             return node;
         }
