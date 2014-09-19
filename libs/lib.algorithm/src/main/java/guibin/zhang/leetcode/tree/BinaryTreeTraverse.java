@@ -76,6 +76,9 @@ public class BinaryTreeTraverse {
      * Use two stacks, one for walk through the tree, 
      * the other is for saving the result in reversed order.
      * 
+     * Same logic with level order traverse, 
+     * just replace the queue as stack, and output to stack.
+     * 
      * http://leetcode.com/2010/10/binary-tree-post-order-traversal.html
      * 
      * @param root 
