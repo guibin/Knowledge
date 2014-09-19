@@ -43,98 +43,28 @@ public class BinaryTreeZigzagLevelOrderTraversal {
         }
     }
     
-    public ArrayList<ArrayList<Integer>> zigzagLevelOrder(TreeNode root) {
-        
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> row = new ArrayList<Integer>();
-        Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        Queue<Integer> level = new LinkedList<Integer>();
-        
-        if(root != null) {
-            queue.offer(root);
-            level.offer(0);
-        } else {
-            return result;
-        }
-        int lastLevel = 0;
-        boolean reverse = false;
-        while(!queue.isEmpty()) {
-            TreeNode curr = queue.poll();
-            int m = level.poll();
-            if(m == lastLevel) {
-                row.add(curr.val);
-            } else {
-                if(!reverse) {
-                    result.add(row);
-                } else {
-                    //reverse
-                    int start = 0;
-                    int end = row.size() - 1;
-                    while(start <= end) {
-                        int tmp = row.get(start);
-                        row.set(start, row.get(end));
-                        row.set(end, tmp);
-                        start ++;
-                        end --;
-                    }
-                    result.add(row);
-                }
-                reverse = !reverse;
-                row = new ArrayList<Integer>();
-                row.add(curr.val);//Don't forget to add the curr to the new row.
-            }
-            
-            if(curr.left != null) {
-                queue.offer(curr.left);
-                level.offer(m + 1);
-            }
-            if(curr.right != null) {
-                queue.offer(curr.right);
-                level.offer(m + 1);
-            }
-            lastLevel = m;
-        }
-        //Note: at the end of the traverse, need to judge the flag of reverse.
-        if (reverse) {
-            int start = 0;
-            int end = row.size() - 1;
-            while (start <= end) {
-                int tmp = row.get(start);
-                row.set(start, row.get(end));
-                row.set(end, tmp);
-                start++;
-                end--;
-            }
-            result.add(row);
-        } else {
-            result.add(row);
-        }
-        
-        return result;
-    }
-    
     public List<List<Integer>> zigzagLevelOrder_v2(TreeNode root) {
         
         Queue<TreeNode> queue = new LinkedList<>();
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> row = new ArrayList<>();
+        TreeNode dummy = new TreeNode(0);
         
         queue.add(root);
-        queue.add(null);
-        TreeNode curr = null;
+        queue.add(dummy);
+        TreeNode curr;
         boolean flip = false;
         
         while (!queue.isEmpty()) {
             curr = queue.remove();
-            if (curr == null) {
+            if (curr == dummy) {
                 result.add(new ArrayList(row));
                 row.clear();
                 
                 flip = !flip;
-                if (queue.isEmpty()) {
-                    break;
+                if (!queue.isEmpty()) {
+                    queue.add(dummy);
                 }
-                queue.add(null);
             } else {
                 if (flip) {
                     row.add(0, curr.val);//Access it and save it in reverse order
@@ -151,23 +81,24 @@ public class BinaryTreeZigzagLevelOrderTraversal {
     public void printTree(TreeNode root) {
         
         Queue<TreeNode> queue = new LinkedList<>();
-        TreeNode curr = null;
+        TreeNode curr;
+        TreeNode dummy = new TreeNode(0);
+        TreeNode dummy2 = new TreeNode(0);
         queue.add(root);
-        queue.add(null);
+        queue.add(dummy);
         
         while (!queue.isEmpty()) {
             curr = queue.remove();
-            if (curr == null) {
+            if (curr == dummy) {
                 System.out.println();
-                if (queue.isEmpty()) {
-                    break;
+                if (!queue.isEmpty()) {
+                    queue.add(dummy);
                 }
-                queue.add(null);
             } else {
-                System.out.print((curr.val == -99 ? "#" : curr.val) + ", ");
+                System.out.print((curr == dummy2 ? "#" : curr.val) + ", ");
                 if (curr.left != null || curr.right != null) {
-                    queue.add(curr.left == null ? new TreeNode(-99) : curr.left);
-                    queue.add(curr.right == null ? new TreeNode(-99) : curr.right);
+                    queue.add(curr.left == null ? dummy2 : curr.left);
+                    queue.add(curr.right == null ? dummy2 : curr.right);
                 }
             }
         }
@@ -204,9 +135,10 @@ public class BinaryTreeZigzagLevelOrderTraversal {
         f.right = m;
         g.left = n;
 //        g.right = o;
-        
+        System.out.println("Before zigzag traverse:");
         rb.printTree(a);
         
+        System.out.println("After zigzag traverse:");
         List<List<Integer>> result = rb.zigzagLevelOrder_v2(a);
         result.forEach(r -> {r.forEach(item -> System.out.print(item + ",")); 
         System.out.println();});
