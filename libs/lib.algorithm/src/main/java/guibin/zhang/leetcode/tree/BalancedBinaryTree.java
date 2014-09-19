@@ -23,41 +23,28 @@ public class BalancedBinaryTree {
         }
     }
     
-    public boolean isBalenced_v1(TreeNode root) {
-        
-        return determine(root) >= 0;
+    public boolean isBalanced(TreeNode root) {
+        return maxHeightOf(root) -  minHeightOf(root) <= 1;
     }
     
-    public int determine(TreeNode root) {
-        
-        if(root == null) {
-            return 0;
-        } else {
-            int leftDepth = determine(root.left);
-            int rightDepth = determine(root.right);
-            if(leftDepth < 0 || rightDepth < 0 || Math.abs(leftDepth - rightDepth) > 1) return -1;
-            return Math.max(leftDepth, rightDepth) + 1;
-        }
+    /**
+     * The max height from root to leaf
+     * @param root
+     * @return height
+     */
+    public int maxHeightOf(TreeNode root) {
+        if (root == null) return 0;
+        return Math.max(maxHeightOf(root.left), maxHeightOf(root.right)) + 1;
     }
     
-    public boolean isBalenced_v2(TreeNode root) {
-        
-        return balancedHeight(root) >= 0;
-    }
-    
-    public int balancedHeight(TreeNode root) {
-        if(root == null) {
-            return 0;
-        }
-        int left = balancedHeight(root.left);
-        if(left == -1) return -1;
-        int right = balancedHeight(root.right);
-        if(right == -1) return -1;
-        if(Math.abs(left - right) <= 1) {
-            return Math.max(left, right) + 1;
-        } else {
-            return -1;
-        }
+    /**
+     * The min height from root to leaf
+     * @param root
+     * @return height
+     */
+    public int minHeightOf(TreeNode root) {
+        if (root == null) return 0;
+        return Math.min(minHeightOf(root.left), minHeightOf(root.right)) + 1;
     }
     
     public int heightOf(TreeNode root) {
@@ -75,7 +62,7 @@ public class BalancedBinaryTree {
           *         / \
           *        2   5
           *       / \   \
-          *      3   4   6
+          *      3   4   
          */
 
         BalancedBinaryTree fbt = new BalancedBinaryTree();
@@ -84,13 +71,15 @@ public class BalancedBinaryTree {
         TreeNode c = fbt.new TreeNode(3);
         TreeNode d = fbt.new TreeNode(4);
         TreeNode f = fbt.new TreeNode(5);
-        TreeNode g = fbt.new TreeNode(6);
+//        TreeNode g = fbt.new TreeNode(6);
         a.left = b;
-//        a.right = f;
-//        b.left = c;
-//        b.right = d;
-//        d.left = c;
+        a.right = f;
+        b.left = c;
+        b.right = d;
+        d.left = c;
 //        f.right = g;
 //        System.out.println(fbt.minDepth(a));
+        
+        System.out.println(fbt.minHeightOf(a));
     }
 }
