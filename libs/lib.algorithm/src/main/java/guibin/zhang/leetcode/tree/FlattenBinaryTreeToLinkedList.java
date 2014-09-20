@@ -101,43 +101,6 @@ public class FlattenBinaryTreeToLinkedList {
         }
     }
     
-    
-    /**
-     * Memory Limit Exceeded
-     * @param root 
-     */
-    public void flatten(TreeNode root) {
-        
-        if(root == null) {
-            return;
-        }
-        
-        Stack<TreeNode> stack = new Stack();
-        TreeNode curr = root;
-        
-        do {
-            while(curr.left != null || curr.right != null) {
-                if(curr.right != null) {
-                    stack.push(curr.right);
-                }
-                if(curr.left != null) {
-                    curr.right = curr.left;
-                    curr = curr.left;
-                }
-            }
-            
-            TreeNode last = curr;
-            if(!stack.isEmpty()) {
-                curr = stack.pop();
-            }
-            if(last != curr) {//To avoid the cycle of the list.
-                last.right = curr;
-                last.left = null;
-            }
-        }
-        while(!stack.isEmpty());
-    }
-    
     public void printLinkedList(TreeNode root) {
         if(root != null) {
             System.out.print(root.val + ", ");
