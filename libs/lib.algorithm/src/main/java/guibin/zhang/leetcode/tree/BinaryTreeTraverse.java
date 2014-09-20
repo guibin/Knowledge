@@ -20,12 +20,29 @@ public class BinaryTreeTraverse {
         }
     }
     
+    public void preorder(TreeNode root) {
+        
+        if (root == null) return;
+        
+        Stack<TreeNode> s = new Stack<>();
+        s.push(root);
+        
+        while (!s.isEmpty()) {
+            TreeNode curr = s.pop();
+            System.out.print(curr.val + ",");
+            
+            if (curr.right != null) s.push(curr.right);
+            if (curr.left != null) s.push(curr.left);
+        }
+        System.out.println();
+    }
+    
     /**
      * Use one stack to save right, access the curr and left.
      * 
      * @param root 
      */
-    public void preorder(TreeNode root) {
+    public void preorder_v2(TreeNode root) {
 
         Stack<TreeNode> s = new Stack<>();
         TreeNode curr = root;
@@ -98,6 +115,7 @@ public class BinaryTreeTraverse {
             if (curr.left != null) s.push(curr.left);
             if (curr.right != null) s.push(curr.right);
         }
+        
         while (!out.isEmpty()) {
             System.out.print(out.pop().val + ",");
         }
@@ -211,6 +229,9 @@ public class BinaryTreeTraverse {
         
         System.out.println("preorder traverse:");
         bst.preorder(a);
+        
+        System.out.println("preorder traverse_v2:");
+        bst.preorder_v2(a);
         
         System.out.println("inorder traverse:");
         bst.inorder(a);
