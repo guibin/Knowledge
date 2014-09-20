@@ -98,4 +98,18 @@ public class MaxPriorityQueue<T extends Comparable> {
         pq[i] = pq[j];
         pq[j] = tmp;
     }
+    
+    public static void main(String[] args) throws Exception {
+        MaxPriorityQueue<Integer> heap = new MaxPriorityQueue<>(10);
+        heap.add(10);
+        heap.add(5);
+        heap.add(16);
+        heap.add(19);
+        heap.add(3);
+        heap.add(2);
+        
+        while (!heap.isEmpty()) {
+            System.out.println(heap.remove());
+        }
+    }
 }
