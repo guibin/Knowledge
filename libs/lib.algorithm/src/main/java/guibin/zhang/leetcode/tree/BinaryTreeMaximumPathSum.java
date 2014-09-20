@@ -45,8 +45,8 @@ public class BinaryTreeMaximumPathSum {
     /**
      * Compute the max sum up to root: Max(left, right) + root.val
      * @param root
-     * @param maxSum int[] to store the maxSum
-     * @return 
+     * @param maxSum int[] to store the maxSum till current code.
+     * @return height sum to this node.
      */
     public int maxSinglePathSum(TreeNode root, int[] maxSum) {
         
@@ -69,10 +69,13 @@ public class BinaryTreeMaximumPathSum {
          *   /   \
          *  ...
          */   
-        int pathSum = root.val + Math.max(leftSum, 0) + Math.max(rightSum, 0);
-        maxSum[0] = Math.max(maxSum[0], pathSum);//Compute the max sum
+        int currPathSum = root.val + Math.max(leftSum, 0) + Math.max(rightSum, 0);
+        maxSum[0] = Math.max(maxSum[0], currPathSum);//Compute the max sum
         
-        //Here is to compute the max sum up to root. We only need one child, refer to http://www.cnblogs.com/shawnhue/archive/2013/06/08/leetcode_124.html
+        //Here is to compute the max sum up to root. 
+        //We only need one child, refer to http://www.cnblogs.com/shawnhue/archive/2013/06/08/leetcode_124.html
+        //This is for parent node computing the max, only one node is selected.
+        //This is same with height computing of the tree.
         return Math.max(Math.max(leftSum, rightSum), 0) + root.val;
     }
     
