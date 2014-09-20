@@ -24,26 +24,24 @@ public class MinimumDepthOfBinaryTree {
         }
     }
     
+    /**
+     * Standard height of tree + two edge case.
+     * @param root
+     * @return 
+     */
     public int minDepth(TreeNode root) {
         
-        if(root == null) {
-            return 0;
-        }
+        if(root == null) return 0;
+        int leftDepth = minDepth(root.left) + 1;
+        int rightDepth = minDepth(root.right) + 1;
         
-        int leftDepth = 1 + minDepth(root.left);
-        int rightDepth = 1 + minDepth(root.right);
-        
+        //Edge cases:
         //the tree only has right branch
-        if(root.left == null && leftDepth ==  1) {
-            return rightDepth;
-        }
+        if(root.left == null && leftDepth ==  1) return rightDepth;
         //the tree only has left branch
-        else if(root.right == null && rightDepth == 1) {
-            return leftDepth;
-        }
-        else {
-            return Math.min(leftDepth, rightDepth);
-        }
+        if(root.right == null && rightDepth == 1) return leftDepth;
+
+        return Math.min(leftDepth, rightDepth);
     }
     
     public int minDepth_v2(TreeNode root) {
