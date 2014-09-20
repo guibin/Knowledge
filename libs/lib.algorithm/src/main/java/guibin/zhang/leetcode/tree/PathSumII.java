@@ -57,7 +57,7 @@ public class PathSumII {
         //Firstly create nPath, then add root.val to nPath.
         //Instead of adding root.val to branch
         if(root.left == null && root.right == null && root.val == target) {
-            ArrayList<Integer> nPath = new ArrayList<>(branch);
+            List<Integer> nPath = new ArrayList<>(branch);
             nPath.add(root.val);
             result.add(nPath);
             return;
