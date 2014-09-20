@@ -46,6 +46,63 @@ public class FlattenBinaryTreeToLinkedList {
     }
     
     /**
+     * Preorder traverse + linked list.
+     * @param root 
+     */
+    public void flatten_v2(TreeNode root) {
+        
+        if (root == null) return;
+        
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        TreeNode prev = root;
+                
+        while(!stack.isEmpty()) {
+            TreeNode curr = stack.pop();
+
+            //Access curr preorder
+            if(prev != curr) {//To avoid the cycle of the list.
+                prev.right = curr;//Connect prev to curr
+                prev.left = null;//Disconnect left of prev
+                prev = curr;//Move prev to curr
+            }
+            
+            if(curr.right != null) stack.push(curr.right);
+            if(curr.left != null) stack.push(curr.left);
+        }
+    }
+    
+    /**
+     * Use preorder traverse. Use prev to save the previous access, to link to curr as a linkedlist.
+     * 
+     * @param root 
+     */
+    public void flatten_v3(TreeNode root) {
+        
+        TreeNode curr = root;
+        TreeNode prev = root;
+        Stack<TreeNode> s = new Stack<>();
+        
+        while (curr != null || !s.isEmpty()) {
+            if (curr != null) {
+                
+                //Access curr preorder
+                if (prev != curr) {
+                    prev.left = null;//Cut off left
+                    prev.right = curr;//Connect to curr on right
+                    prev = curr;//Move prev to curr
+                }
+                
+                if (curr.right != null) s.push(curr.right);
+                curr = curr.left;
+            } else {
+                curr = s.pop();
+            }
+        }
+    }
+    
+    
+    /**
      * Memory Limit Exceeded
      * @param root 
      */
@@ -81,61 +138,6 @@ public class FlattenBinaryTreeToLinkedList {
         while(!stack.isEmpty());
     }
     
-    public void flatten_v2(TreeNode root) {
-        
-        Stack<TreeNode> stack = new Stack<TreeNode>();
-        if(root != null) {
-            stack.push(root);
-            while(!stack.isEmpty()) {
-                TreeNode n = stack.pop();
-                if(n.right != null){
-                    stack.push(n.right);
-                }
-                if(n.left != null) {
-                    stack.push(n.left);
-                }
-                
-                //Access this node
-                if(root != n) {//To avoid the cycle of the list.
-                    root.right = n;
-                    root.left = null;
-                    root = root.right;
-                }
-            }
-        }
-    }
-    
-    /**
-     * Use preorder traverse. Use prev to save the previous access, to link to curr as a linkedlist.
-     * 
-     * @param root 
-     */
-    public void flatten_v3(TreeNode root) {
-        
-        TreeNode curr = root;
-        TreeNode prev = null;
-        Stack<TreeNode> s = new Stack<>();
-        
-        while (curr != null || !s.isEmpty()) {
-            if (curr != null) {
-                
-                //Access curr preorder
-                if (prev == null) {
-                    prev = curr;
-                } else {
-                    prev.left = null;//Cut off left
-                    prev.right = curr;//Connect to curr on right
-                    prev = prev.right;//Move prev to curr
-                }
-                
-                if (curr.right != null) s.push(curr.right);
-                curr = curr.left;
-            } else {
-                curr = s.pop();
-            }
-        }
-    }
-    
     public void printLinkedList(TreeNode root) {
         if(root != null) {
             System.out.print(root.val + ", ");
@@ -159,8 +161,8 @@ public class FlattenBinaryTreeToLinkedList {
         b.right = d;
         f.right = g;
         
-//        fbt.flatten_v2(a);
-        fbt.flatten_v3(a);
+        fbt.flatten_v2(a);
+//        fbt.flatten_v3(a);
         fbt.printLinkedList(a);
         
     }
