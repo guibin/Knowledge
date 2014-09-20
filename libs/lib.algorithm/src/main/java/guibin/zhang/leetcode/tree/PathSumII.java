@@ -1,6 +1,7 @@
 package guibin.zhang.leetcode.tree;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
@@ -38,34 +39,31 @@ public class PathSumII {
         }
     }
     
-    public ArrayList<ArrayList<Integer>> pathSum(TreeNode root, int sum) {
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
         
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        List<List<Integer>> result = new ArrayList<>();
 
-        ArrayList<Integer> path = new ArrayList<Integer>();
+        List<Integer> path = new ArrayList<>();
         sum(root, sum, path, result);
         
         return result;
     }
     
     
-    public void sum(TreeNode root, int target, ArrayList<Integer> branch, ArrayList<ArrayList<Integer>> result) {
+    public void sum(TreeNode root, int target, List<Integer> branch, List<List<Integer>> result) {
         
         if(root == null) return;
         
         //Firstly create nPath, then add root.val to nPath.
         //Instead of adding root.val to branch
         if(root.left == null && root.right == null && root.val == target) {
-            ArrayList<Integer> nPath = new ArrayList<Integer>(branch);
+            ArrayList<Integer> nPath = new ArrayList<>(branch);
             nPath.add(root.val);
             result.add(nPath);
-            
+            return;
         }
-        branch.add(root.val);
         
-        /**
-         * Here we reuse the path, but note to remove the last one element.
-         */
+        branch.add(root.val);
         sum(root.left, target - root.val, branch, result);
         sum(root.right, target - root.val, branch, result);
         branch.remove(branch.size() - 1);
