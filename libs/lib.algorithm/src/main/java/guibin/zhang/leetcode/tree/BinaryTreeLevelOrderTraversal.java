@@ -57,7 +57,9 @@ public class BinaryTreeLevelOrderTraversal {
         while (!queue.isEmpty()) {
             curr = queue.remove();
             if (curr == dummy) {
+                //At the end of the each level
                 System.out.println();
+                
                 if (!queue.isEmpty()) {
                     queue.add(dummy);
                 }

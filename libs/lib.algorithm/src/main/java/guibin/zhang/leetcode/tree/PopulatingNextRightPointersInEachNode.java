@@ -66,22 +66,26 @@ public class PopulatingNextRightPointersInEachNode {
         if (root == null) return;
         
         Queue<TreeLinkNode> q = new LinkedList<>();
-        q.add(root);
-        q.add(null);
+        TreeLinkNode dummy = new TreeLinkNode(0);
         TreeLinkNode prev = null;
+        q.add(root);
+        q.add(dummy);
         
         while (!q.isEmpty()) {
             TreeLinkNode curr = q.remove();
-            if (curr == null) {
+            if (curr == dummy) {
+                
+                //At the end of each level
                 //Change level, point prev.next to null
                 if (prev != null) {
                     prev.next = null;
                     prev = prev.next;
                 }
                 
-                if (q.isEmpty()) break;
-                q.add(null);
+                if (!q.isEmpty()) q.add(dummy);
+                
             } else {
+                //Access curr
                 //Save level, prev.next = curr
                 if (prev == null) {
                     prev = curr;
