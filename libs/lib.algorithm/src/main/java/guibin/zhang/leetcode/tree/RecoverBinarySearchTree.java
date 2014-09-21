@@ -16,6 +16,8 @@ import java.util.Stack;
  * http://n00tc0d3r.blogspot.com/2013/05/recover-binary-search-tree.html
  * http://yucoding.blogspot.com/2013/03/leetcode-question-75-recover-binary.html
  * http://discuss.leetcode.com/questions/272/recover-binary-search-tree
+ * http://www.darrensunny.me/leetcode-binary-tree-inorder-traversal/
+ * http://www.darrensunny.me/leetcode-recover-binary-search-tree/
  * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
@@ -32,43 +34,96 @@ public class RecoverBinarySearchTree {
         }
     }
     
+    public void recoverTree_v3(TreeNode root) {
+        
+        TreeNode[] nodes = new TreeNode[2];
+        
+        inorder(root, nodes, null);
+        //found the two misplaced nodes
+        if(nodes[0] != null && nodes[1] != null) {
+            int temp = nodes[0].val;
+            nodes[0].val = nodes[1].val;
+            nodes[1].val = temp;
+        }
+    }
+    
+    /**
+     * inorder traverse recursively
+     * @param root
+     * @param nodes
+     * @param pre
+     * @return 
+     */
+    private TreeNode inorder(TreeNode root, TreeNode[] nodes, TreeNode pre) {
+        
+        if(root == null) return pre;
+        
+        //left subtree
+        TreeNode last = inorder(root.left, nodes, pre);
+        //visit
+        if(last != null && root.val < last.val) {
+            if(nodes[0] == null) {//Found the first node
+                nodes[0] = last;//The first one should be the bigger one, 
+                nodes[1] = root;//the second one should be the smaller one.
+            }
+            else {
+                nodes[1] = root;//the second one should be the smaller one.
+            }
+        }
+        //right subtree
+        return inorder(root.right, nodes, root);
+    }
+    
+    
     public void recoverTree(TreeNode root) {
         
         List<TreeNode> list = inOrderTraverse(root);
-        boolean found = false;
+        boolean first = false;
+        boolean second = false;
         //The first one should be the bigger one, 
         //the second one should be the smaller one.
         int i = 0;
         for(; i < list.size() - 1; i++) {
             if(list.get(i).val > list.get(i + 1).val) {
+                first = true;
                 break;
             }
         }
         int j = i + 1;
         for(; j < list.size() - 1; j++) {
             if(list.get(j).val > list.get(j + 1).val) {
-                found = true;
+                second = true;
                 break;
             }
         }
         //Note: here is the edge case
-        if(!found) {
+        //Case 1: 3 and 2 need to be reversed
+        //                    i i+1
+        //1, 2, 3, 4, 5 => 1, 3, 2, 4, 5
+        if(first && !second) {
             j = i + 1;
-        } else {
+            swap(list, i, j);
+        } else if (first && second) {
+            //Case 2: 4 and 2 need to be reversed
+            //                    i i+1 
+            //1, 2, 3, 4, 5 => 1, 4, 3, 2, 5
+            //                       j  j+1
             j = j + 1;
+            swap(list, i, j);
         }
-        
+    }
+    
+    private void swap(List<TreeNode> list, int i, int j) {
         int tmp = list.get(i).val;
         list.get(i).val = list.get(j).val;
         list.get(j).val = tmp;
     }
     
-    
     public List<TreeNode> inOrderTraverse(TreeNode root) {
         
-        Stack<TreeNode> stack = new Stack<TreeNode>();
+        Stack<TreeNode> stack = new Stack<>();
         TreeNode curr = root;
-        List<TreeNode> result = new ArrayList<TreeNode>();
+        List<TreeNode> result = new ArrayList<>();
         
         while(!stack.isEmpty() || curr != null) {
             while(curr != null) {
@@ -107,42 +162,6 @@ public class RecoverBinarySearchTree {
             }
         }
         return result;
-    }
-    
-    
-    public void recoverTree_v3(TreeNode root) {
-        
-        TreeNode[] nodes = new TreeNode[2];
-        
-        inorder(root, nodes, null);
-        //found the two misplaced nodes
-        if(nodes[0] != null && nodes[1] != null) {
-            int temp = nodes[0].val;
-            nodes[0].val = nodes[1].val;
-            nodes[1].val = temp;
-        }
-    }
-    
-    private TreeNode inorder(TreeNode root, TreeNode[] nodes, TreeNode pre) {
-        if(root == null) {
-            return pre;
-        }
-        
-        //left subtree
-        TreeNode last = inorder(root.left, nodes, pre);
-        //visit
-        if(last != null && root.val < last.val) {
-            if(nodes[0] == null) {//Found the first node
-                nodes[0] = last;//The first one should be the bigger one, 
-                nodes[1] = root;//the second one should be the smaller one.
-            }
-            else {
-                nodes[1] = root;//the second one should be the smaller one.
-                return root;
-            }
-        }
-        //right subtree
-        return inorder(root.right, nodes, root);
     }
     
     public static void main(String[] args) {
