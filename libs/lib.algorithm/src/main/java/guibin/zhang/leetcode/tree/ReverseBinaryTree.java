@@ -57,33 +57,32 @@ public class ReverseBinaryTree {
 
         if (root == null) return;
 
-        Queue<TreeNode> workingQ = new LinkedList<>();
-        Stack<String> stack = new Stack<>();
-        Queue<TreeNode> queue = new LinkedList<>();
+        Queue<TreeNode> q = new LinkedList<>();
+        Stack<String> stack = new Stack<>();//Save the value of the childre to be reversed.
+        Queue<TreeNode> queue = new LinkedList<>();//Save the parent node that is not reversed.
         
         boolean flip = false;
-        TreeNode curr = root;
-        workingQ.add(curr);
-        workingQ.add(null);
+        TreeNode dummy = new TreeNode("a");
+        q.add(root);
+        q.add(dummy);
         
-        while (!workingQ.isEmpty()) {
-            curr = workingQ.remove();
-            if (curr == null) {
+        while (!q.isEmpty()) {
+            TreeNode curr = q.remove();
+            if (curr == dummy) {
                 if (flip) {
                     //reverse all the values in queue
                     while (!queue.isEmpty()) {
-                        curr = queue.remove();
+                        TreeNode n = queue.remove();
+                        //left is pushed fristly, right is pushed secondly
+                        //So right is pop firstly
                         String r = stack.pop();
                         String l = stack.pop();
-                        curr.left.val = r;
-                        curr.right.val = l;
+                        n.left.val = r;
+                        n.right.val = l;
                     }
                 }
                 flip = !flip;
-                if (workingQ.isEmpty()) {
-                    break;
-                }
-                workingQ.add(null);
+                if (!q.isEmpty()) q.add(dummy);
             } else {
                 //Access curr here
                 //Parent is in queue, children are in stack. One parent => two kids
@@ -95,10 +94,10 @@ public class ReverseBinaryTree {
                 }
                 
                 if (curr.left != null) {
-                    workingQ.add(curr.left);
+                    q.add(curr.left);
                 }
                 if (curr.right != null) {
-                    workingQ.add(curr.right);
+                    q.add(curr.right);
                 }
             }
         }
