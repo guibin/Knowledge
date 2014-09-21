@@ -49,16 +49,12 @@ public class SumRootToLeafNumbers {
      */
     public int dfsSumNumbers(TreeNode root, int sum) {
         
-        if(root == null) {
-            return 0;
-        }
+        if(root == null) return 0;
         
         int s = sum * 10 + root.val;
-        if(root.left == null && root.right == null) {
-            return s;
-        } else {
-            return dfsSumNumbers(root.left, s) + dfsSumNumbers(root.right, s);
-        }
+        if(root.left == null && root.right == null) return s;
+
+        return dfsSumNumbers(root.left, s) + dfsSumNumbers(root.right, s);
     }
     
     /**
