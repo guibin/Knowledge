@@ -93,13 +93,8 @@ public class SerializeBinaryTree {
             if (curr != null) {
                 sb.append(curr.val).append(" ");
                 
-                if (curr.left != null || curr.right != null) {
-                    q.add(curr.left);
-                    q.add(curr.right);
-                } else {
-                    q.add(curr.left);
-                    q.add(curr.right);
-                }
+                q.add(curr.left);
+                q.add(curr.right);
             }
             else {
                 sb.append("#").append(" ");
