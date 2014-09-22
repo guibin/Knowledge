@@ -27,31 +27,23 @@ public class SimplifyPath {
     public String simplifyPath(String path) {
 
         StringBuilder sb = new StringBuilder("/");
-
         Stack<String> stack = new Stack<>();
+        
         String[] arr = path.split("/");
         for (String s : arr) {
             if ("..".equals(s)) {
-                if (!stack.isEmpty()) {
-                    stack.pop();
-                }
-            } else if ("".equals(s) || ".".equals(s)) {
-                //Do nothing, just discard the segment.
-            } else if (s.length() > 0) {
-                stack.push(s);
+                if(!stack.isEmpty()) stack.pop();
+                //if stack is empty, that means it at the root, just skip ..
             }
+            else if (".".equals(s) || "".equals(s)) {}//Skip . and //
+            else stack.push(s);
         }
-
-        if (stack.isEmpty()) {
-            return sb.toString();
-        }
+        
         while (!stack.isEmpty()) {
             sb.insert(1, stack.pop() + "/");
         }
-        if (sb.length() > 1) {
-            sb.delete(sb.length() - 1, sb.length());
-        }
-
+        if (sb.length() > 1) sb.delete(sb.length() - 1, sb.length());
+        
         return sb.toString();
     }
     
