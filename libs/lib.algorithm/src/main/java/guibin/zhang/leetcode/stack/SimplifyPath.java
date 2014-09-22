@@ -28,7 +28,7 @@ public class SimplifyPath {
 
         StringBuilder sb = new StringBuilder("/");
 
-        Stack<String> stack = new Stack<String>();
+        Stack<String> stack = new Stack<>();
         String[] arr = path.split("/");
         for (String s : arr) {
             if ("..".equals(s)) {
@@ -53,6 +53,12 @@ public class SimplifyPath {
         }
 
         return sb.toString();
+    }
+    
+    public static void main(String[] args) {
+        SimplifyPath sp = new SimplifyPath();
+        System.out.println(sp.simplifyPath("/a/./b/../../c/"));
+        System.out.println(sp.simplifyPath("/../../"));
     }
    
 }
