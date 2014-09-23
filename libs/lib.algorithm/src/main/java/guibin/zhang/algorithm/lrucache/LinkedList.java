@@ -3,6 +3,7 @@ package guibin.zhang.algorithm.lrucache;
 /**
  *
  * @author Gubin Zhang <guibin.beijing@gmail.com>
+ * @param <K>
  */
 public class LinkedList<K> {
     
@@ -11,7 +12,7 @@ public class LinkedList<K> {
     
     public ListNode<K> add(K val) {
         
-        ListNode<K> node = new ListNode<K>(val);
+        ListNode<K> node = new ListNode<>(val);
         
         if (head == null) {
             head = tail = node;

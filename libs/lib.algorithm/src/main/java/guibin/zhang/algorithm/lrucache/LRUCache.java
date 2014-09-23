@@ -17,8 +17,8 @@ public class LRUCache<K, V> {
     
     public LRUCache(int maxSize) {
         this.maxSize = maxSize;
-        map = new HashMap<K, ValueHolder<K, V>>();
-        queue = new LinkedList<K>();
+        map = new HashMap<>();
+        queue = new LinkedList<>();
     }
     
     private void freeSpace() {
@@ -36,11 +36,11 @@ public class LRUCache<K, V> {
         
         if (map.containsKey(key)) {
             ValueHolder<K, V> vh = map.get(key);
-            queue.remove(vh.locationInQueue);
+            queue.remove(vh.locInQueue);
         }
         
         ListNode<K> node = queue.add(key);
-        ValueHolder<K, V> vh = new ValueHolder<K, V>(val, node);
+        ValueHolder<K, V> vh = new ValueHolder<>(val, node);
         map.put(key, vh);
         currentSize++;
     }
@@ -50,10 +50,10 @@ public class LRUCache<K, V> {
         ValueHolder<K, V> vh = map.get(key);
         
         if (vh != null) {
-            queue.remove(vh.locationInQueue);
+            queue.remove(vh.locInQueue);
             
             ListNode<K> node = queue.add(key);
-            vh.locationInQueue = node;
+            vh.locInQueue = node;
             return vh.value;
         }
         
