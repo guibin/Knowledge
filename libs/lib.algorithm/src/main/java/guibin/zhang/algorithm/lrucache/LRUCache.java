@@ -4,7 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * Use a double linked list to track each key. both add() and remove() operation are constant time.
+ * Use a Map as a cache.
+ * In the map, we use a ValueHoder<K, V> as value to save both and value information.
+ * K is for ListNode, which is used to save the location in the double linked list.
+ * V is the actual value.
+ * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class LRUCache<K, V> {
