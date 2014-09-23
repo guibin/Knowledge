@@ -32,6 +32,17 @@ public class MedianOfTwoSortedArrays {
         }
     }
     
+    /**
+     * 
+     * @param a array a
+     * @param startA start position of array a, inclusive
+     * @param endA end position of array a, inclusive
+     * @param b array b
+     * @param startB start position of array b, inclusive
+     * @param endB end position of array b, inclusive
+     * @param k The target position to be searched, 1 based.
+     * @return 
+     */
     public double findKth (int[] a, int startA, int endA, int[] b, int startB, int endB, int k) {
         
         int m = endA - startA + 1;
@@ -53,11 +64,22 @@ public class MedianOfTwoSortedArrays {
         int pa = Math.min(m, k/2);
         int pb = k - pa;
         
-        //Discard part a from a
+        /**
+         * 我们要找第k大的数，可以先将k分为两部分，比较A[k/2]和B[k/2]。
+         * 如果k为奇数的话，我们可以将剩下的一个随便放入A或者B。
+         * 比较A[k/2]和B[k/2],如果A[k/2] == B[k/2]，说明正好相等。返回A[k/2]即可。
+         * 如果A[k/2] > B[k/2]，说明B[k/2]之前的都可以丢掉。利用反证法可以证明。
+         * 证明如下，假设B[k/2]中存在第k大的数，下标为index(index < k/2)，以为A[k/2] > B[k/2]，
+         * 所以A中最多有k/2 - 1个比第k个数小的数。所以总共有k/2 - 1 + index <=k/2 - 1 + k/2 ，
+         * 即小于等于k-1，与事实不符。所以可以丢掉B中k/2下标之前的数。不断进行可以得到。
+         * 
+         */
+        
+        //Discard part a from a, discard smaller part.
         if (a[startA + pa - 1] < b[startB + pb - 1]) {
             return findKth(a, startA + pa, endA, b, startB, endB, k - pa);
         }
-        //Discard part b from b
+        //Discard part b from b, discard smaller part
         else if (a[startA + pa - 1] > b[startB + pb - 1]) {
             return findKth(a, startA, endA, b, startB + pb, endB, k - pb);
         //Find it
@@ -69,7 +91,9 @@ public class MedianOfTwoSortedArrays {
     public static void main(String[] args) {
         MedianOfTwoSortedArrays mt = new MedianOfTwoSortedArrays();
         int[] a = {1, 5, 6, 8, 10, 11, 16, 30};
-        int[] b = {2, 9, 13, 15, 17, 18, 20, 22, 25};
+        int[] b = {2, 6, 13, 15, 17, 18, 20, 22, 25};
         System.out.println(mt.findMedianSortedArrays(a, b));
+        
+        System.out.println(mt.findKth(a, 0, a.length - 1, b, 0, b.length - 1, 5));
     }
 }
