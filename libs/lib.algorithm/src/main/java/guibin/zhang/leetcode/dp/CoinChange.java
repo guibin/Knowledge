@@ -47,44 +47,45 @@ public class CoinChange {
      * 
      * @param S The coin set.
      * @param m The mth coin that is included or excluded in the solution.
-     * @param n The target value
+     * @param target The target value
      * @return 
      */
-    public int countNaive(int[] S, int m, int n) {
+    public int countNaive(int[] S, int m, int target) {
         
         //If n equals 0, then there is one solution which is don't include any coin.
-        if (n == 0) return 1;
+        if (target == 0) return 1;
         //If n less than 0, then no solution.
-        if (n < 0) return 0;
+        if (target < 0) return 0;
         //If there are no coins but n > 0, no solution.
-        if (m <= 0 && n > 0) return 0;
+        if (m <= 0 && target > 0) return 0;
         
         //count is sum of solutions 
         //(i) excluding excluding S[m-1]
         //(ii) including the coin S[m-1] 
-        return countNaive(S, m - 1, n) + countNaive(S, m, n - S[m - 1]);
+        return countNaive(S, m - 1, target) + countNaive(S, m, target - S[m - 1]);
     }
     
     /**
      * 
      * @param S The coin set.
-     * @param n The target value.
+     * @param target The target value.
      * @return 
      */
-    public int count(int[] S, int n) {
+    public int count(int[] S, int target) {
         
         int m = S.length;
         
         // We need n+1 rows as the table is consturcted in bottom up manner using 
         // the base case 0 value case (n = 0)
-        int[][] dp = new int[n + 1][m];
+        int[][] dp = new int[target + 1][m];
         
-        // Fill the enteries for case n = 0, if n equals 0, then there is one solution which is don't include any coin.
+        // Fill the enteries for case n = 0, if n equals 0, then there is one solution that doesn't include any coin.
+        //dp[i][j] means # of ways to make changes for target cents with supply S[m] valued coins.
         for (int i = 0; i < m; i++) {
             dp[0][i] = 1;
         }
         
-        for (int i = 1; i < n + 1; i++) {
+        for (int i = 1; i < target + 1; i++) {
             for (int j = 0; j < m; j++) {
                 // Count of solutions including S[j]
                 int x = (i - S[j] >= 0) ? dp[i - S[j]][j] : 0;
@@ -94,7 +95,7 @@ public class CoinChange {
                 dp[i][j] = x + y;
             }
         }
-        return dp[n][m - 1];
+        return dp[target][m - 1];
     }
     
     /**
