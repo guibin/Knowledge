@@ -25,27 +25,31 @@ public class MultiplyStrings {
         int m = num2.length();
         int[] res = new int[n + m];//the length of m + n is big enough.
         
+        //1. multiply one digit by one digit
         for (int i = 0; i < m; i++) {
             //Note: define carry inside of mun2
             int carry = 0;
             for (int j = 0; j < n; j++) {
-                //Multiply from the least significant position, say from right to left
+                //Multiply from the least significant position, say from right most to left
                 int s = (num2.charAt(m-1-i) - '0') * (num1.charAt(n-1-j) - '0') + carry;
-                //Compute the carry: Previous one plus the new value / 10
+                //Compute the carry: (Previous one + the new value) / 10
+                //Save the result from left to right, will be output reversely later.
                 carry = (res[i + j] + s) / 10;
-                //Compute the result: Previous one plus the new value % 10
+                //Compute the result: (Previous one + the new value) % 10
                 res[i + j] = (res[i + j] + s) % 10;
             }
             //Don't forget this carry.
             res[n + i] += carry;
         }
         
+        //2. find the non-zero start position
         //Finish computing, just output the result reversely 
         int k = m + n - 1;
         while(res[k] == 0 && k > 0) {
             k--;
         }
 
+        //3. output the result
         StringBuilder sb = new StringBuilder();
         for (int i = k; i >= 0; i--) {
             sb.append(res[i]);
