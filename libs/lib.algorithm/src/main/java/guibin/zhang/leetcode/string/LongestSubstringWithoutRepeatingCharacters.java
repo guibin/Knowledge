@@ -37,8 +37,8 @@ public class LongestSubstringWithoutRepeatingCharacters {
         // Start typing your Java solution below
         // DO NOT write main() function
         int max = 0;
-        HashSet<Character> set = new HashSet<Character>();
-        int j = 0;
+        HashSet<Character> set = new HashSet<>();//Save the non-repetition characters start from last repetition.
+        int j = 0;//Start idx of the sub-string without repetition
         for(int i = 0; i < s.length(); ++i) {
             char c = s.charAt(i);
             if(set.contains(c)) {
