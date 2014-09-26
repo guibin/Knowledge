@@ -85,7 +85,7 @@ public class PermutationAndCombination {
                     list.remove(j);
                 }
             }
-            result = curr;
+            result = curr;//Here is the point which is different from the Full Permutation.
         }
         
         System.out.println("----------");
