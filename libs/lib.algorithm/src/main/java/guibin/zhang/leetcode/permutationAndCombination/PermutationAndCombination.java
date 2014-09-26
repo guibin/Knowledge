@@ -89,7 +89,7 @@ public class PermutationAndCombination {
         }
         
         System.out.println("----------");
-        System.out.println("Full permutation Result:");
+        System.out.println("Permutation Iteration Result:");
         result.forEach(item -> {item.forEach(it -> System.out.print(it)); System.out.println();});
         System.out.println("----------");
             
@@ -370,7 +370,7 @@ public class PermutationAndCombination {
         System.out.println("-------Full permutation----------");
         cp.generatePermutations(arr, branch, 0, visited, n);
         
-        System.out.println("-------Full permutation Iteration verion----------");
+        System.out.println("-------permutation Iteration verion----------");
         cp.generatePermutations(arr);
         
         System.out.println("-------Full Full permutation Iteration verion----------");
