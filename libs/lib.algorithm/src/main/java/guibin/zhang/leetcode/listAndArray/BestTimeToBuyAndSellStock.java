@@ -27,22 +27,6 @@ package guibin.zhang.leetcode.listAndArray;
  */
 public class BestTimeToBuyAndSellStock {
     
-    public int maxProfit(int[] prices) {
-        
-        int maxProfit = 0;
-        
-        for(int i = 0; i < prices.length; i++) {
-            int buy = prices[i];
-            for(int j = i; j < prices.length; j++) {
-                int sell = prices[j];
-                int profit = sell - buy;
-                maxProfit = profit > maxProfit ? profit : maxProfit;
-            }
-        }
-        
-        return maxProfit;
-    }
-    
     public int maxProfit_v2(int[] prices) {
         
         int lowest = 0;
@@ -58,6 +42,28 @@ public class BestTimeToBuyAndSellStock {
                 maxProfit = Math.max(maxProfit, prices[i] - lowest);
             }
         }
+        return maxProfit;
+    }
+    
+    
+    /**
+     * Brute force
+     * @param prices
+     * @return 
+     */
+    public int maxProfit(int[] prices) {
+        
+        int maxProfit = 0;
+        
+        for(int i = 0; i < prices.length; i++) {
+            int buy = prices[i];
+            for(int j = i; j < prices.length; j++) {
+                int sell = prices[j];
+                int profit = sell - buy;
+                maxProfit = profit > maxProfit ? profit : maxProfit;
+            }
+        }
+        
         return maxProfit;
     }
     
