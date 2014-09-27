@@ -44,9 +44,7 @@ public class BestTimeToBuyAndSellStockIII {
         if(end - start + 1 > 0) {
             lowest = prices[start];
             for(int i = start; i <= end; i++) {
-                if(prices[i] < lowest) {
-                    lowest = prices[i];
-                }
+                lowest = Math.min(lowest, prices[i]);
                 maxProfit = Math.max(maxProfit, prices[i] - lowest);
             }
         }
@@ -65,122 +63,27 @@ public class BestTimeToBuyAndSellStockIII {
         int[] maxEndWith = new int[prices.length];
         //Build the maxEndWith
         int lowest = prices[0];
-        int maxProfit = 0;
         maxEndWith[0] = 0;
         for(int i = 1; i < prices.length; i++) {
-            int profit = prices[i] - lowest;
-            if(profit > maxProfit) {
-                maxProfit = profit;
-            }
-            maxEndWith[i] = maxProfit;
-            if(prices[i] < lowest){
-                lowest = prices[i];
-            }
+            maxEndWith[i] = Math.max(maxEndWith[i - 1], prices[i] - lowest);
+            lowest = Math.min(lowest, prices[i]);
         }
         
         int result = maxEndWith[prices.length - 1];
         /**
-         * reverse to check what is the maxprofit of [i, ... , n-1] subarray in prices
-         * and meanwhile calculate the final result
+         * reverse to track maxPrices and maxProfit.
+         * And meanwhile calculate maxEndWith[i] + maxProfit
          */
         int highest = prices[prices.length - 1];
-        maxProfit = 0;
+        int maxProfit = 0;
         for(int i = prices.length - 2; i >= 0; i--) {
-            int profit = highest - prices[i];
-            if(profit > maxProfit) {
-                maxProfit = profit;
-            }
-            int finalProfit = maxProfit + maxEndWith[i];
-            if(finalProfit > result) {
-                result = finalProfit;
-            }
-            if(prices[i] > highest) {
-                highest = prices[i];
-            }
+            maxProfit = Math.max(maxProfit, highest - prices[i]);
+            highest = Math.max(highest, prices[i]);
+            
+            result = Math.max(maxProfit + maxEndWith[i], result);
         }
         
         return result;
-    }
-    
-    /**
-     * This method is wrong.
-     * 并非连续地波峰-波谷就是答案，而是最的两个峰－最低的两个谷，峰谷之间不一定相邻
-     * @param prices
-     * @return 
-     */
-    public int maxProfit_error(int[] prices) {
-        
-        int len = prices.length;
-        //record the history of the buy and sell
-        int[] buyAndSell = new int[len];//buy = 1; sell = -1; default = 0;
-        
-        if(len <= 1) {
-            return 0;
-        } else if(len == 2) {
-            return Math.max(prices[1] - prices[0], 0);
-        }
-        
-        int sell = 0;
-        int buy = 0;
-        int profit = 0;
-        int first = 0;
-        int second = 0;
-        boolean sold = false;
-        for(int i = 0; i < len - 1; i++) {
-            if(i == 0 && prices[i] < prices[i + 1]) {
-                buy = i;
-                sold = false;
-                buyAndSell[buy] = 1;
-            } else if (i > 0) {
-                // /\
-                if (prices[i - 1] <= prices[i] && prices[i + 1] <= prices[i]) {
-                    sell = i;
-                    if (sell >= buy && !sold) {
-                        profit = prices[sell] - prices[buy];
-                        sold = true;
-                        buyAndSell[sell] = -1;
-
-                        if (profit > first) {
-                            second = first;
-                            first = profit;
-                        } else if (profit > second) {
-                            second = profit;
-                        }
-                    }
-                } // \/
-                else if (prices[i - 1] >= prices[i] && prices[i + 1] >= prices[i]) {
-                    buy = i;
-                    sold = false;
-                    buyAndSell[buy] = 1;
-                }
-            }
-            
-        }
-        
-        if(sell < len - 1 && prices[len - 1] > prices[buy] && !sold) {
-            sell = len - 1;
-            profit = prices[sell] - prices[buy];
-            buyAndSell[sell] = -1;
-            
-            if (profit > first) {
-                second = first;
-                first = profit;
-            } else if (profit > second) {
-                second = profit;
-            }
-        }
-        
-        StringBuilder sbPrices = new StringBuilder();
-        StringBuilder sbBuyAndSell = new StringBuilder();
-        for(int i = 0; i < len; i++) {
-            sbPrices.append(prices[i]).append(",");
-            sbBuyAndSell.append(buyAndSell[i]).append(",");
-        }
-        System.out.println("first=" + first + ", second=" + second + ", maxProfit=" + (first + second));
-        System.out.println(sbPrices.toString());
-        System.out.println(sbBuyAndSell.toString());
-        
-        return first + second;
     }
     
     public static void main(String[] args) {
