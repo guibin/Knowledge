@@ -16,6 +16,23 @@ package guibin.zhang.leetcode.listAndArray;
 public class BestTimeToBuyAndSellStockII {
     
     /**
+     * 因为不限制交易次数， 并且同一个价格可以卖再买，因此累加所有差价就OK
+     * @param prices
+     * @return 
+     */
+    public int maxProfit_v2(int[] prices) {
+        int profit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            int d = prices[i] - prices[i - 1];
+            if (d > 0) {
+                profit += d;
+            }
+        }
+        return profit;
+    }
+    
+    
+    /**
      * 找波谷买入，找波峰卖出，最后一笔特殊处理。这种方式买卖次数最少。
      * @param prices
      * @return 
@@ -60,22 +77,6 @@ public class BestTimeToBuyAndSellStockII {
             maxProfit += prices[sell] - prices[buy];
         } 
         return maxProfit;
-    }
-    
-    /**
-     * 因为不限制交易次数， 并且同一个价格可以卖再买，因此累加所有差价就OK
-     * @param prices
-     * @return 
-     */
-    public int maxProfit_v2(int[] prices) {
-        int profit = 0;
-        for (int i = 1; i < prices.length; i++) {
-            int d = prices[i] - prices[i - 1];
-            if (d > 0) {
-                profit += d;
-            }
-        }
-        return profit;
     }
     
     public static void main(String[] args) {
