@@ -23,6 +23,32 @@ import java.util.Stack;
  */
 public class TrappingRainWater {
     
+    public int trap_v3(int[] A) {
+        
+        int vol = 0;
+        int len = A.length;
+        int curr = 0;
+        //Skip zeros
+        while (curr < len && A[curr] == 0) curr++;
+        
+        Stack<Integer> indices = new Stack<>();
+        for (; curr < len; curr ++) {
+            while (!indices.isEmpty() && A[curr] >= A[indices.peek()]) {
+                int b = indices.pop();
+                if (indices.isEmpty()) break;
+                //这里 -1 的原因是 curr 距离 indices.peek() 中间隔了一个较小的 indices.pop.
+                //A[b] 是较小的 indices.pop 的高度
+                //curr - indices.peek() - 1 is the bottom.
+                //(Math.min - A[b]) is the delta height that can contain the water.
+                vol += (curr - indices.peek() - 1) * (Math.min(A[curr], A[indices.peek()]) - A[b]);
+            }
+            indices.push(curr);
+        }
+        
+        return vol;
+    }
+    
+    
     /**
      * 
      * http://yucoding.blogspot.com/2013/05/leetcode-question-111-trapping-rain.html
@@ -84,109 +110,6 @@ public class TrappingRainWater {
         }
 
         return waterSum - allSum;
-    }
-    
-    
-    public int trap_v3(int[] A) {
-        
-        int vol = 0;
-        int len = A.length;
-        int curr = 0;
-        //Skip zeros
-        while (curr < len && A[curr] == 0) curr++;
-        
-        Stack<Integer> indices = new Stack<Integer>();
-        for (; curr < len; curr ++) {
-            while (!indices.isEmpty() && A[curr] >= A[indices.peek()]) {
-                int b = indices.pop();
-                if (indices.isEmpty()) break;
-                //这里 -1 的原因是 curr 距离 indices.peek() 中间隔了一个较小的 indices.pop.
-                //A[b] 是较小的 indices.pop 的高度
-                //curr - indices.peek() - 1 is the bottom.
-                //(Math.min - A[b]) is the delta height that can contain the water.
-                vol += (curr - indices.peek() - 1) * (Math.min(A[curr], A[indices.peek()]) - A[b]);
-            }
-            indices.push(curr);
-        }
-        
-        return vol;
-    }
-    
-    /**
-     * This method is not correct.
-     * Although you find the inflection point， 
-     * if there are higher columns on both sides, 
-     * the correct water area should be lager. For example:
-     *               g
-     * a            /
-     *  \        e /
-     *   \  c  /\ /
-     *    \/ \/  f 
-     *    b   d  
-     * The correct water level is a, not c or e. 
-     * So the method to find the inflection point is incorrect.
-     * 
-     * @param A
-     * @return 
-     */
-    public int trap_error(int[] A) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        int len = A.length;
-        if (len <= 2) {
-            return 0;
-        }
-        
-        //points is used to record inflection point of the curve.
-        int[] points = new int[len];
-        int p = 0;
-        points[0] = p;
-        for (int i = 1; i < len - 1; i++) {
-            if (A[i - 1] > A[i] && A[i] <= A[i + 1]) {
-                p++;
-                points[p] = i;
-            } else if (A[i - 1] >= A[i] && A[i] < A[i + 1]) {
-                p++;
-                points[p] = i;
-            } else if (A[i - 1] < A[i] && A[i] >= A[i + 1]) {
-                p++;
-                points[p] = i;
-            } else if (A[i - 1] <= A[i] && A[i] > A[i + 1]) {
-                p++;
-                points[p] = i;
-            }
-            /**
-             * Remove the duplicated ones, in the following case
-             * \
-             *  \    /
-             *   ---
-             */
-            if (p > 0 && A[points[p]] == A[points[p - 1]]) {
-                p--;
-            }
-        }
-
-        if (A[points[p]] < A[len - 1]) {
-            p++;
-            points[p] = len - 1;
-        }
-
-        int sum = 0;
-        if (p <= 1) {
-            return 0;
-        }
-
-        for (int i = 1; i < p; i++) {
-            if (A[points[i - 1]] > A[points[i]] && A[points[i]] < A[points[i + 1]]) {
-                int top = Math.min(A[points[i - 1]], A[points[i + 1]]);
-                for (int j = points[i - 1] + 1; j < points[i + 1]; j++) {
-                    if (A[j] < top) {
-                        sum += top - A[j];
-                    }
-                }
-            }
-        }
-        return sum;
     }
     
     public static void main(String[] args) {
