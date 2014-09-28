@@ -2,7 +2,7 @@ package guibin.zhang.leetcode.listAndArray;
 
 /**
  * 
- * Given an unsorted array of integers, you need to return maximum possible n 
+ * Given an unsorted array of integers, you need to return maximum possible n in the array
  * such that the array consists at least n values greater than or equals to n. 
  * 
  * Array can contain duplicate values. 
@@ -24,7 +24,9 @@ public class MaxNumberPossibleNArray {
     public static int searchMaxNumberPossibleN(int[] a) {
         
         int[] counter = new int[a.length + 1];
-        //Use value as index of counter to sort it.
+        //Use value as index of counter to sort it. 
+        //Since the required n must be less than or equal to the length of the array, 
+        //So we will ignore the values lagger than len.
         for (int i = 0; i < a.length; i++) {
             if (a[i] >= a.length) {
                 counter[a.length] += 1;
