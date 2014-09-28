@@ -37,9 +37,11 @@ public class JumpGameII {
     public int jump(int[] A) {
         
         int steps = 0;
-        for (int i = 0, max = A[0], next = 0; i < A.length; i++) {
+        int max = A[0];//current maximum distances, 
+        int next = 0;//next maximum reachable distance
+        for (int i = 0; i < A.length; i++) {
             if (i > next) {
-                if (max < i) return -1;//Unreachable
+                if (i > max) return -1;//Unreachable
                 next = max;//Greedy algo.
                 steps++;
             }
