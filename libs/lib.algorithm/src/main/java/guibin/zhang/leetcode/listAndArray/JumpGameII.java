@@ -37,15 +37,15 @@ public class JumpGameII {
     public int jump(int[] A) {
         
         int steps = 0;
-        int max = A[0];//current maximum distances, 
-        int next = 0;//next maximum reachable distance
+        int nextMax = A[0];//next maximum reachable distance
+        int currMax = 0;//current maximum distances
         for (int i = 0; i < A.length; i++) {
-            if (i > next) {
-                if (i > max) return -1;//Unreachable
-                next = max;//Greedy algo.
+            if (i > currMax) {
+                if (i > nextMax) return -1;//Unreachable
+                currMax = nextMax;//Greedy algo.
                 steps++;
             }
-            max = Math.max(max, i + A[i]);
+            nextMax = Math.max(nextMax, i + A[i]);
         }
         return steps;
     }
