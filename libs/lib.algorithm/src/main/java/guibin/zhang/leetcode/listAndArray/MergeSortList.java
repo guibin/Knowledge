@@ -6,7 +6,7 @@ package guibin.zhang.leetcode.listAndArray;
  * 
  * @author Guibin Zhang
  */
-public class SortedList {
+public class MergeSortList {
     
     public class ListNode {
         int val;
@@ -72,7 +72,7 @@ public class SortedList {
     }
     
     public static void main(String[] args) {
-        SortedList mks = new SortedList();
+        MergeSortList mks = new MergeSortList();
         
         ListNode a = mks.new ListNode(103);
         ListNode b = mks.new ListNode(33);
