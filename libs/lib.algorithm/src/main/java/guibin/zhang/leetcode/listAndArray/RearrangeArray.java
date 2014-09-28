@@ -37,20 +37,18 @@ public class RearrangeArray {
     
     public static int partition(int[] a) {
         
-        int i = -1;
-        int j = a.length;
+        int i = 0;
+        int j = a.length - 1;
         while(true) {
-            while (a[++i] < 0) {
-                if (i == a.length - 1) break;
+            while (i < a.length && a[i] < 0) {
+                i++;
             }
-            while (a[--j] > 0) {
-                if (j == 0) break;
+            while (j > 0 && a[j] > 0) {
+                j--;
             }
-            if (i < j) {
-                swap(a, i, j);
-            } else {
-                break;
-            }
+            
+            if (i >= j) break;
+            swap(a, i, j);
         }
         System.out.println(i + "," + j);
         return i;
