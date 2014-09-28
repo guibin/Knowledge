@@ -30,30 +30,32 @@ import java.util.Stack;
 public class LargestRectangleInHistogram {
     public int largestRectangleArea(int[] histo) {
         
-        Stack<Integer> height = new Stack<Integer>();
+        //If curr hight is bigger than height in stack, push; otherwise pop and compute the area.
+        //Keep track of the heigher height in stack.
+        Stack<Integer> height = new Stack<>();
         //Indices save the start point. length = i - start.
-        Stack<Integer> indices = new Stack<Integer>();
-        int lastIndex = 0;
+        Stack<Integer> indices = new Stack<>();
+        int start = 0;
         int maxArea = 0;
         for (int i = 0; i < histo.length; i++) {
-            //Case 1, the height is larger thus we can be candidate of rectangle of *start*
-            if (height.isEmpty() || histo[i] > height.peek()) {
-                height.push(histo[i]);
+            //Case 1, the height is larger thus it can be candidate of rectangle of *start*
+            int h = histo[i];
+            if (height.isEmpty() || h > height.peek()) {
+                height.push(h);
                 indices.push(i);
-            } else if (histo[i] < height.peek()) {
+            } else if (h < height.peek()) {
                 //If current height is shorter, thus we need pop those larger heights, 
                 //and compute the candidate rectangle's area size.
-                while (!height.isEmpty() && histo[i] < height.peek()) {
-                    lastIndex = indices.pop();
-                    //Deem i as the end point, lastIndex as the start point, length = end - start
-                    int area = height.pop() * (i - lastIndex);
+                while (!height.isEmpty() && h < height.peek()) {
+                    start = indices.pop();
+                    int area = height.pop() * (i - start);
                     maxArea = Math.max(maxArea, area);
                 }
-                //After poping those unqualified start positions including current index, add current
-                height.push(histo[i]);
+
+                height.push(h);
                 //Note: here is lastIndex, not i;
                 //indices is used to save the start index, so here should push lastIndex instead of i.
-                indices.push(lastIndex);
+                indices.push(start);
             }
         }
         
