@@ -32,14 +32,11 @@ public class JumpGame {
         int max = 0;
         
         for (int i = 0; i < A.length - 1; i++) {
-            if (i > max) {
-                return false;
-            }
+            //If i is faster than max, that means curr falls into 0, return false.
+            if (i > max) return false;
             
             curr = i + A[i];
-            if (curr > max) {
-                max = curr;
-            }
+            max = Math.max(max, curr);
             if (max >= A.length - 1) {
                 return true;
             }
