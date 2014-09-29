@@ -31,6 +31,51 @@ public class ReorderList {
     }
     
     public void reorderList(ListNode head) {
+        
+        if (head == null || head.next == null) return;
+        //Find the middle node of the list
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        ListNode p1 = head;
+        ListNode p2 = slow.next;
+        slow.next = null;
+        
+        //Reverse the second part
+        p2 = reverse(p2);
+        
+        //Merge the p1 and reversed p2
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+        while(p1 != null && p2 != null) {
+            curr.next = p1;
+            curr = curr.next;
+            p1 = p1.next;
+            curr.next = p2;
+            curr = curr.next;
+            p2 = p2.next;
+        }
+        
+        if (p1 != null) curr.next = p1;
+        if (p2 != null) curr.next = p2;
+    }
+    
+    public ListNode reverse(ListNode head) {
+        ListNode curr = head;
+        ListNode prev = null;
+        while (curr != null) {
+            ListNode nxt = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nxt;
+        }
+        return prev;
+    }
+    
+    public void reorderList_v2(ListNode head) {
         // IMPORTANT: Please reset any member data you declared, as
         // the same Solution instance will be reused for each test case.
         List<ListNode> list = new ArrayList<>();
@@ -64,9 +109,11 @@ public class ReorderList {
         ListNode b = r.new ListNode(2);
         ListNode c = r.new ListNode(3);
         ListNode d = r.new ListNode(4);
+        ListNode e = r.new ListNode(5);
         a.next = b;
         b.next = c;
         c.next = d;
+        d.next = e;
         
         System.out.println("Before re-order:");
         ListNode curr = a;
