@@ -121,7 +121,8 @@ public class SearchForARange {
     
     public static void main(String[] args) {
         SearchForARange sf = new SearchForARange();
-        int[] A = {1};
-        sf.searchRange_v2(A, 1);
+        int[] A = {2, 2};
+        int[] res = sf.searchRange_v2(A, 2);
+        System.out.println(res[0] + ", " + res[1]);
     }
 }
