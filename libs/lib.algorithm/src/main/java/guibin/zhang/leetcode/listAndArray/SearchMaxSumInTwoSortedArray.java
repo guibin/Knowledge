@@ -45,12 +45,15 @@ public class SearchMaxSumInTwoSortedArray {
         
         int idxA = 0, idxB = 0, sumA = 0, sumB = 0, total = 0;
         while (idxA < A.length || idxB < B.length) {
+            //When B is consumed or both are not consumed and A[currA] < B[currB]
             while (idxB >= B.length && idxA < A.length || idxA < A.length && A[idxA] < B[idxB]) {
                 sumA += A[idxA ++];
             }
+            //When A is consumed or both are not consumed and B[currB] < A[currA]
             while (idxA >= A.length && idxB < B.length || idxB < B.length && B[idxB] < A[idxA]) {
                 sumB += B[idxB ++];
             }
+            //When A[currA] == B[currB], select a bigger sum to add to total, then reset sum.
             if (idxA < A.length && idxB < B.length && A[idxA] == B[idxB]) {
                 sumA += A[idxA ++];
                 sumB += B[idxB ++];
