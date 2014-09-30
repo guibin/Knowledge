@@ -27,10 +27,9 @@ public class SearchInsertPosition {
         // DO NOT write main() function
         int start = 0;
         int end = A.length - 1;
-        int mid = 0;
         
         while (start < end) {
-            mid = start + (end - start)/2;
+            int mid = start + (end - start)/2;
             if (A[mid] == target) {
                 return mid;
             } else if (A[mid] < target) {
