@@ -28,7 +28,8 @@ public class SearchInsertPosition {
         int start = 0;
         int end = A.length - 1;
         
-        while (start < end) {
+        //Binary search use <= always
+        while (start <= end) {
             int mid = start + (end - start)/2;
             if (A[mid] == target) {
                 return mid;
@@ -38,11 +39,8 @@ public class SearchInsertPosition {
                 end = mid - 1;
             }
         }
-        //Note the ">="
-        if (A[start] >= target) {
-            return start;
-        } else {
-            return start + 1;
-        }
+        
+        //Just return start index
+        return start;
     }
 }
