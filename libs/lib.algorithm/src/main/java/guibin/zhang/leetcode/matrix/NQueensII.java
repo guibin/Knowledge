@@ -19,28 +19,30 @@ public class NQueensII {
         // DO NOT write main() function
         int[] loc = new int[n];
         int[] result = new int[1];
-        dfs(result, loc, 0, n);
+        dfs(result, loc, 0);
         return result[0];
     }
 
-    public void dfs(int[] result, int[] branch, int idx, int n) {
+    public void dfs(int[] result, int[] branch, int idx) {
 
-        if (idx == n) {
+        if (idx == branch.length) {
             result[0]++;
             return;
         }
-        for (int i = 0; i < n; i++) {
+        
+        for (int i = 0; i < branch.length; i++) {
             //Note: curr is the row index, i is the cols index.
             branch[idx] = i;
             if (isValid(branch, idx)) {
-                dfs(result, branch, idx + 1, n);
+                dfs(result, branch, idx + 1);
             }
         }
     }
 
-    public boolean isValid(int[] loc, int curr) {
-        for (int i = 0; i < curr; i++) {
-            if (loc[curr] == loc[i] || Math.abs(loc[curr] - loc[i]) == curr - i) {
+    public boolean isValid(int[] branch, int idx) {
+        
+        for (int i = 0; i < idx; i++) {
+            if (branch[idx] == branch[i] || Math.abs(branch[idx] - branch[i]) == idx - i) {
                 return false;
             }
         }
@@ -49,6 +51,6 @@ public class NQueensII {
     
     public static void main(String[] args) {
         NQueensII nq = new NQueensII();
-        System.out.println(nq.totalNQueens(4));
+        System.out.println(nq.totalNQueens(5));
     }
 }
