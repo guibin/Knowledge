@@ -34,6 +34,7 @@ public class GroupNumbersInMatrix {
     //DFS search on non-visited and non-zero element
     public static void accessGroupNumbers(int[][] matrix, boolean[][] visited, int row, int col) {
         
+        //Access the matrix[row][col] when it is not zero
         if (!visited[row][col] && matrix[row][col] != 0) {
             System.out.print(matrix[row][col] + ", ");
             visited[row][col] = true;
@@ -43,7 +44,7 @@ public class GroupNumbersInMatrix {
             accessGroupNumbers(matrix, visited, row + 1, col);
         }
         //look up
-        if (row > 0 && !visited[row - 1][col] && matrix[row - 1][col] != 0) {
+        if (row - 1 >= 0 && !visited[row - 1][col] && matrix[row - 1][col] != 0) {
             accessGroupNumbers(matrix, visited, row - 1, col);
         }
         //look right
@@ -51,7 +52,7 @@ public class GroupNumbersInMatrix {
             accessGroupNumbers(matrix, visited, row, col + 1);
         }
         //look left
-        if (col > 0 && !visited[row][col - 1] && matrix[row][col - 1] != 0) {
+        if (col - 1 >= 0 && !visited[row][col - 1] && matrix[row][col - 1] != 0) {
             accessGroupNumbers(matrix, visited, row, col - 1);
         }
     }
