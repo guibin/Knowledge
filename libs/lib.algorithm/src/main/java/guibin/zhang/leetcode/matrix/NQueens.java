@@ -41,7 +41,7 @@ public class NQueens {
      * 2. 验证放置Queen的地方是否合法
      * 3. 输出Board结果
      * 
-     * 用一个数组对应Board里面的每一行，数组每一个值对应这一行放置Queen的列号
+     * 用一个数组对应Board里面的每一行，数组每一个值对应这一行***放置Queen的列号**
      * 比如： int[ ] {3,1,4,2} 代表放置的地点分别为[1,3], [2,1], [3,4], [4,2].
      * 这么一来，我们用很简单的用数组表示了整个Board，而且在isValid函数里判断的时候会非常简洁，
      * 而且把输出Board单独隔离了出来
@@ -52,27 +52,45 @@ public class NQueens {
     public ArrayList<String[]> solveNQueens(int n) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        ArrayList<String[]> res = new ArrayList<String[]>();
+        ArrayList<String[]> res = new ArrayList<>();
 
         int[] loc = new int[n];
         dfs(res, loc, 0, n);
         return res;
     }
 
-    public void dfs(ArrayList<String[]> res, int[] branch, int idx, int n) {
+    /**
+     * 
+     * @param result
+     * @param branch
+     * @param idx The index/(row id) that put queen.
+     * @param n The # of columns to put the queen.
+     */
+    public void dfs(ArrayList<String[]> result, int[] branch, int idx, int n) {
         if (idx == n) {
-            printBoard(res, branch, n);
+            printBoard(result, branch, n);
         } else {
             //Note: 要遍历全部可能性，一个循环加一个递归即可
             for (int i = 0; i < n; i++) {
                 branch[idx] = i;//Index is the row id, the value is the col id
+                //If existing layout is valid, then keep on dfs to extend neighbour nodes
                 if (isValid(branch, idx)) {
-                    dfs(res, branch, idx + 1, n);
+                    dfs(result, branch, idx + 1, n);
                 }
             }
         }
     }
 
+    /**
+     * Check if the branch(board layout) is valid, from row 0 to row idx(exclusive).
+     * Valid condition:
+     * 1. Not in same row, i != idx, that is it.
+     * 2. Not in same column, branch[i] != branch[idx].
+     * 3. Not in same diagonal direction, diffOfColIds == diffOfRowIds
+     * @param branch
+     * @param idx
+     * @return 
+     */
     public boolean isValid(int[] branch, int idx) {
         for (int i = 0; i < idx; i++) {
             //Since i != curr, the row id is not same.
@@ -85,7 +103,7 @@ public class NQueens {
         return true;
     }
 
-    public void printBoard(ArrayList<String[]> res, int[] branch, int n) {
+    public void printBoard(ArrayList<String[]> result, int[] branch, int n) {
         String[] ans = new String[n];
         for (int i = 0; i < n; i++) {//i -> row id
             String row = new String();
@@ -98,7 +116,7 @@ public class NQueens {
                 ans[i] = row;
             }
         }
-        res.add(ans);
+        result.add(ans);
     }
     
     public static void main(String[] args) {
