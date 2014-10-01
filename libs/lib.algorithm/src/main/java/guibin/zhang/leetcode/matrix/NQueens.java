@@ -2,6 +2,7 @@ package guibin.zhang.leetcode.matrix;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 
@@ -49,13 +50,13 @@ public class NQueens {
      * @param n
      * @return 
      */
-    public ArrayList<String[]> solveNQueens(int n) {
+    public List<String[]> solveNQueens(int n) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        ArrayList<String[]> res = new ArrayList<>();
+        List<String[]> res = new ArrayList<>();
 
         int[] loc = new int[n];
-        dfs(res, loc, 0, n);
+        dfs(res, loc, 0);
         return res;
     }
 
@@ -64,19 +65,20 @@ public class NQueens {
      * @param result
      * @param branch
      * @param idx The index/(row id) that put queen.
-     * @param n The # of columns to put the queen.
      */
-    public void dfs(ArrayList<String[]> result, int[] branch, int idx, int n) {
-        if (idx == n) {
-            printBoard(result, branch, n);
-        } else {
-            //Note: 要遍历全部可能性，一个循环加一个递归即可
-            for (int i = 0; i < n; i++) {
-                branch[idx] = i;//Index is the row id, the value is the col id
-                //If existing layout is valid, then keep on dfs to extend neighbour nodes
-                if (isValid(branch, idx)) {
-                    dfs(result, branch, idx + 1, n);
-                }
+    public void dfs(List<String[]> result, int[] branch, int idx) {
+        
+        if (idx == branch.length) {
+            printBoard(result, branch);
+            return;
+        }
+        
+        //Standard dfs to tranverse all the possibilities on each idx.
+        for (int i = 0; i < branch.length; i++) {
+            branch[idx] = i;//Index is the row id, the value is the col id
+            //If existing layout is valid, then keep on dfs to extend neighbour nodes
+            if (isValid(branch, idx)) {
+                dfs(result, branch, idx + 1);
             }
         }
     }
@@ -92,6 +94,7 @@ public class NQueens {
      * @return 
      */
     public boolean isValid(int[] branch, int idx) {
+        
         for (int i = 0; i < idx; i++) {
             //Since i != curr, the row id is not same.
             //loc[i] and loc[curr] are the col id, they should not be same.
@@ -103,20 +106,27 @@ public class NQueens {
         return true;
     }
 
-    public void printBoard(ArrayList<String[]> result, int[] branch, int n) {
-        String[] ans = new String[n];
+    /**
+     * Convert 1D branch into 2D board.
+     * @param result
+     * @param branch 
+     */
+    public void printBoard(List<String[]> result, int[] branch) {
+        
+        int n = branch.length;
+        String[] board = new String[n];
         for (int i = 0; i < n; i++) {//i -> row id
-            String row = new String();
+            StringBuilder row = new StringBuilder();
             for (int j = 0; j < n; j++) {
                 if (j == branch[i]) {//loc[i] -> colid, loc[i] == j is to find the col id
-                    row += "Q";
+                    row.append("Q");
                 } else {
-                    row += ".";
+                    row.append(".");
                 }
-                ans[i] = row;
+                board[i] = row.toString();
             }
         }
-        result.add(ans);
+        result.add(board);
     }
     
     public static void main(String[] args) {
