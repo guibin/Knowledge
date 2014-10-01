@@ -34,12 +34,14 @@ import java.util.List;
 public class MatrixLongestSequence {
     
     /**
+     * DFS, recursive way, compute the count.
+     * 
      * Get the longest sequence count from the start point [r, c] of matrix.
      * @param r row index
      * @param c column
      * @param matrix
      * @param visited
-     * @return 
+     * @return The maximum # of elements in seq
      */
     public static int countSequence(int r, int c, int[][] matrix, boolean[][] visited) {
         
@@ -81,8 +83,53 @@ public class MatrixLongestSequence {
         return 1;
     }
     
+    /**
+     * DFS, recursive way to get the sequence.
+     * Get the longest sequence from the start point [r, c] of matrix.
+     * @param matrix
+     * @param visited
+     * @param r
+     * @param c
+     * @param result The longest sequence in this matrix
+     */
+    public static void getSequence_v2(int[][] matrix, boolean[][] visited, int r, int c, List<Integer> result) {
+        
+        result.add(matrix[r][c]);
+        int X = matrix.length;
+        int Y = matrix[0].length;
+        
+        //Look up
+        if (r - 1 >= 0 && !visited[r - 1][c] && matrix[r][c] + 1 == matrix[r - 1][c]) {
+            visited[r - 1][c] = true;
+            getSequence_v2(matrix, visited, r - 1, c, result);
+            visited[r - 1][c] = false;
+        }
+        
+        //Look down
+        if (r + 1 < X && !visited[r + 1][c] && matrix[r][c] + 1 == matrix[r + 1][c]) {
+            visited[r + 1][c] = true;
+            getSequence_v2(matrix, visited, r + 1, c, result);
+            visited[r + 1][c] = false;
+        }
+        
+        //Look left
+        if (c - 1 >= 0 && !visited[r][c - 1] && matrix[r][c] + 1 == matrix[r][c - 1]) {
+            visited[r][c - 1] = true;
+            getSequence_v2(matrix, visited, r, c - 1, result);
+            visited[r][c - 1] = false;
+        }
+        
+        //Look right
+        if (c + 1 < Y && !visited[r][c + 1] && matrix[r][c] + 1 == matrix[r][c + 1]) {
+            visited[r][c + 1] = true;
+            getSequence_v2(matrix, visited, r, c + 1, result);
+            visited[r][c + 1] = false;
+        }
+    }
     
     /**
+     * Iteration way, get the longest sequence.
+     * 
      * Get the longest sequence from the start point [r, c] of matrix.
      * 
      * This method only works for the **distinct** array elements.
@@ -135,42 +182,6 @@ public class MatrixLongestSequence {
                 
         return result;
     }
-    
-    public static void getSequence_v2(int[][] matrix, boolean[][] visited, int r, int c, List<Integer> result) {
-        
-        result.add(matrix[r][c]);
-        int X = matrix.length;
-        int Y = matrix[0].length;
-        
-        //Look up
-        if (r - 1 >= 0 && !visited[r - 1][c] && matrix[r][c] + 1 == matrix[r - 1][c]) {
-            visited[r - 1][c] = true;
-            getSequence_v2(matrix, visited, r - 1, c, result);
-            visited[r - 1][c] = false;
-        }
-        
-        //Look down
-        if (r + 1 < X && !visited[r + 1][c] && matrix[r][c] + 1 == matrix[r + 1][c]) {
-            visited[r + 1][c] = true;
-            getSequence_v2(matrix, visited, r + 1, c, result);
-            visited[r + 1][c] = false;
-        }
-        
-        //Look left
-        if (c - 1 >= 0 && !visited[r][c - 1] && matrix[r][c] + 1 == matrix[r][c - 1]) {
-            visited[r][c - 1] = true;
-            getSequence_v2(matrix, visited, r, c - 1, result);
-            visited[r][c - 1] = false;
-        }
-        
-        //Look right
-        if (c + 1 < Y && !visited[r][c + 1] && matrix[r][c] + 1 == matrix[r][c + 1]) {
-            visited[r][c + 1] = true;
-            getSequence_v2(matrix, visited, r, c + 1, result);
-            visited[r][c + 1] = false;
-        }
-    }
-    
     
     public static void printLogestSequence(int[][] matrix) {
         
