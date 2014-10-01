@@ -31,19 +31,20 @@ public class SearchInRotatedSortedArrayII {
                 return true;
             }
             
+            //mid is in the left part of rotated array
             if (A[mid] > A[start]) {
-                if (A[mid] > target && A[start] <= target) {
+                if (target >= A[start] && target < A[mid]) {
                     end = mid - 1;
                 } else {
                     start = mid + 1;
                 }
-            } else if (A[mid] < A[start]) {
-                if (A[mid] < target && A[end] >= target) {
+            } else if (A[mid] < A[start]) {//mid is in the right part of rotated array
+                if (target > A[mid] && target <= A[end]) {
                     start = mid + 1;
                 } else {
                     end = mid - 1;
                 }
-            } else {
+            } else {//This condition is for resolving the case like: [1,3,1,1,1], 3
                 start++;
             }
         }
@@ -112,7 +113,7 @@ public class SearchInRotatedSortedArrayII {
     public static void main(String[] args) {
         
         SearchInRotatedSortedArrayII si = new SearchInRotatedSortedArrayII();
-        int[] A = {3,1,2,2,2};
-        System.out.println(si.search_v2(A, 1));
+        int[] A = {4,1,2,2,2,3};
+        System.out.println(si.search_v2(A,32));
     }
 }

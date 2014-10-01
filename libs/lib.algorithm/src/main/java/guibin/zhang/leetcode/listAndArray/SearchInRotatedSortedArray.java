@@ -28,14 +28,15 @@ public class SearchInRotatedSortedArray {
                 return mid;
             }
             
-            if (A[mid] >= A[start]) {//Note: Here is >=
-                if (A[mid] > target && A[start] <= target) {
+            //mid is in the left part of rotated array
+            if (A[mid] >= A[start]) {
+                if (target >= A[start] && target < A[mid]) {
                     end = mid - 1;
                 } else {
                     start = mid + 1;
                 }
-            } else {
-                if (A[mid] < target && A[end] >= target) {
+            } else {//mid is in the right part of rotated array
+                if (target > A[mid] && target <= A[end]) {
                     start = mid + 1;
                 } else {
                     end = mid - 1;
