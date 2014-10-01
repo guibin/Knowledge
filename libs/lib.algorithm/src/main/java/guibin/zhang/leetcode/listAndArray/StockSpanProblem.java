@@ -28,6 +28,11 @@ import java.util.Stack;
  */
 public class StockSpanProblem {
     
+    /**
+     * 
+     * @param price price array
+     * @return span array for each price
+     */
     public static int[] calculateSpan(int[] price) {
         
         int[] S = new int[price.length];
