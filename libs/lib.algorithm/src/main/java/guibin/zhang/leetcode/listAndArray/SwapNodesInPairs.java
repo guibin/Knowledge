@@ -36,34 +36,51 @@ public class SwapNodesInPairs {
         
         ListNode dummy = new ListNode(0);
         dummy.next = head;
-        ListNode pre = dummy;
+        ListNode curr = dummy;
+        ListNode prev = dummy;
         int i = 0;
-        while(head != null) {
-            i++;
-            if(i % 2 == 0) {
-                pre = reverse(pre, head.next);
-                head = pre.next;
+        while(curr != null) {
+            if(i > 0 && i % 2 == 0) {
+                //Save next
+                ListNode nxt = curr.next;
+                //Tail of the reversed nodes becomes to p1 of next round
+                prev = reverse(prev, nxt);
+                curr = nxt;
             } else {
-                head = head.next;
+                curr = curr.next;
             }
+            i++;
         }
-            
+        
         return dummy.next;
     }
     
-    public ListNode reverse(ListNode pre, ListNode next) {
+    /**
+     * Standard reverse nodes between p1 and p2 exclusively.
+     * 
+     * @param p1
+     * @param p2
+     * @return Tail of the reversed nodes.
+     */
+    public ListNode reverse(ListNode p1, ListNode p2) {
         
-        ListNode last = pre.next;
-        ListNode curr = last.next;
+        ListNode curr = p1.next;
+        ListNode tailer = curr;//Remember the tailer of the list between p1 and p2
+        ListNode prev = null;
+        ListNode nxt = null;
         
-        while(curr != next) {
-            last.next = curr.next;
-            curr.next = pre.next;
-            pre.next = curr;
-            curr = last.next;
+        //Reverse the nodes between p1 and p2 normally
+        while (curr != p2) {
+            nxt = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nxt;
         }
+        //Fix connectivity between the three segments.
+        tailer.next = p2;
+        p1.next = prev;
         
-        return last;
+        return tailer;
     }
     
     public static void main(String[] args) {
