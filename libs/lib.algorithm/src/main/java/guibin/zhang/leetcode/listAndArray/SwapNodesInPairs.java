@@ -40,6 +40,7 @@ public class SwapNodesInPairs {
         ListNode prev = dummy;
         int i = 0;
         while(curr != null) {
+            //i > 0 to avoid the first run and return null
             if(i > 0 && i % 2 == 0) {
                 //Save next
                 ListNode nxt = curr.next;
