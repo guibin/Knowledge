@@ -54,8 +54,8 @@ public class MedianOfTwoSortedArrays {
             
             //When pa + pb > k discard bigger parts
             if (pa + pb > k) {
-                if (a[midA] > b[midB]) endA = midA - 1;
-                else endB = midB - 1;
+                if (a[midA] < b[midB]) endB = midB - 1;
+                else endA = midA - 1;
 
             //When pa + pb <= k discard smaler part
             } else if (a[midA] < b[midB]) {
