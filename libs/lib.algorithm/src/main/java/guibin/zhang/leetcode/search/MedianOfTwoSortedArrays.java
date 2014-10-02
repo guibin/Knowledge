@@ -34,6 +34,9 @@ public class MedianOfTwoSortedArrays {
     
     /**
      * Iteration version, O(log N + log M).
+     * 
+     * http://apps.topcoder.com/forums/;jsessionid=A08E459C4AF67982EAEBC81CEE4644FE?module=Thread&threadID=750818&start=15&mc=21#1597302
+     * 
      * @param a 
      * @param b
      * @param k search the kth item.
