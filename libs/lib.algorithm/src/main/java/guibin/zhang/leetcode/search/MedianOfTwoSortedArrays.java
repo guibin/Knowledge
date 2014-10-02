@@ -33,6 +33,45 @@ public class MedianOfTwoSortedArrays {
     }
     
     /**
+     * Iteration version, O(log N + log M).
+     * @param a 
+     * @param b
+     * @param k search the kth item.
+     * @return 
+     */
+    public int findKth_v2(int[] a, int[] b, int k) {
+        
+        int startA = 0, endA = a.length - 1, startB = 0, endB = b.length - 1, midA, midB;
+        
+        while (startA <= endA && startB <= endB) {
+            midA = startA + (endA - startA)/2;
+            midB = startB + (endB - startB)/2;
+            int pa = midA - startA + 1;
+            int pb = midB - startB + 1;
+            
+            //When pa + pb > k discard bigger parts
+            if (pa + pb > k) {
+                if (a[midA] > b[midB]) endA = midA - 1;
+                else endB = midB - 1;
+
+            //When pa + pb <= k discard smaler part
+            } else if (a[midA] < b[midB]) {
+                startA = midA + 1;
+                k -= pa;
+                
+            } else {
+                startB = midB + 1;
+                k -= pb;
+            }
+        }
+        
+        //Pick up the non-consumed one.
+        if (startA <= endA) return a[startA + k - 1];
+        else return b[startB + k - 1];
+    }
+    
+    
+    /**
      * 
      * @param a array a
      * @param startA start position of array a, inclusive
