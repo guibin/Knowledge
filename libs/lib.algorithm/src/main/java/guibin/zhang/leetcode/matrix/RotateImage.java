@@ -14,6 +14,45 @@ package guibin.zhang.leetcode.matrix;
 public class RotateImage {
     
     /**
+     * http://joycelearning.blogspot.com/2013/10/leetcode-rotate-image.html
+     * 
+     * @param matrix 
+     */
+    public void rotate_v3(int[][] matrix) {
+        
+        if (matrix == null) return;
+        int n = matrix.length;
+        if (n <= 1) return;
+        
+        // rule: i = j'; j = n-1 - i';
+        // that is: i' = n-1 -j; j' = i;
+        // loop through 1/4 of the matrix
+        // a | b
+        // c | d
+        // four parts
+        // 
+        // a = matrix[i][j]; d = matrix[n - 1 - i][n - 1 - j]
+        // b = matrix[j][n - 1 - i];
+        // c = matrix[n - 1 - j][i]
+        //
+        // Math.ceil : returns the smallest integer >= a number.
+        for (int i = 0; i < n/2; i++) {
+            for (int j = 0; j < Math.ceil(((double)n)/2.0); j++) {
+                int tmp = matrix[i][j];
+                //c -> a
+                matrix[i][j] = matrix[n - 1 - j][i];
+                //d -> c
+                matrix[n - 1 - j][i] = matrix[n - 1 - i][n - 1 - j];
+                //b -> d
+                matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i];
+                //a -> b
+                matrix[j][n - 1 - i] = tmp;
+            }
+        }
+    }
+    
+    
+    /**
      * The key idea is to rotate the matrix according to layers. 
      * For the nth layer(the out layer), rotate 90 degree is to move all the elements n times in a circle. 
      * In each layer, the rotation can be performed by first swap 4 corners, 
@@ -28,6 +67,12 @@ public class RotateImage {
         if (n == 0 || n == 1) {
             return;
         }
+        
+        /**
+         *      (layer, i)          ∆           (i, n-layer-1)
+         *          ∆               ∆                ∆
+         *      (n-i-1, layer)      ∆           (n-layer-1, n-i-1)
+         */
         //n-i-1 = moving last index, n-layer-1 = fixed last index
         //layer : divide the square into different layers like an earth
         for (int layer = 0; layer < n / 2; layer++) {
@@ -72,44 +117,6 @@ public class RotateImage {
                 int tmp = matrix[i][j];
                 matrix[i][j] = matrix[n-i-1][j];
                 matrix[n-i-1][j] = tmp;
-            }
-        }
-    }
-    
-    /**
-     * http://joycelearning.blogspot.com/2013/10/leetcode-rotate-image.html
-     * 
-     * @param matrix 
-     */
-    public void rotate_v3(int[][] matrix) {
-        
-        if (matrix == null) return;
-        int n = matrix.length;
-        if (n <= 1) return;
-        
-        // rule: i = j'; j = n-1 - i';
-        // that is: i' = n-1 -j; j' = i;
-        // loop through 1/4 of the matrix
-        // a | b
-        // c | d
-        // four parts
-        // 
-        // a = matrix[i][j]; d = matrix[n - 1 - i][n - 1 - j]
-        // b = matrix[j][n - 1 - i];
-        // c = matrix[n - 1 - j][i]
-        //
-        // Math.ceil : returns the smallest integer >= a number.
-        for (int i = 0; i < n/2; i++) {
-            for (int j = 0; j < Math.ceil(((double)n)/2.0); j++) {
-                int tmp = matrix[i][j];
-                //c -> a
-                matrix[i][j] = matrix[n - 1 - j][i];
-                //d -> c
-                matrix[n - 1 - j][i] = matrix[n - 1 - i][n - 1 - j];
-                //b -> d
-                matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i];
-                //a -> b
-                matrix[j][n - 1 - i] = tmp;
             }
         }
     }
