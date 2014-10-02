@@ -34,8 +34,8 @@ public class SearchA2DMatrix {
         int rows = matrix.length;
         int cols = matrix[0].length;
         
-        int start = 1;
-        int end = rows * cols;
+        int start = 0;
+        int end = rows * cols - 1;
         int mid = start + (end - start)/2;
         while(start <= end) {
             int midValue = valueOf(mid, matrix, cols);
@@ -54,8 +54,8 @@ public class SearchA2DMatrix {
     //Note the method to compute the x,y by the position of the element
     //This is the key point of this question
     private int valueOf(int mid, int[][] matrix, int cols) {
-        int x = (mid -1 )/ cols;
-        int y = (mid - 1) % cols;
+        int x = mid / cols;
+        int y = mid % cols;
         return matrix[x][y];
     }
     
