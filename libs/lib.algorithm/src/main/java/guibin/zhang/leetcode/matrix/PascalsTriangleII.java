@@ -21,6 +21,36 @@ import java.util.List;
  */
 public class PascalsTriangleII {
     
+    /**
+     * Build Pascal's Triangle from the first line, just save the result in the same line.
+     * 
+     * http://www.darrensunny.me/leetcode-pascals-triangle-ii/
+     * 
+     * @param rowIndex
+     * @return 
+     */
+    public List<Integer> getRow_v3(int rowIndex) {
+        
+        List<Integer> result = new ArrayList<>(); 
+        result.add(1);//The row 0 case, just one element.
+        
+        // Build each row one at a time
+        for (int i = 1; i <= rowIndex; i++) {
+            
+            //Compute No.i row
+            int prev = 1; // Leading 1
+            for (int j = 1; j < i; j++) {
+                int curr = result.get(j);// Cache the value before it is overwritten
+                result.set(j, prev + curr);
+                prev = curr;
+            }
+            result.add(1);// Tailing 1
+        }
+        
+        return result;
+    }
+    
+    
     public ArrayList<Integer> getRow(int rowIndex) {
 
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
@@ -64,34 +94,6 @@ public class PascalsTriangleII {
         }
         return result;
     }
-    
-    /**
-     * Build Pascal's Triangle from the first line, just save the result in the same line.
-     * 
-     * http://www.darrensunny.me/leetcode-pascals-triangle-ii/
-     * 
-     * @param rowIndex
-     * @return 
-     */
-    public List<Integer> getRow_v3(int rowIndex) {
-        
-        ArrayList<Integer> result = new ArrayList<>(); 
-        result.add(1);//The row 0 case, just one element.
-        
-        // Build each row one at a time
-        for (int i = 1; i <= rowIndex; i++) {
-            int tmp1 = 1; // Leading 1
-            for (int j = 1; j < i; j++) {
-                int tmp2 = result.get(j);// Cache the value before it is overwritten
-                result.set(j, tmp1 + tmp2);
-                tmp1 = tmp2;
-            }
-            result.add(1);// Tailing 1
-        }
-        
-        return result;
-    }
-    
     
     public void print(List<Integer> row) {
         for(int i : row) {
