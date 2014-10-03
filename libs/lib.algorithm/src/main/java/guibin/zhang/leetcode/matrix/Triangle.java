@@ -1,6 +1,7 @@
 package guibin.zhang.leetcode.matrix;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -28,24 +29,51 @@ import java.util.ArrayList;
  */
 public class Triangle {
     
-    public int minimumTotal(ArrayList<ArrayList<Integer>> triangle) {
+    
+    public int minimumTotal(List<List<Integer>> triangle) {
         
-        int lastRow = triangle.size() - 1;
-        int[] path = new int[triangle.size()];
-        //Initialize the path
-        for(int m = 0; m < triangle.get(lastRow).size(); m++) {
-            path[m] = triangle.get(lastRow).get(m);
-        }
+        //Copy the bottom row
+        List<Integer> path = new ArrayList<>(triangle.get(triangle.size() - 1));
         
-        //From the last row but one, upto to the first row
-        for(int row = triangle.size() - 2; row >= 0; row--) {
-            for(int j = 0, col = 0; j < triangle.get(row).size(); j++, col++) {
-                path[col] = triangle.get(row).get(col) + Math.min(path[j], path[j + 1]);
+        //Start from the last row but one, refer it as currRow
+        for (int i = triangle.size() - 2; i >= 0 ; i--) {
+            List<Integer> currRow = triangle.get(i);
+            for (int j = 0; j < currRow.size(); j++) {
+                int min = Math.min(path.get(j), path.get(j + 1));
+                path.set(j, currRow.get(j) + min);
             }
         }
-        
-        return path[0];
+        return path.get(0);
     }
+    
+    
+    
+    /**
+     * replace every element in the current row at level i 
+     * with the minimum sum possible after adding elements from the row below 
+     * i.e. at level i+1. The code traverse the algorithm in bottom up fashion
+     * 
+     * Modify the triangle in-place.
+     * 
+     * @param triangle
+     * @return 
+     */
+    public int minumTotal_v3(ArrayList<ArrayList<Integer>> triangle) {
+        
+        for (int i = triangle.size() - 2; i >= 0; i--) {
+            
+            ArrayList<Integer> currRow = triangle.get(i);
+            ArrayList<Integer> nextLevel = triangle.get(i + 1);
+            
+            for (int j = 0; j < currRow.size(); j++) {
+                int sum2 = currRow.get(j) + nextLevel.get(j);
+                int sum3 = currRow.get(j) + nextLevel.get(j + 1);
+                currRow.set(j, Math.min(sum2, sum3));
+            }
+        }
+        return triangle.get(0).get(0);
+    }
+    
     
     /**
      * If the triangle can be modified, we can do it in place.
@@ -61,25 +89,4 @@ public class Triangle {
         return triangle.get(0).get(0);
     }
     
-    /**
-     * replace every element in the current row at level i 
-     * with the minimum sum possible after adding elements from the row below 
-     * i.e. at level i+1. The code traverse the algorithm in bottom up fashion
-     * 
-     * @param triangle
-     * @return 
-     */
-    public int minumTotal_v3(ArrayList<ArrayList<Integer>> triangle) {
-        for (int i = triangle.size() - 2; i >= 0; i--) {
-            ArrayList<Integer> al = triangle.get(i);
-            ArrayList<Integer> nextLevel = triangle.get(i + 1);
-            for (int j = 0; j < al.size(); j++) {
-                int sum2 = 0, sum3 = 0;
-                sum2 = al.get(j) + nextLevel.get(j);
-                sum3 = al.get(j) + nextLevel.get(j + 1);
-                al.set(j, Math.min(sum2, sum3));
-            }
-        }
-        return triangle.get(0).get(0);
-    }
 }
