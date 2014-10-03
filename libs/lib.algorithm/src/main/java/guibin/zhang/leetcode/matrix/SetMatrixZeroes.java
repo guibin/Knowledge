@@ -12,6 +12,73 @@ import java.util.Set;
 public class SetMatrixZeroes {
     
     /**
+     * Use the first row and the first col to mark the status of the whole matrix.
+     * 1. check the zero status of the first row and the first col.
+     * 2. mark zero on the first row and the first col when matrix[i][j] is zero.
+     * 3. set the matrix as zero based on the first row and the fist col.
+     * 4. Process the first row and the first col.
+     * @param matrix 
+     */
+    public void setZero_v3(int[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        
+        boolean rowZero = false;
+        boolean colZero = false;
+        //The first row
+        for (int j = 0; j < cols; j++) {
+            if (matrix[0][j] == 0) rowZero = true;
+        }
+        
+        //The first col
+        for (int i = 0; i < rows; i++) {
+            if (matrix[i][0] == 0) colZero = true;
+        }
+        
+        //Mark zero on first row and first col, start from 1
+        for (int i = 1; i < rows; i++) {
+            for (int j = 1; j < cols; j++) {
+                if (matrix[i][j] == 0) {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+        
+        //Set zero based on the first col, start from 1
+        for (int i = 1; i < rows; i++) {
+            if (matrix[i][0] == 0) {
+                for (int j = 1; j < cols; j++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        
+        //Set zero based on the first row
+        for (int j = 1; j < cols; j++) {
+            if (matrix[0][j] == 0) {
+                for (int i = 1; i < rows; i++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        
+        //Process the first col
+        if (colZero) {
+            for (int i = 0; i < rows; i++) {
+                matrix[i][0] = 0;
+            }
+        }
+        
+        //Process the first row
+        if (rowZero) {
+            for (int j = 0; j < cols; j++) {
+                matrix[0][j] = 0;
+            }
+        }
+    }
+    
+    /**
      * Run Status: Accepted!
      * Program Runtime: 692 milli secs
      * Progress: 154/154 test cases passed.
@@ -25,8 +92,8 @@ public class SetMatrixZeroes {
         int rows = matrix.length;
         if(rows == 0) return;
         int cols = matrix[0].length;
-        Set<Integer> r = new HashSet<Integer>();
-        Set<Integer> c = new HashSet<Integer>();
+        Set<Integer> r = new HashSet<>();
+        Set<Integer> c = new HashSet<>();
         
         for(int i = 0; i < rows; i++) {
             for(int j = 0; j < cols; j++) {
@@ -87,65 +154,4 @@ public class SetMatrixZeroes {
         }
     }
     
-    /**
-     * Use the first row and the first col to mark the status of the whole matrix.
-     * 1. check the zero status of the first row and the first col.
-     * 2. mark zero on the first row and the first col when matrix[i][j] is zero.
-     * 3. set the matrix as zero based on the first row and the fist col.
-     * 4. Process the first row and the first col.
-     * @param matrix 
-     */
-    public void setZero_v3(int[][] matrix) {
-        int rows = matrix.length;
-        int cols = matrix[0].length;
-        
-        boolean rowZero = false;
-        boolean colZero = false;
-        //The first row
-        for (int j = 0; j < cols; j++) {
-            if (matrix[0][j] == 0) rowZero = true;
-        }
-        //The first col
-        for (int i = 0; i < rows; i++) {
-            if (matrix[i][0] == 0) colZero = true;
-        }
-        //Mark zero on first row and first col
-        for (int i = 1; i < rows; i++) {
-            for (int j = 1; j < cols; j++) {
-                if (matrix[i][j] == 0) {
-                    matrix[i][0] = 0;
-                    matrix[0][j] = 0;
-                }
-            }
-        }
-        
-        //Set zero based on the first col
-        for (int i = 1; i < rows; i++) {
-            if (matrix[i][0] == 0) {
-                for (int j = 1; j < cols; j++) {
-                    matrix[i][j] = 0;
-                }
-            }
-        }
-        //Set zero based on the first row
-        for (int j = 1; j < cols; j++) {
-            if (matrix[0][j] == 0) {
-                for (int i = 1; i < rows; i++) {
-                    matrix[i][j] = 0;
-                }
-            }
-        }
-        //Process the first col
-        if (colZero) {
-            for (int i = 0; i < rows; i++) {
-                matrix[i][0] = 0;
-            }
-        }
-        //Process the first row
-        if (rowZero) {
-            for (int j = 0; j < cols; j++) {
-                matrix[0][j] = 0;
-            }
-        }
-    }
 }
