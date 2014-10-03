@@ -31,7 +31,7 @@ public class SurroundedRegions {
      */
     public void solve_v2(char[][] board) {
         
-        if(board.length <= 0 || board[0].length <= 0) {
+        if(board.length == 0 || board[0].length == 0) {
             return;
         }
         
@@ -135,17 +135,17 @@ public class SurroundedRegions {
      * Standard BFS traverse.
      * 
      * @param board
-     * @param row
-     * @param col 
+     * @param xx
+     * @param yy 
      */
-    private void markBFS_std(char[][] board, int row, int col) {
+    private void markBFS_std(char[][] board, int xx, int yy) {
         
         int rows = board.length;
         int columns = board[0].length;
         Queue<Integer> q = new LinkedList<>();
         
-        if (board[row][col] == 'O') {//Here only add candidates to queue
-            q.add(row * columns + col);    
+        if (board[xx][yy] == 'O') {//Here only add candidates to queue
+            q.add(xx * columns + yy);    
         }
         
         while(!q.isEmpty()) {
