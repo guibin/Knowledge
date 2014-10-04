@@ -35,7 +35,7 @@ public class MergeIntervals {
         }
     }
     
-    public ArrayList<Interval> merge(ArrayList<Interval> intervals) {
+    public List<Interval> merge(List<Interval> intervals) {
         // Start typing your Java solution below
         // DO NOT write main() function
         
@@ -55,7 +55,7 @@ public class MergeIntervals {
         });
         
         Interval last = null;
-        ArrayList<Interval> res = new ArrayList<Interval>();
+        List<Interval> res = new ArrayList<>();
         for (Interval v : intervals) {
             if (last == null) {
                 last = v;
