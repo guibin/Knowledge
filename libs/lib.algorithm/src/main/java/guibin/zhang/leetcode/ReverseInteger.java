@@ -25,6 +25,23 @@ import java.util.Stack;
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class ReverseInteger {
+    
+    public int reverse_v2(int x) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        long result = 0;
+        while (x != 0) {//Here is x != 0 instead of x > 0, since it is possible that x is negative.
+            result *= 10;
+            result += x % 10;
+            x /= 10;
+        }
+        
+        if (result > 0 && result > Integer.MAX_VALUE) return Integer.MAX_VALUE;
+        if (result < 0 && result < Integer.MIN_VALUE) return Integer.MIN_VALUE;
+        return (int)result;
+    }
+    
+    
     public int reverse(int x) {
         // Start typing your Java solution below
         // DO NOT write main() function
@@ -48,15 +65,4 @@ public class ReverseInteger {
         }
     }
     
-    public int reverse_v2(int x) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        int rev = 0;
-        while (x != 0) {
-            rev *= 10;
-            rev += x % 10;
-            x /= 10;
-        }
-        return rev;
-    }
 }
