@@ -14,37 +14,19 @@ public class PlusOne {
 
     public int[] plusOne(int[] digits) {
 
-        int promote = 0;
-        int n = 1;
-        int len = digits.length;
-        int[] result = new int[len];
-
-        for (int i = len - 1; i >= 0; i--) {
-            if (i == len - 1) {
-                if (digits[i] + n > 9) {
-                    result[i] = 0;
-                    promote = 1;
-                } else {
-                    result[i] = digits[i] + n;
-                    promote = 0;
-                }
-            } else {
-                if (digits[i] + promote > 9) {
-                    result[i] = 0;
-                    promote = 1;
-                } else {
-                    result[i] = digits[i] + promote;
-                    promote = 0;
-                }
-            }
+        int[] result = new int[digits.length];
+        int carry = 1;
+        for (int i = digits.length - 1; i >=0; i--) {
+            int sum = carry + digits[i];
+            result[i] = sum % 10;
+            carry = sum / 10;
         }
         
-        //Note when the result gets overflow, we need to create a bigger int[].
-        if(promote > 0) {
-             int[] tmp = new int[len + 1];
-             tmp[0] = 1;
-             System.arraycopy(result, 0, tmp, 1, len);
-             result = tmp;
+        if (carry != 0) {//When the carry-over is not zero, extend the reuslt array
+            int[] tmp = new int[digits.length + 1];
+            tmp[0] = carry;
+            System.arraycopy(result, 0, tmp, 1, digits.length);
+            return tmp;
         }
         return result;
     }
