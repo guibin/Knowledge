@@ -1,4 +1,4 @@
-package guibin.zhang.leetcode;
+package guibin.zhang.leetcode.math;
 
 /**
  * Divide two integers without using multiplication, division and mod operator.

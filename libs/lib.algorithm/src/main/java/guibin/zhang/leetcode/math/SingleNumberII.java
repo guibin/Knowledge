@@ -1,4 +1,4 @@
-package guibin.zhang.leetcode;
+package guibin.zhang.leetcode.math;
 
 /**
  *
@@ -9,7 +9,7 @@ package guibin.zhang.leetcode;
  * 
  * http://fisherlei.blogspot.com/2013/11/leetcode-single-number-ii-solution.html
  * 
- * @author Guibin Zhang <gzhang at radiumone.com>
+ * @author Guibin Zhang <guibin.beijing@gmail.com>
  */
 public class SingleNumberII {
     
