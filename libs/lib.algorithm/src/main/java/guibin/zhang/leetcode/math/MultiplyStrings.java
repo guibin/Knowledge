@@ -1,4 +1,4 @@
-package guibin.zhang.leetcode.string;
+package guibin.zhang.leetcode.math;
 
 /**
  * 
