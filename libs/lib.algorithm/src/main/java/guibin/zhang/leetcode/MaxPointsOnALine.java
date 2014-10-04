@@ -8,6 +8,8 @@ import java.util.Map;
 /**
  * Given n points on a 2D plane, find the maximum number of points that lie on the same straight line.
  * 
+ * http://blog.csdn.net/muscler/article/details/23015277
+ * 
  * @author zhangguibin
  */
 public class MaxPointsOnALine {
@@ -37,9 +39,9 @@ public class MaxPointsOnALine {
         int duplicates = 1;
         int max = 1;
         for (int i = 0; i < points.length - 1; i++) {
-            float slope = Float.MAX_VALUE;
+            float slope;
             duplicates = 1;
-            Map<Float, Integer> map = new HashMap<Float, Integer>();
+            Map<Float, Integer> map = new HashMap<>();
             for (int j = i + 1; j < points.length; j++) {
                 //Find the duplicates
                 if (points[j].x == points[i].x && points[j].y == points[i].y) {
@@ -55,10 +57,9 @@ public class MaxPointsOnALine {
                 //Put the slops into map in case that the points are not adjacent.
                 int preMax = map.get(slope) == null ? duplicates : map.get(slope);
                 map.put(slope, preMax + 1);
+                max = Math.max(preMax + 1, max);
             }
-            for (Integer ii : map.values()) {
-                max = Math.max(ii, max);
-            }
+            
             result = Math.max(result, max);
             result = Math.max(duplicates, result);
         }
