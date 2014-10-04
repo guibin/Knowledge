@@ -39,41 +39,37 @@ public class MergeIntervals {
         // Start typing your Java solution below
         // DO NOT write main() function
         
-        if (intervals == null || intervals.size() <= 1) {
-            return intervals;
-        }
+        if (intervals== null || intervals.size() <= 1) return intervals;
         
-        Collections.sort(intervals, new Comparator<Interval>(){
-            @Override
-            public int compare(Interval t1, Interval t2) {
-                if (t1.start != t2.start) {
-                    return t1.start - t2.start;
-                } else {
-                    return t1.end - t2.end;
-                }
+        Collections.sort(intervals, new Comparator<Interval>() {
+            public int compare(Interval v1, Interval v2) {
+                if (v1.start > v2.start) return 1;
+                if (v1.start < v2.start) return -1;
+                if (v1.end > v2.end) return 1;
+                if (v1.end < v2.end) return -1;
+                return 0;
             }
         });
         
-        Interval last = null;
-        List<Interval> res = new ArrayList<>();
+        Interval tmp = null;
+        List<Interval> result = new ArrayList<>();
         for (Interval v : intervals) {
-            if (last == null) {
-                last = v;
-            } else if (v.start > last.end) {
-                res.add(last);
-                last = v;
-                //Since the intervals has been sorted, last should be ahead of v,
-                //So this judge condition is useless.
-            } else if (v.end < last.start) {
-                res.add(v);
+            if (tmp == null) {
+                tmp = v;
             } else {
-                last.end = Math.max(last.end, v.end);
+                if (v.end < tmp.start) {
+                    result.add(v);
+                } else if (tmp.end < v.start) {
+                    result.add(tmp);
+                    tmp = v;
+                } else {
+                    tmp = new Interval(Math.min(v.start, tmp.start), Math.max(v.end, tmp.end));
+                }
             }
         }
-        if (last != null) {
-            res.add(last);
-        }
-        return res;
+        result.add(tmp);
+        
+        return result;
     }
     
     public static void main(String[] args) {
