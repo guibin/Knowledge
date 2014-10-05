@@ -37,13 +37,13 @@ public class WordBreak {
         t[0] = true;//set first to be true, why?
         //Because we need initial state
         
-        for (int i = 0; i < s.length(); i++) {
+        for (int start = 0; start < s.length(); start++) {
             //should continue from match position
-            if (t[i]) {
+            if (t[start]) {
                 for (String a : dict) {
-                    int end = i + a.length();
+                    int end = start + a.length();
                     if (end <= s.length() && !t[end]) {
-                        if (s.substring(i, end).equals(a)) t[end] = true;
+                        if (s.substring(start, end).equals(a)) t[end] = true;
                     }
                 }
             }
@@ -52,6 +52,26 @@ public class WordBreak {
         return t[s.length()];
     }
     
+    /**
+     * Same with wordBreak_v2, just in reverse order from right to left.
+     * @param s
+     * @param dict
+     * @return 
+     */
+    public boolean wordBreak_v3(String s, Set<String> dict) {
+        
+        boolean[] t = new boolean[s.length() + 1];
+        t[s.length()] = true;
+        //i is start position
+        for (int start = s.length() - 1; start >= 0; start --) {
+            //j is end position
+            for (int end = s.length(); end > start; end--) {
+                t[start] = t[end] && dict.contains(s.substring(start, end));
+                if (t[start]) break;
+            }
+        }
+        return t[0];
+    }
     
     public boolean wordBreak(String s, Set<String> dict) {
         // Note: The Solution object is instantiated only once and is reused by each test case.
