@@ -36,8 +36,7 @@ public class LongestConsecutiveSequence {
         for(int m : num) {
             if(!map.get(m)) {
                 //As the length of single element is 1, if this element has not been visited, we count it in.
-                int length = 1 + findConsequtive(map, m - 1, -1);
-                length += findConsequtive(map, m + 1, 1);
+                int length = 1 + findConsequtive(map, m - 1, -1) + findConsequtive(map, m + 1, 1);
                 maxLength = Math.max(maxLength, length);
             }
         }
