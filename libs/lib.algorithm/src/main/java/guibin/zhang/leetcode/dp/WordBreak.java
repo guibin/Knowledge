@@ -41,8 +41,7 @@ public class WordBreak {
             //should continue from match position
             if (t[i]) {
                 for (String a : dict) {
-                    int len = a.length();
-                    int end = i + len;
+                    int end = i + a.length();
                     if (end <= s.length() && !t[end]) {
                         if (s.substring(i, end).equals(a)) t[end] = true;
                     }
