@@ -27,20 +27,15 @@ public class LinkedListCycle {
     public boolean hasCycle(ListNode head) {
         // IMPORTANT: Please reset any member data you declared, as
         // the same Solution instance will be reused for each test case.
-        ListNode curr = head;
-        ListNode fast = head;
         
-        while(fast != null) {
-            curr = curr.next;
-            fast = fast.next;
-            if (fast != null) {
-                fast = fast.next;
-            }
-            //Be careful the null test.
-            if (fast != null && curr == fast) {
-                return true;
-            }
+        ListNode fast = head, slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            //Judge the cross node inside the loop
+            if (fast == slow) return true;
         }
+        
         return false;
     }
     
@@ -61,32 +56,39 @@ public class LinkedListCycle {
      * @param head
      * @return 
      */
-    public ListNode findFistNodeOnCycle(ListNode head) {
-
-        ListNode curr = head;
+    public ListNode detectCycle(ListNode head) {
+        
+        if (head == null || head.next == null) return null;
+        
+        ListNode slow = head;
         ListNode fast = head;
-        while (fast != null) {
-            curr = curr.next;
-            fast = fast.next;
-            if (fast != null) {
-                fast = fast.next;
-            }
-            //Be careful the null test.
-            if (fast != null && curr == fast) {
-                
-                // There is cycle on the linkedlist, here start to figure out the cross node.
-                ListNode curr2 = head;
-                while (curr2 != null) {
-                    curr2 = curr2.next;
-                    curr = curr.next;
-                    if (curr2 == curr) {
-                        return curr2;
-                    }
-                }
-                
-            }
+        
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) break;//linkedlist crossed here
         }
         
+        if (fast == slow && fast != null) {
+            ListNode p1 = head;
+            ListNode p2 = slow;
+            while (p1 != p2) {
+                p1 = p1.next;
+                p2 = p2.next;
+            }
+            return p1;
+        } 
+        
         return null;
+    }
+    
+    public static void main(String[] args) {
+        LinkedListCycle lc = new LinkedListCycle();
+        
+        ListNode a = lc.new ListNode(1);
+        ListNode b = lc.new ListNode(2);
+        a.next = b;
+        
+        lc.detectCycle(a);
     }
 }
