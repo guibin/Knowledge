@@ -1,4 +1,4 @@
-package guibin.zhang.leetcode.string;
+package guibin.zhang.leetcode.math;
 
 /**
  *
@@ -15,79 +15,27 @@ package guibin.zhang.leetcode.string;
 public class AddBinary {
 
     public String addBinary(String a, String b) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        int lenA = a.length();
-        int lenB = b.length();
-        String mS = null;
-        String nS = null;
-        int m = 0;
-        int n = 0;
-        StringBuilder sb = null;
-        if (lenA > lenB) {
-            sb = new StringBuilder(a);
-            m = lenA;
-            mS = a;
-            n = lenB;
-            nS = b;
-        } else {
-            sb = new StringBuilder(b);
-            m = lenB;
-            mS = b;
-            n = lenA;
-            nS = a;
+        
+        if (a==null ||a.length()==0) return b;
+        if (b==null || b.length()==0) return a;
+        
+        StringBuilder sb = new StringBuilder();
+        
+        int posA = a.length() - 1;
+        int posB = b.length() - 1;
+        int carry = 0;
+        
+        while (posA >= 0 || posB >= 0 || carry > 0) {
+            int num1 = posA >= 0 ? a.charAt(posA) - '0' : 0;
+            int num2 = posB >= 0 ? b.charAt(posB) - '0' : 0;
+            int curr = (num1 + num2 + carry) % 2;
+            carry = (num1 + num2 + carry) / 2;
+            sb.insert(0, curr);
+            posA--;
+            posB--;
         }
-
-        boolean carry = false;
-        for (int i = n - 1; i >= 0; i--) {
-            //Note the logic for j; Draft an example to compute it.
-            int j = i + m - n;
-            if (nS.charAt(i) - '0' + mS.charAt(j) - '0' == 1) {
-                if (!carry) {
-                    sb.setCharAt(j, '1');
-                } else {
-                    sb.setCharAt(j, '0');
-                    carry = true;
-                }
-            } else if (nS.charAt(i) - '0' + mS.charAt(j) - '0' == 0) {
-                if (!carry) {
-                    sb.setCharAt(j, '0');
-                } else {
-                    sb.setCharAt(j, '1');
-                    carry = false;
-                }
-            } else {
-                if (!carry) {
-                    sb.setCharAt(j, '0');
-                } else {
-                    sb.setCharAt(j, '1');
-                }
-                carry = true;
-            }
-        }
-
-        if (!carry) {
-            return sb.toString();
-        } else {
-            //Note the logic for i, draft an example to compute it.
-            for (int i = m - n - 1; i >= 0; i--) {
-                if (mS.charAt(i) == '0') {
-                    if (carry) {
-                        sb.setCharAt(i, '1');
-                        carry = false;
-                    }
-                } else {
-                    if (carry) {
-                        sb.setCharAt(i, '0');
-                        carry = true;
-                    }
-                }
-            }
-            if (carry) {
-                sb.insert(0, '1');
-            }
-            return sb.toString();
-        }
+        
+        return sb.toString();
     }
     
     public static void main(String[] args) {

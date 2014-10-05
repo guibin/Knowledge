@@ -1,4 +1,4 @@
-package guibin.zhang.leetcode.listAndArray;
+package guibin.zhang.leetcode.math;
 
 /**
  *
@@ -24,56 +24,25 @@ public class AddTwoNumbers {
     }
     
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
+        
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
         int carry = 0;
-        ListNode curr1 = l1;
-        ListNode curr2 = l2;
         ListNode dummy = new ListNode(0);
         ListNode curr = dummy;
-        int sum = 0;
-        ListNode node = null;
-        while (curr1 != null && curr2 != null) {
-            sum = curr1.val + curr2.val + carry;
-            if (sum > 9) {
-                carry = sum / 10;
-                node = new ListNode(sum % 10);
-            } else {
-                carry = 0;
-                node = new ListNode(sum);
-            }
+        
+        while(l1 != null || l2 != null || carry > 0) {
+            int num1 = l1 == null ? 0 : l1.val;
+            int num2 = l2 == null ? 0 : l2.val;
+            
+            int currVal = (num1 + num2 + carry) % 10;
+            carry = (num1 + num2 + carry) / 10;
+            
+            ListNode node = new ListNode(currVal);
             curr.next = node;
             curr = curr.next;
-            curr1 = curr1.next;
-            curr2 = curr2.next;
-        }
-        
-        if (curr1 != null || curr2 != null) {
-            ListNode remaining = null;
-            if (curr1 != null) {
-                remaining = curr1;
-            }
-            if (curr2 != null) {
-                remaining = curr2;
-            }
-            while (remaining != null) {
-                sum = carry + remaining.val;
-                if (sum > 9) {
-                    carry = sum / 10;
-                    node = new ListNode(sum % 10);
-                } else {
-                    carry = 0;
-                    node = new ListNode(sum);
-                }
-                curr.next = node;
-                curr = curr.next;
-                remaining = remaining.next;
-            }
-        }
-        //Note the last carry.
-        if (carry > 0) {
-            node = new ListNode(carry);
-            curr.next = node;
+            if (l1 != null) l1 = l1.next;
+            if (l2 != null) l2 = l2.next;
         }
         return dummy.next;
     }
