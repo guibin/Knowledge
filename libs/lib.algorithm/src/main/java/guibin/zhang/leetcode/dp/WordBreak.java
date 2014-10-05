@@ -17,6 +17,43 @@ import java.util.Set;
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class WordBreak {
+    
+    /**
+     * http://www.programcreek.com/2012/12/leetcode-solution-word-break/
+     * 
+     * Define an array t[] such that t[i]==true => 0~(i-1) can be segmented using dictionary
+     * Initial state t[0] == true
+     * 
+     * INPUT: "programcreek", ["programcree","program","creek"]. 
+     * We should get all possible matches, not stop at "programcree".
+     * 
+     * @param s
+     * @param dict
+     * @return 
+     */
+    public boolean wordBreak_v2(String s, Set<String> dict) {
+        
+        boolean[] t = new boolean[s.length() + 1];
+        t[0] = true;//set first to be true, why?
+        //Because we need initial state
+        
+        for (int i = 0; i < s.length(); i++) {
+            //should continue from match position
+            if (t[i]) {
+                for (String a : dict) {
+                    int len = a.length();
+                    int end = i + len;
+                    if (end <= s.length() && !t[end]) {
+                        if (s.substring(i, end).equals(a)) t[end] = true;
+                    }
+                }
+            }
+        }
+        
+        return t[s.length()];
+    }
+    
+    
     public boolean wordBreak(String s, Set<String> dict) {
         // Note: The Solution object is instantiated only once and is reused by each test case.
         int len = s.length();
