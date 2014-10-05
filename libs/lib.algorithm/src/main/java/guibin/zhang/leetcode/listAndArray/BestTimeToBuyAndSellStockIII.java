@@ -15,12 +15,35 @@ package guibin.zhang.leetcode.listAndArray;
  */
 public class BestTimeToBuyAndSellStockIII {
     
+    public int maxProfit(int[] prices) {
+        
+        if(prices == null || prices.length < 2) return 0;
+        
+        int[] maxEndWith = new int[prices.length];
+        int min = prices[0];
+        int max = prices[prices.length - 1];
+        int maxProfit = 0;
+        //Keep track the min to compute the maxI, save it in maxEndWith
+        for (int i = 1; i < prices.length; i++) {
+            min = Math.min(prices[i], min);
+            maxEndWith[i] = Math.max(prices[i] - min, maxEndWith[i - 1]);
+        }
+        //Keep track the max to compute the maxII
+        for (int j = prices.length - 1; j >= 0; j--) {
+            max = Math.max(prices[j], max);
+            int profit = max - prices[j];//The profit from second transaction.
+            maxProfit = Math.max(maxProfit, profit + maxEndWith[j]);
+        }
+        return maxProfit;
+    }
+    
+    
     /**
      * This method is very clear, but Time Limit Exceed when judge large.
      * @param prices
      * @return 
      */
-    public int maxProfit_v1(int[] prices) {
+    public int maxProfit_naive(int[] prices) {
         
         if(prices.length < 2) return 0;
         int max = 0;
@@ -51,41 +74,6 @@ public class BestTimeToBuyAndSellStockIII {
         return maxProfit;
     }
     
-    public int maxProfit_v2(int[] prices) {
-        
-        if(prices.length < 2) {
-            return 0;
-        }
-        
-        /**
-         * stores the max profit in [0, ... , i] subarray in prices
-         */
-        int[] maxEndWith = new int[prices.length];
-        //Build the maxEndWith
-        int lowest = prices[0];
-        maxEndWith[0] = 0;
-        for(int i = 1; i < prices.length; i++) {
-            maxEndWith[i] = Math.max(maxEndWith[i - 1], prices[i] - lowest);
-            lowest = Math.min(lowest, prices[i]);
-        }
-        
-        int result = maxEndWith[prices.length - 1];
-        /**
-         * reverse to track maxPrices and maxProfit.
-         * And meanwhile calculate maxEndWith[i] + maxProfit
-         */
-        int highest = prices[prices.length - 1];
-        int maxProfit = 0;
-        for(int i = prices.length - 2; i >= 0; i--) {
-            maxProfit = Math.max(maxProfit, highest - prices[i]);
-            highest = Math.max(highest, prices[i]);
-            
-            result = Math.max(maxProfit + maxEndWith[i], result);
-        }
-        
-        return result;
-    }
-    
     public static void main(String[] args) {
         int[] prices1 = {6,1,3,2,4,7};//7
         int[] prices2 = {2,1,4,5,2,9,7};//11
@@ -93,11 +81,11 @@ public class BestTimeToBuyAndSellStockIII {
         int[] prices4 = {1,2,4,2,5,7,2,4,9,0};//13
         int[] prices5 = {1,2,4,2,5,7,2,4,9,0,9};//17
         BestTimeToBuyAndSellStockIII btt = new BestTimeToBuyAndSellStockIII();
-        btt.maxProfit_v1(prices1);
-        btt.maxProfit_v1(prices2);
-        btt.maxProfit_v1(prices3);
-        btt.maxProfit_v1(prices4);
-        btt.maxProfit_v1(prices5);
+        btt.maxProfit_naive(prices1);
+        btt.maxProfit_naive(prices2);
+        btt.maxProfit_naive(prices3);
+        btt.maxProfit_naive(prices4);
+        btt.maxProfit_naive(prices5);
     }
     
 }
