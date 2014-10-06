@@ -1,5 +1,7 @@
 package guibin.zhang.leetcode.dp;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -17,6 +19,30 @@ import java.util.Set;
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class WordBreak {
+    
+    /**
+     * Same with wordBreak_v2, just in reverse order from right to left.
+     * @param s
+     * @param dict
+     * @return 
+     */
+    public boolean wordBreak_v3(String s, Set<String> dict) {
+        
+        boolean[] t = new boolean[s.length() + 1];
+        t[s.length()] = true;
+        //i is start position
+        for (int start = s.length() - 1; start >= 0; start --) {
+            //j is end position
+            for (int end = s.length(); end > start; end--) {
+                t[start] = t[end] && dict.contains(s.substring(start, end));
+                if (t[start]) break;
+            }
+        }
+        System.out.println("wordBreak_v3");
+        for (boolean b : t) System.out.print(b + ",");
+        System.out.println();
+        return t[0];
+    }
     
     /**
      * http://www.programcreek.com/2012/12/leetcode-solution-word-break/
@@ -48,29 +74,10 @@ public class WordBreak {
                 }
             }
         }
-        
+        System.out.println("wordBreak_v2");
+        for (boolean b : t) System.out.print(b + ",");
+        System.out.println();
         return t[s.length()];
-    }
-    
-    /**
-     * Same with wordBreak_v2, just in reverse order from right to left.
-     * @param s
-     * @param dict
-     * @return 
-     */
-    public boolean wordBreak_v3(String s, Set<String> dict) {
-        
-        boolean[] t = new boolean[s.length() + 1];
-        t[s.length()] = true;
-        //i is start position
-        for (int start = s.length() - 1; start >= 0; start --) {
-            //j is end position
-            for (int end = s.length(); end > start; end--) {
-                t[start] = t[end] && dict.contains(s.substring(start, end));
-                if (t[start]) break;
-            }
-        }
-        return t[0];
     }
     
     public boolean wordBreak(String s, Set<String> dict) {
@@ -107,5 +114,24 @@ public class WordBreak {
             }
         }
         return false;
+    }
+    
+    public static void main(String[] args) {
+        String a = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab";
+        //["a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"]
+        Set<String> dict = new HashSet<>();
+        dict.add("a");
+        dict.add("aa");
+        dict.add("aaa");
+        dict.add("aaaa");
+        dict.add("aaaaa");
+        dict.add("aaaaaa");
+        dict.add("aaaaaaa");
+        dict.add("aaaaaaaa");
+        dict.add("aaaaaaaaa");
+        dict.add("aaaaaaaaaa");
+        WordBreak wb = new WordBreak();
+        System.out.println("wordBreak_v2: " + wb.wordBreak_v2(a, dict));
+        System.out.println("wordBreak_v3: " + wb.wordBreak_v3(a, dict));
     }
 }
