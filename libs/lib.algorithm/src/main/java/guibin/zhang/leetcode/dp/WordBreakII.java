@@ -43,17 +43,17 @@ public class WordBreakII {
         return result;
     }
     
-    public void search(String s, Set<String> dict, List<String> result, String tmp, int idx, boolean[] possible) {
+    public void search(String s, Set<String> dict, List<String> result, String branch, int idx, boolean[] possible) {
         
-        if (idx >= s.length()) {
-            result.add(tmp.trim());
+        if (idx == s.length()) {
+            result.add(branch.trim());
             return;
         }
         
         for (int i = idx; i < s.length(); i ++) {
-            if (dict.contains(s.substring(idx, i + 1)) && possible[i + 1]) {
-                String t = tmp + s.substring(idx, i + 1) + " ";
-                search(s, dict, result, t, i + 1, possible);
+            if (possible[i + 1] && dict.contains(s.substring(idx, i + 1))) {
+                String tmp = branch + s.substring(idx, i + 1) + " ";
+                search(s, dict, result, tmp, i + 1, possible);
             }
         }
     }
