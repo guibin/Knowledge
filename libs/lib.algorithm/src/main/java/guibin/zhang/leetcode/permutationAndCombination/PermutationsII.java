@@ -43,6 +43,7 @@ public class PermutationsII {
     }
 
     public boolean swapable(Integer[] num, int start, int i) {
+        //Since it is comparing with num[i], so it should be only < instead of <=
         for (int j = start; j < i; j++) {
             if (num[j] == num[i]) {
                 return false;
@@ -71,5 +72,15 @@ public class PermutationsII {
         Integer temp = num[i];
         num[i] = num[j];
         num[j] = temp;
+    }
+    
+    public static void main(String[] args) {
+        PermutationsII p = new PermutationsII();
+        int[] num = {-1, -1, 3, -1};
+        ArrayList<ArrayList<Integer>> result = p.permuteUnique(num);
+        result.forEach(list -> {
+            list.forEach(e -> System.out.print(e + ", "));
+            System.out.println();
+        });
     }
 }
