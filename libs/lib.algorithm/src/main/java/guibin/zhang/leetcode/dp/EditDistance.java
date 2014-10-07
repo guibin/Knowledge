@@ -14,10 +14,31 @@ package guibin.zhang.leetcode.dp;
  * http://www.youtube.com/watch?v=gSGf8P8D_uY
  * http://www.youtube.com/watch?v=dUSqwTC8TM8
  * http://www.youtube.com/watch?v=CB425OsE4Fo
+ * http://www.geeksforgeeks.org/dynamic-programming-set-5-edit-distance/
  * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class EditDistance {
+    
+    
+    public int minDistanceNaive(String word1, String word2) {
+        
+        // Base cases:
+        if (word1.length() == 0) {
+            return word2.length();
+        }
+        if (word2.length() == 0) {
+            return word1.length();
+        }
+        
+        int left = minDistanceNaive(word1.substring(0, word1.length() - 1), word2) + 1;
+        int right = minDistanceNaive(word1, word2.substring(0, word2.length() - 1)) + 1;
+        int corner = minDistanceNaive(word1.substring(0, word1.length() - 1), word2.substring(0, word2.length() - 1)) 
+                + word1.charAt(word1.length() - 1) == word2.charAt(word2.length() - 1) ? 0 : 1;
+        
+        return Math.min(Math.min(left, right), corner);
+    }
+    
     /**
      * The following recurrence relations define the edit distance, d(s1,s2), of two strings s1 and s2:
      * 
@@ -88,6 +109,7 @@ public class EditDistance {
     
     public static void main(String[] args) {
         EditDistance ed = new EditDistance();
-        System.out.println(ed.minDistance("a", "a"));
+        System.out.println(ed.minDistance("SUNDAY", "SATURDAY"));
+        System.out.println(ed.minDistanceNaive("SUNDAY", "SATURDAY"));
     }
 }

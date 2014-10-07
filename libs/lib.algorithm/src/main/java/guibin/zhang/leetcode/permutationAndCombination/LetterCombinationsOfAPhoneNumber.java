@@ -59,22 +59,22 @@ public class LetterCombinationsOfAPhoneNumber {
         
         if (idx == digits.length()) {
             result.add(sb.toString());
-        } else {
-            char[] candidates = map[digits.charAt(idx) - '0'];
-            //Otherwise, when digits contains 0 and 1, the result will be empty.
-            //Because letterCombinations cannot be involked, and finally the i < digits.length();
-            if (candidates.length == 0) {
-                letterCombinations(digits, idx + 1, sb, result);
-            } else {
-                for (int i = 0; i < candidates.length; i++) {
-                    sb.append(candidates[i]);
-                    letterCombinations(digits, idx + 1, sb, result);
-                    //Because each digit maps to multiple candidate characers, 
-                    //only one is needed in each combination.
-                    //So delete it.
-                    sb.deleteCharAt(sb.length() - 1);
-                }
-            }
+            return;
+        }
+        char[] candidates = map[digits.charAt(idx) - '0'];
+        //Otherwise, when digits contains 0 and 1, the result will be empty.
+        //Because letterCombinations cannot be involked, and finally the i < digits.length();
+        if (candidates.length == 0) {
+            letterCombinations(digits, idx + 1, sb, result);
+            return;
+        }
+        for (int i = 0; i < candidates.length; i++) {
+            sb.append(candidates[i]);
+            letterCombinations(digits, idx + 1, sb, result);
+            //Because each digit maps to multiple candidate characers, 
+            //only one is needed in each combination.
+            //So delete it.
+            sb.deleteCharAt(sb.length() - 1);
         }
     }
     
