@@ -54,15 +54,15 @@ public class PermutationsII {
     public void perm(Integer[] branch, int start, int end, ArrayList<ArrayList<Integer>> result) {
         if (start == end) {
             result.add(new ArrayList<>(Arrays.asList(branch)));
-        } else {
-            for (int i = start; i <= end; i++) {
-                //Before swaping, check if there any identical emelent with element i in [start, i)
-                if (swapable(branch, start, i)) {
-                    //Swap the first element with the rest of the element, including itself.
-                    swap(branch, start, i);
-                    perm(branch, start + 1, end, result);
-                    swap(branch, start, i);
-                }
+            return;
+        } 
+        for (int i = start; i <= end; i++) {
+            //Before swaping, check if there any identical emelent with element i in [start, i)
+            if (swapable(branch, start, i)) {
+                //Swap the first element with the rest of the element, including itself.
+                swap(branch, start, i);
+                perm(branch, start + 1, end, result);
+                swap(branch, start, i);
             }
         }
     }

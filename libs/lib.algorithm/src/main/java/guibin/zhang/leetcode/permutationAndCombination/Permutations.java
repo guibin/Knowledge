@@ -88,14 +88,14 @@ public class Permutations {
     public void perm(Integer[] branch, int start, int end, List<List<Integer>> result) {
         if (start == end) {
             result.add(new ArrayList<>(Arrays.asList(branch)));
-        } else {
-            for (int i = start; i <= end; i++) {
-                //Swap the first element with the rest of the element, including itself.
-                swap(branch, start, i);
-                perm(branch, start + 1, end, result);
-                //Swap back
-                swap(branch, start, i);
-            }
+            return;
+        } 
+        for (int i = start; i <= end; i++) {
+            //Swap the first element with the rest of the element, including itself.
+            swap(branch, start, i);
+            perm(branch, start + 1, end, result);
+            //Swap back
+            swap(branch, start, i);
         }
     }
     
