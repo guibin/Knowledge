@@ -33,8 +33,10 @@ public class WordBreakII {
         //wordBreak I to compute the possible array
         for (int start = s.length() - 1; start >= 0; start--) {
             for (int end = s.length(); end > start; end--) {
-                possible[start] = possible[end] && dict.contains(s.substring(start, end));
-                if (possible[start]) break;
+                if (possible[end] && dict.contains(s.substring(start, end))) {
+                    possible[start] = true;
+                    break;
+                }
             }
         }
         
@@ -43,16 +45,16 @@ public class WordBreakII {
         return result;
     }
     
-    public void search(String s, Set<String> dict, List<String> result, String branch, int idx, boolean[] possible) {
+    public void search(String s, Set<String> dict, List<String> result, String branch, int startId, boolean[] possible) {
         
-        if (idx == s.length()) {
+        if (startId == s.length()) {
             result.add(branch.trim());
             return;
         }
         
-        for (int i = idx; i < s.length(); i ++) {
-            if (possible[i + 1] && dict.contains(s.substring(idx, i + 1))) {
-                String tmp = branch + s.substring(idx, i + 1) + " ";
+        for (int i = startId; i < s.length(); i ++) {
+            if (possible[i + 1] && dict.contains(s.substring(startId, i + 1))) {
+                String tmp = branch + s.substring(startId, i + 1) + " ";
                 search(s, dict, result, tmp, i + 1, possible);
             }
         }

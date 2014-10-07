@@ -34,8 +34,10 @@ public class WordBreak {
         for (int start = s.length() - 1; start >= 0; start --) {
             //j is end position
             for (int end = s.length(); end > start; end--) {
-                t[start] = t[end] && dict.contains(s.substring(start, end));
-                if (t[start]) break;
+                if (t[end] && dict.contains(s.substring(start, end))) {
+                    t[start] = true;
+                    break;
+                }
             }
         }
         System.out.println("wordBreak_v3");
