@@ -49,6 +49,8 @@ public class KSum {
     public static List<List<Integer>> kSumInSortedArray(int[] a, int begin, int k, int target) {
 
         List<List<Integer>> result = new ArrayList<>();
+        //visited is just for deduplication.
+        //If int[] a doesn't has any deplication, then visited is not helpful.
         Set<Integer> visited = new HashSet<>();
         //Base case, Two sum.
         if (k == 2) {
