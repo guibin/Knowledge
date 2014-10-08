@@ -63,6 +63,7 @@ public class CombinationSum {
             for (int i = startId; i < arr.length; i++) {
                 sum += arr[i];
                 branch.add(arr[i]);
+                //Note: Here is i instead of i + 1, since we need duplication.
                 combinate(arr, target, sum, branch, result, i);
                 sum -= arr[i];
                 branch.remove(branch.size() - 1);
