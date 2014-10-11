@@ -32,6 +32,11 @@ import java.util.Set;
  * http://discuss.leetcode.com/questions/1108/word-ladder
  * 
  * 
+ * BFS can only be used to find shortest path in a graph if:
+ * 1. There are no loops 
+ * 2. All edges have same weight or no weight. 
+ * 
+ * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class WordLadder {
