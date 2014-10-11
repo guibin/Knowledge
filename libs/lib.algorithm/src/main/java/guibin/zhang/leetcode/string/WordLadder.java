@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -38,15 +39,15 @@ public class WordLadder {
     public int ladderLength(String start, String end, HashSet<String> dict) {
         
         //current -> prev
-        HashMap<String, String> path = new HashMap<String, String>();
-        Set<String> visit = new HashSet<String>();
+        HashMap<String, String> path = new HashMap<>();
+        Set<String> visit = new HashSet<>();
         //bfs queue
-        Queue<String> queue = new LinkedList<String>();
+        Queue<String> queue = new LinkedList<>();
         queue.add(start);
         visit.add(start);
         
         while(queue.size() > 0) {
-            String prev = queue.poll();
+            String prev = queue.remove();
             //Traverse all the adjacent words
             for(String curr : adjacent(prev, dict)) {
                 if(curr.equals(end)) {
@@ -76,10 +77,10 @@ public class WordLadder {
      */
     public Set<String> adjacent(String str, Set<String> dict) {
 
-        Set<String> rest = new HashSet<String>();
+        Set<String> rest = new HashSet<>();
         char[] sArr = str.toCharArray();
         for (int i = 0; i < sArr.length; i++) {
-            char origin = sArr[i];
+            char origin = sArr[i];//Save the original char
             for (char c = 'a'; c <= 'z'; c++) {
                 if (c != origin) {
                     sArr[i] = c;
@@ -89,6 +90,7 @@ public class WordLadder {
                     }
                 }
             }
+            //Recover to original string
             sArr[i] = origin;
         }
         return rest;
@@ -103,16 +105,16 @@ public class WordLadder {
      */
     public int ladderLength_v2(String start, String end, HashSet<String> dict) {
         
-        LinkedList<String> queue = new LinkedList<String>();
-        LinkedList<Integer> len = new LinkedList<Integer>();
+        LinkedList<String> queue = new LinkedList<>();
+        LinkedList<Integer> len = new LinkedList<>();
         
-        queue.offer(start);
-        len.offer(1);
+        queue.add(start);
+        len.add(1);
         dict.remove(start);
         
         while(!queue.isEmpty()) {
-            String current = queue.poll();
-            int depth = len.poll();
+            String current = queue.remove();
+            int depth = len.remove();
             if(current.equals(end)) {
                 return depth;
             }
@@ -121,8 +123,8 @@ public class WordLadder {
             while(it.hasNext()) {
                 String tmp = it.next();
                 if(isAdjacent(tmp, current)) {
-                    queue.offer(tmp);
-                    len.offer(depth + 1);
+                    queue.add(tmp);
+                    len.add(depth + 1);
                     it.remove();
                 }
             }
