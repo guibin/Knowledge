@@ -36,17 +36,17 @@ import java.util.Set;
  */
 public class WordLadder {
 
-    public int ladderLength(String start, String end, HashSet<String> dict) {
+    public int ladderLength(String start, String end, Set<String> dict) {
         
         //current -> prev
-        HashMap<String, String> path = new HashMap<>();
+        Map<String, String> path = new HashMap<>();
         Set<String> visit = new HashSet<>();
         //bfs queue
         Queue<String> queue = new LinkedList<>();
         queue.add(start);
         visit.add(start);
         
-        while(queue.size() > 0) {
+        while(!queue.isEmpty()) {
             String prev = queue.remove();
             //Traverse all the adjacent words
             for(String curr : adjacent(prev, dict)) {
@@ -90,7 +90,7 @@ public class WordLadder {
                     }
                 }
             }
-            //Recover to original string
+            //Remember to recover to original string
             sArr[i] = origin;
         }
         return rest;
