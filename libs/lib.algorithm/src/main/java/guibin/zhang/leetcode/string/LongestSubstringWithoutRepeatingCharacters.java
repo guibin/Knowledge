@@ -38,21 +38,23 @@ public class LongestSubstringWithoutRepeatingCharacters {
         // DO NOT write main() function
         int max = 0;
         HashSet<Character> set = new HashSet<>();//Save the non-repetition characters start from last repetition.
-        int j = 0;//Start idx of the sub-string without repetition
-        for(int i = 0; i < s.length(); ++i) {
-            char c = s.charAt(i);
-            if(set.contains(c)) {
-                max = Math.max(max, i - j);
-                while(s.charAt(j) != s.charAt(i)) {
-                    set.remove(s.charAt(j));
-                    j++;
+        int start = 0;//Start idx of the sub-string without repetition
+        for(int end = 0; end < s.length(); ++end) {
+            char e = s.charAt(end);
+            if(set.contains(e)) {
+                max = Math.max(max, end - start);
+                while(s.charAt(start) != s.charAt(end)) {
+                    set.remove(s.charAt(start));
+                    start++;
                 }
-                j++;
+                //Here s.charAt(end) is still in set, make the start point to "end + 1"
+                start++;
             } else {
-                set.add(c);
+                set.add(e);
             }
         }
-        max = Math.max(max, s.length() - j);
+        //Here is the last segment till the end of the string
+        max = Math.max(max, s.length() - start);
         return max;
     }
     
