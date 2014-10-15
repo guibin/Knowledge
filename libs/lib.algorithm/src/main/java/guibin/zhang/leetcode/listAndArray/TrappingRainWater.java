@@ -26,13 +26,12 @@ public class TrappingRainWater {
     public int trap_v3(int[] A) {
         
         int vol = 0;
-        int len = A.length;
         int curr = 0;
         //Skip zeros
-        while (curr < len && A[curr] == 0) curr++;
+        while (curr < A.length && A[curr] == 0) curr++;
         
         Stack<Integer> indices = new Stack<>();
-        for (; curr < len; curr ++) {
+        while (curr < A.length) {
             while (!indices.isEmpty() && A[curr] >= A[indices.peek()]) {
                 int b = indices.pop();
                 if (indices.isEmpty()) break;
@@ -43,6 +42,7 @@ public class TrappingRainWater {
                 vol += (curr - indices.peek() - 1) * (Math.min(A[curr], A[indices.peek()]) - A[b]);
             }
             indices.push(curr);
+            curr ++;
         }
         
         return vol;
