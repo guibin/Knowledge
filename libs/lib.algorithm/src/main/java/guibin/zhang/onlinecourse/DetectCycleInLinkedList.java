@@ -38,6 +38,6 @@ public class DetectCycleInLinkedList {
         System.out.println(detector.hasCycle(node1));
         
         System.out.println("The first node on cycle is:");
-        System.out.println(detector.findFistNodeOnCycle(node1).val);
+        System.out.println(detector.detectCycle(node1).val);
     }
 }
