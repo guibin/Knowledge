@@ -40,7 +40,7 @@ public class LargestRectangleInHistogram {
         for (int i = 0; i < histo.length; i++) {
             //Case 1, the height is larger thus it can be candidate of rectangle of *start*
             int h = histo[i];
-            if (height.isEmpty() || h > height.peek()) {
+            if (height.isEmpty() || h >= height.peek()) {
                 height.push(h);
                 indices.push(i);
             } else if (h < height.peek()) {
