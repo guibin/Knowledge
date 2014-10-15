@@ -43,7 +43,7 @@ public class LargestRectangleInHistogram {
             if (height.isEmpty() || h >= height.peek()) {
                 height.push(h);
                 indices.push(i);
-            } else if (h < height.peek()) {
+            } else {//h < height.peek()
                 //If current height is shorter, thus we need pop those larger heights, 
                 //and compute the candidate rectangle's area size.
                 while (!height.isEmpty() && h < height.peek()) {
