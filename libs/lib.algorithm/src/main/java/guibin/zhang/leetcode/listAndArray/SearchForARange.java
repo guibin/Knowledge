@@ -19,42 +19,6 @@ package guibin.zhang.leetcode.listAndArray;
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class SearchForARange {
-    public int[] searchRange(int[] A, int target) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        int start = 0;
-        int end = A.length - 1;
-        int mid = 0;
-        int[] res = {-1, -1};
-        
-        while (start < end) {
-            mid = start + (end - start) / 2;
-            if (A[mid] == target) {
-                int s = mid;
-                while (s >= start && A[s] == target) {
-                    s --;
-                }
-                int e = mid;
-                //Note: here "<= end" instead of "<"
-                while (e <= end && A[e] == target) {
-                    e ++;
-                }
-                res[0] = s + 1;
-                res[1] = e - 1;
-                return res;
-            } else if (A[mid] < target) {
-                start = mid + 1;
-            } else {
-                end = mid - 1;
-            }
-        }
-        if (A[start] == target) {
-            res[0] = start;
-            res[1] = end;
-        } 
-        
-        return res;
-    }
     
     /**
      * Run Status: Accepted!
@@ -115,6 +79,43 @@ public class SearchForARange {
                 end = mid - 1;
             }
         }
+        
+        return res;
+    }
+    
+    public int[] searchRange(int[] A, int target) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int start = 0;
+        int end = A.length - 1;
+        int mid = 0;
+        int[] res = {-1, -1};
+        
+        while (start < end) {
+            mid = start + (end - start) / 2;
+            if (A[mid] == target) {
+                int s = mid;
+                while (s >= start && A[s] == target) {
+                    s --;
+                }
+                int e = mid;
+                //Note: here "<= end" instead of "<"
+                while (e <= end && A[e] == target) {
+                    e ++;
+                }
+                res[0] = s + 1;
+                res[1] = e - 1;
+                return res;
+            } else if (A[mid] < target) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+        if (A[start] == target) {
+            res[0] = start;
+            res[1] = end;
+        } 
         
         return res;
     }
