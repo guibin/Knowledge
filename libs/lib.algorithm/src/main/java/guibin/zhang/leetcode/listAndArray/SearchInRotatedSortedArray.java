@@ -53,7 +53,7 @@ public class SearchInRotatedSortedArray {
      * @param A
      * @return 
      */
-    public int search(int[] A) {
+    public int searchSeparatePointOfRotateArray(int[] A) {
         
         //Use "left" to judge which part mid is pointing to
         int start = 0, left = 0;
@@ -111,6 +111,6 @@ public class SearchInRotatedSortedArray {
         int[] C = {4,5,6,7};//0
         int[] E = {9,4,5,6,7};//1
         
-        System.out.println(si.search(E));
+        System.out.println(si.searchSeparatePointOfRotateArray(C));
     }
 }
