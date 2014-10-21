@@ -1,4 +1,4 @@
-package guibin.zhang.algorithm.string;
+package guibin.zhang.leetcode.string;
 
 /**
  * 
@@ -41,13 +41,13 @@ public class MinimumWindowSubstring {
     
     public String minWindow(String S, String T) {
         
-        int[] srcHash = new int[128];
+        int[] tHash = new int[128];
         //Make statistics of T
         for (int i = 0; i < T.length(); i++) {
-            srcHash[T.charAt(i)] ++;
+            tHash[T.charAt(i)] ++;
         }
         
-        int[] destHash = new int[128];
+        int[] sHash = new int[128];
         int found = 0;
         //The min length window
         int begin = -1, end = S.length(), minLen = 1 + S.length();
@@ -55,20 +55,20 @@ public class MinimumWindowSubstring {
         for (int start = 0, i = 0; i < S.length(); i++) {
             char curr = S.charAt(i);
             //If curr in T, make statistics of S, otherwise continue to scan
-            if (srcHash[curr] != 0) {
-                destHash[curr] ++;
+            if (tHash[curr] != 0) {
+                sHash[curr] ++;
             
                 //This is necessary to avoid duplicated characters in S
-                if (destHash[curr] <= srcHash[curr]) found++;
+                if (sHash[curr] <= tHash[curr]) found++;
 
                 //Found the first windows that contains all the characters in T
                 if (found == T.length()) {
                     //Shrink the window
                     while (start < i) {
                         char sChar = S.charAt(start);
-                        if (srcHash[sChar] == 0 || 
+                        if (tHash[sChar] == 0 || 
                                 //This is case that there are more duplicated characters in S
-                                (srcHash[sChar] != 0 && --destHash[sChar] >= srcHash[sChar])) {
+                                (tHash[sChar] != 0 && --sHash[sChar] >= tHash[sChar])) {
                             start ++;
                         } else {
                             break;
