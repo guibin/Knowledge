@@ -25,7 +25,7 @@ package guibin.zhang.leetcode.listAndArray;
  * 
  * @author Guibin Zhang <guibin.beijing@gmail.com>
  */
-public class MaxProduct {
+public class MaxProductSubarray {
     
     public int maxProduct(int[] A) {
 
@@ -34,7 +34,8 @@ public class MaxProduct {
         int maxProd = A[0];
         int max_temp = A[0];
         int min_temp = A[0];
-
+        
+        //Start from 1
         for (int i = 1; i < A.length; i++) {
             int a = A[i] * max_temp;
             int b = A[i] * min_temp;
