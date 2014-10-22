@@ -22,19 +22,19 @@ public class SearchMinimumInRotatedSortedArray {
         int start = 0, end = num.length - 1;
         
         while (start <= end) {
+            
+            //Case [1,3] and [3,1]
+            if (start + 1 == end) return Math.min(num[start], num[end]);
+            
             int mid = start + (end - start)/2;
-            //Case: [1, 2]
-            if (num[start] < num[end]) {
+            if (num[start] < num[end]) {//Case: [1, 2, 3, 4]
                 return num[start];  
-                //Normal acceptable case
-            } else if ((mid - 1) >= 0 && num[mid - 1] > num[mid]) {
+            } else if ((mid - 1) >= 0 && num[mid - 1] > num[mid]) {//Normal acceptable case
                 return num[mid];
-            } else if (num[mid] >= num[start]) {
+            } else if (num[mid] >= num[start]) {//On left part
                 start = mid + 1;
-            } else if (num[mid] <= num[end]) {
+            } else if (num[mid] <= num[end]) {//On right part
                 end = mid - 1;
-            } else {
-                return result;
             }
         }
         return result;
