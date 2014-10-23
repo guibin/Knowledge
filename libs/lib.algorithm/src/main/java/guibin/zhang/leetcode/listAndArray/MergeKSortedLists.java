@@ -54,7 +54,7 @@ public class MergeKSortedLists {
         
         ListNode dummy = new ListNode(0);
         ListNode curr = dummy;
-        while (heap.size() > 0) {
+        while (!heap.isEmpty()) {
             ListNode n = heap.remove();
             //Fill the heap if there is available element from the list
             if (n.next != null) heap.add(n.next);
