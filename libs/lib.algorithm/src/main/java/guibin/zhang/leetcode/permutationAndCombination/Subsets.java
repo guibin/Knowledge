@@ -2,6 +2,7 @@ package guibin.zhang.leetcode.permutationAndCombination;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Given a set of distinct integers, S, return all possible subsets.
@@ -52,17 +53,17 @@ public class Subsets {
      * @param S
      * @return 
      */
-    public ArrayList<ArrayList<Integer>> subsets_v2(int[] S) {
+    public List<List<Integer>> subsets_v2(int[] S) {
         
         Arrays.sort(S);
-        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
-        ArrayList<Integer> branch = new ArrayList<>();
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> branch = new ArrayList<>();
         result.add(branch);
         fullCombination(result, branch, S, 0);
         return result;
     }
     
-    public void fullCombination(ArrayList<ArrayList<Integer>> res, ArrayList<Integer> branch, int[] a, int startId) {
+    public void fullCombination(List<List<Integer>> res, List<Integer> branch, int[] a, int startId) {
         for(int i = startId; i < a.length; i ++) {
             branch.add(a[i]);
             res.add(new ArrayList<>(branch));
