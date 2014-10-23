@@ -16,6 +16,7 @@ public class StrStr {
           
          int n = 0;
           
+         //Here is <= instead of <, for handling case: "a", "a"
          for(int start = 0; start <= haystack.length() - needle.length(); start++){
              n = 0;
               
