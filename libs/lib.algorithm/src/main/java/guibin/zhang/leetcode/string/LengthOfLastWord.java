@@ -15,6 +15,23 @@ package guibin.zhang.leetcode.string;
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class LengthOfLastWord {
+    
+    public int lengthOfLastWord_v3(String s) {
+
+        int len = 0;
+        
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (s.charAt(i) != ' ') {
+                len++;
+            } else {
+                if (len > 0) {
+                    return len;
+                }
+            }
+        }
+        return len;
+    }
+    
     public int lengthOfLastWord(String s) {
         // Start typing your Java solution below
         // DO NOT write main() function
