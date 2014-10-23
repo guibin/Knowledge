@@ -1,4 +1,4 @@
-package guibin.zhang.onlinecourse;
+package guibin.zhang.leetcode.listAndArray;
 
 /**
  * 
@@ -56,16 +56,18 @@ public class CloneLinkedListOfTwoPointers {
         
         // 2. Split the origin linked list and the copied one
         curr = head;
-        ListNode copiedHead = curr.next;
-        ListNode copyCurr = copiedHead;
+        ListNode nHead = curr.next;
         while (curr != null) {
-            ListNode nxt = curr.next.next;
-            curr.next = nxt;
-            copyCurr.next = nxt.next;
             
-            curr = nxt;
-            copyCurr = copyCurr.next;
+            ListNode nxt = curr.next;
+            curr.next = nxt.next;//Cut off the curr with its neighbor
+            
+            //Cut off the nxt with its neibor and point to next nxt
+            if (nxt.next != null) {
+                nxt.next = nxt.next.next;
+            }
+            curr = curr.next;
         }
-        return copiedHead;
+        return nHead;
     }
 }
