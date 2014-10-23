@@ -2,6 +2,7 @@ package guibin.zhang.leetcode.listAndArray;
 
 import guibin.zhang.leetcode.tree.MaxPriorityQueue;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -36,6 +37,34 @@ public class MergeKSortedLists {
         }
     }
 
+    public ListNode mergeKLists_v3(List<ListNode> lists) {
+        
+        if (lists == null || lists.isEmpty()) return null;
+        
+        Queue<ListNode> heap = new PriorityQueue<>(lists.size(), new Comparator<ListNode>() {
+            public int compare(ListNode a, ListNode b) {
+                return a.val - b.val;
+            }
+        });
+        
+        //Initialize the heap
+        for (ListNode n : lists) {
+            if (n != null) heap.add(n);
+        }
+        
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+        while (heap.size() > 0) {
+            ListNode n = heap.remove();
+            //Fill the heap if there is available element from the list
+            if (n.next != null) heap.add(n.next);
+            
+            curr.next = n;
+            curr = curr.next;
+        }
+        return dummy.next;
+    }
+    
     public ListNode mergeKLists(ArrayList<ListNode> lists) {
         // Start typing your Java solution below
         // DO NOT write main() function
