@@ -18,73 +18,6 @@ public class PalindromePartitionII {
     private Map<String, Integer> stringToNumberOfCuts = new HashMap<String, Integer>();
     private Map<String, Boolean> stringToIsPalindrome = new HashMap<String, Boolean>();
     
-    /**
-     * http://polythinking.wordpress.com/2013/06/09/leetcode-palindrome-partitioning-ii/
-     * Solution 1: 记忆化搜索实现，能pass small data set，但运行large data set里 Time Limit Exceeded。
-     * 
-     * 这题一般人一看就是DP，DP公式也很容易推出，算是一道简单的DP。
-     * dp(i)=min(1+dp(j+1) if s(i,j) is palindrome, j from i until n)
-     * 从以上的分析时间复杂度为O(n^3), 主要是因为检查回文也需要O(n)的时间。因此这题有意思的一点就是如何降低时间复杂度到O(n^2)？
-     * 
-     * @param s
-     * @return 
-     */
-    public int minCut_v1(String s) {
-        if(s.length() == 1 || s.length() == 0) {//If the string only has one character, it is palindrome and needs 0 cut.
-            return 0;
-        }
-        //首先检查缓存中是否存在该字符串
-        if(stringToNumberOfCuts.containsKey(s)) {
-            return stringToNumberOfCuts.get(s);
-        }
-        
-        if(isPalindrome(s)) {//If the string itself is palindrome, needs 0 cut.
-            stringToNumberOfCuts.put(s, 0);
-            return 0;
-        }
-        
-        //Each single character is palindrome, so the whole string needs length -1 cuts at most.
-        int result = s.length() - 1;
-        /**
-         * 字符串被切割的次数 = min{ 第一段被切割的次数 + 第二段被切割的次数 + 1 }
-         */
-        for(int i = 1; i < s.length(); i++) {
-            result = Math.min(result, minCut_v1(s.substring(0, i)) + 1 + minCut_v1(s.substring(i)));
-        }
-        stringToNumberOfCuts.put(s, result);
-        
-        return result;
-    }
-    
-    /**
-     * 判断字符串是否为palindrome.
-     * 游标从字符串两边开始向中间移动，依次比较前后相应位置上的字符。
-     * @param s
-     * @return 
-     */
-    public boolean isPalindrome(String s) {
-        
-        if(stringToIsPalindrome.containsKey(s)) {
-            return stringToIsPalindrome.get(s);
-        }
-        
-        int start = 0;
-        int end = s.length() - 1;
-        boolean result = true;
-        while(start < end) {
-            if(s.charAt(start) == s.charAt(end)) {
-                start ++;
-                end --;
-            } else {
-                result = false;
-                break;
-            }
-        }
-        stringToIsPalindrome.put(s, result);
-        
-        return result;
-    }
-    
     
     /**
      * http://fisherlei.blogspot.com/2013/03/leetcode-palindrome-partitioning-ii.html
@@ -165,6 +98,74 @@ public class PalindromePartitionII {
         
         return numberOfCuts[0];
     }
+    
+    /**
+     * http://polythinking.wordpress.com/2013/06/09/leetcode-palindrome-partitioning-ii/
+     * Solution 1: 记忆化搜索实现，能pass small data set，但运行large data set里 Time Limit Exceeded。
+     * 
+     * 这题一般人一看就是DP，DP公式也很容易推出，算是一道简单的DP。
+     * dp(i)=min(1+dp(j+1) if s(i,j) is palindrome, j from i until n)
+     * 从以上的分析时间复杂度为O(n^3), 主要是因为检查回文也需要O(n)的时间。因此这题有意思的一点就是如何降低时间复杂度到O(n^2)？
+     * 
+     * @param s
+     * @return 
+     */
+    public int minCut_v1(String s) {
+        if(s.length() == 1 || s.length() == 0) {//If the string only has one character, it is palindrome and needs 0 cut.
+            return 0;
+        }
+        //首先检查缓存中是否存在该字符串
+        if(stringToNumberOfCuts.containsKey(s)) {
+            return stringToNumberOfCuts.get(s);
+        }
+        
+        if(isPalindrome(s)) {//If the string itself is palindrome, needs 0 cut.
+            stringToNumberOfCuts.put(s, 0);
+            return 0;
+        }
+        
+        //Each single character is palindrome, so the whole string needs length -1 cuts at most.
+        int result = s.length() - 1;
+        /**
+         * 字符串被切割的次数 = min{ 第一段被切割的次数 + 第二段被切割的次数 + 1 }
+         */
+        for(int i = 1; i < s.length(); i++) {
+            result = Math.min(result, minCut_v1(s.substring(0, i)) + 1 + minCut_v1(s.substring(i)));
+        }
+        stringToNumberOfCuts.put(s, result);
+        
+        return result;
+    }
+    
+    /**
+     * 判断字符串是否为palindrome.
+     * 游标从字符串两边开始向中间移动，依次比较前后相应位置上的字符。
+     * @param s
+     * @return 
+     */
+    public boolean isPalindrome(String s) {
+        
+        if(stringToIsPalindrome.containsKey(s)) {
+            return stringToIsPalindrome.get(s);
+        }
+        
+        int start = 0;
+        int end = s.length() - 1;
+        boolean result = true;
+        while(start < end) {
+            if(s.charAt(start) == s.charAt(end)) {
+                start ++;
+                end --;
+            } else {
+                result = false;
+                break;
+            }
+        }
+        stringToIsPalindrome.put(s, result);
+        
+        return result;
+    }
+    
     
     public static void main(String[] args) {
         PalindromePartitionII pp = new PalindromePartitionII();
