@@ -2,6 +2,7 @@ package guibin.zhang.leetcode.tree;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -43,45 +44,32 @@ public class BinaryTreeLevelOrderTraversalII {
         }
     }
     
-    public ArrayList<ArrayList<Integer>> levelOrderBottom(TreeNode root) {
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
         
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) return result;
         
-        Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        Queue<Integer> level = new LinkedList<Integer>();
+        List<Integer> branch = new ArrayList<>();
+        Queue<TreeNode> q = new LinkedList<>();
+        TreeNode dummy = new TreeNode(0);
+        q.add(root);
+        q.add(dummy);
         
-        if(root != null) {
-            queue.offer(root);
-            level.offer(0);
-        }
-        int m = 0;
-        while(!queue.isEmpty()) {
-            TreeNode curr = queue.poll();
-            m = level.poll();
-            
-            if(result.size() < m + 1) {
-                result.add(0, new ArrayList<Integer>());
-            }
-            result.get(0).add(curr.val);
-            
-            if(curr.left != null) {
-                queue.offer(curr.left);
-                level.offer(m + 1);
-            }
-            if(curr.right != null) {
-                queue.offer(curr.right);
-                level.offer(m + 1);
+        while (!q.isEmpty()) {
+            TreeNode curr = q.remove();
+            if (curr == dummy) {
+                result.add(0, new ArrayList<>(branch));
+                branch.clear();
+                if (!q.isEmpty()) {
+                    q.add(dummy);
+                }
+            } else {
+                branch.add(curr.val);
+                if (curr.left != null) q.add(curr.left);
+                if (curr.right != null) q.add(curr.right);
             }
         }
-        
         return result;
     }
     
-    public static void main(String[] args) {
-        ArrayList<Integer> l = new ArrayList<Integer>();
-        
-        l.add(0);
-        l.add(0, 1);
-        System.out.println(l.size() + ": " + l.get(l.size() - 1));
-    }
 }
