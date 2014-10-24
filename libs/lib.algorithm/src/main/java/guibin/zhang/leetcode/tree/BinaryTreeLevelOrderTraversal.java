@@ -1,6 +1,7 @@
 package guibin.zhang.leetcode.tree;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -29,6 +30,8 @@ import java.util.Queue;
  * Program Runtime: 720 milli secs
  * Progress: 33/33 test cases passed.
  * 
+ * http://www.geeksforgeeks.org/level-order-tree-traversal/
+ * 
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class BinaryTreeLevelOrderTraversal {
@@ -43,7 +46,7 @@ public class BinaryTreeLevelOrderTraversal {
         }
     }
     
-    public void levelOrder_v4(TreeNode root) {
+    public void levelOrder(TreeNode root) {
         
         if (root == null) return;
         
@@ -76,91 +79,25 @@ public class BinaryTreeLevelOrderTraversal {
     }
     
     
-    public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
+    public List<List<Integer>> levelOrder_v2(TreeNode root) {
         
-        Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        Queue<Integer> level = new LinkedList<Integer>();
-        
-        if(root != null) {
-            queue.offer(root);
-            level.offer(0);
-        }
-        
-        TreeNode curr = null;
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> row = null;
-        while(!queue.isEmpty()) {
-            curr = queue.poll();
-            int m = level.poll();
-            
-            //Judge the result based on depth and result.size
-            if(result.size() < m + 1) {
-                row = new ArrayList<Integer>();
-                result.add(row);
-            }
-            result.get(m).add(curr.val);
-            
-            if(curr.left != null) {
-                queue.offer(curr.left);
-                level.offer(m + 1);
-            }
-            if(curr.right != null) {
-                queue.offer(curr.right);
-                level.offer(m + 1);
-            }
-        }
-        return result;
-    }
-    
-    public ArrayList<ArrayList<Integer>> levelOrder_v2(TreeNode root) {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        List<List<Integer>> result = new ArrayList<>();
         dfs(root, 0, result);
         return result;
     }
     
-    public void dfs(TreeNode root, int depth, ArrayList<ArrayList<Integer>> result) {
-        if(root == null) {
-            return;
-        }
+    public void dfs(TreeNode root, int depth, List<List<Integer>> result) {
+        
+        if(root == null) return;
         
         //Judge the result based on depth and result.size
         if(result.size() < depth + 1) {
-            result.add(new ArrayList<Integer>());
+            result.add(new ArrayList<>());
         }
         result.get(depth).add(root.val);
         
         dfs(root.left, depth + 1, result);
         dfs(root.right, depth + 1, result);
-    }
-    
-    public void levelOrder_v3(TreeNode root) {
-        
-        Queue<TreeNode> q = new LinkedList<>();
-        Queue<Integer> levels = new LinkedList<>();
-        TreeNode curr = null;
-        if (root != null) {
-            q.offer(root);
-            levels.offer(0);
-        }
-        int prevLevel = 0;
-        while (!q.isEmpty()) {
-            if (levels.peek() > prevLevel) {
-                System.out.println();
-            }
-            curr = q.poll();
-            prevLevel = levels.poll();
-            System.out.print(curr.val + ",");
-            
-            if (curr.left != null) {
-                q.offer(curr.left);
-                levels.offer(prevLevel + 1);
-            }
-            if (curr.left != null) {
-                q.offer(curr.right);
-                levels.offer(prevLevel + 1);
-            }
-        }
-        System.out.println();
     }
     
     public static void main(String[] args) {
@@ -181,15 +118,14 @@ public class BinaryTreeLevelOrderTraversal {
         TreeNode e = bst.new TreeNode(20);
         c.left = d;
         c.right = e;
-        bst.levelOrder_v3(a);
         
         System.out.println("level order travel v2");
-        ArrayList<ArrayList<Integer>> ret = bst.levelOrder_v2(a);
+        List<List<Integer>> ret = bst.levelOrder_v2(a);
         ret.forEach(row -> 
         {row.forEach(i -> System.out.print(i + ","));
         System.out.println();});
         
         System.out.println("level order travel v4");
-        bst.levelOrder_v4(a);
+        bst.levelOrder(a);
     }
 }
