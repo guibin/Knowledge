@@ -30,15 +30,15 @@ public class PalindromePartitionII {
      */
     public int minCut_v2(String s) {
         
-        int length = s.length();
+        int len = s.length();
         
         /**
          * The length of numberOfCuts is length+1 instead of length is because:
          * numberOfCuts[i] means the minimum cuts of s[i:]
          * So s[0] is the whole string, s[length] is the last empty string
          */
-        int[] numberOfCuts = new int[length + 1];
-        boolean[][] palindrome = new boolean[length][length];//Initialized as false by default
+        int[] numberOfCuts = new int[len + 1];
+        boolean[][] isPalindrome = new boolean[len][len];//Initialized as false by default
         
         /**
          * numberOfCuts[i] means minimum number of cuts for the sub-string s[from i to end].
@@ -50,8 +50,8 @@ public class PalindromePartitionII {
          * min{ 第一段被切割的次数 + 第二段被切割的次数 + 1 }
          * 
          */
-        for(int i = 0; i <= length; i++) { //Initialize the numberOfCuts with the worst case.
-            numberOfCuts[i] = length - 1 - i;
+        for(int i = 0; i <= len; i++) { //Initialize the numberOfCuts with the worst case.
+            numberOfCuts[i] = len - 1 - i;
         }
         
         /**
@@ -75,13 +75,13 @@ public class PalindromePartitionII {
          * Since the last element is s[length - 1], so the last but one is s[length - 2].
          * The reason to start from the last element is that we do know cut 1 element needs 1 cuts.
          */
-        for(int i = length - 2; i >= 0; i--) {
-            for(int j = i; j < length; j++) {
+        for(int i = len - 1; i >= 0; i--) {
+            for(int j = i; j < len; j++) {
                 //i + 1 == j - 1 => i和j间隔一个元素
-                //i + 1 > j - 1 => i和j相邻或者i==j
+                //j - i < 2 => i和j相邻或者i==j
                 //This condition below means that when (i is equal to j) && ((i is next to j) || ([i + 1, j - 1] is palindrome)),
-                if(s.charAt(i) == s.charAt(j) && (j - 1 < i + 1 || palindrome[i + 1][j - 1])) {
-                    palindrome[i][j] = true;
+                if(s.charAt(i) == s.charAt(j) && (j - i < 2 || isPalindrome[i + 1][j - 1])) {
+                    isPalindrome[i][j] = true;
                     /**
                      * The expression below equals to:
                      * result = Math.min(result, minCut_v1(s.substring(0, i)) + 1 + minCut_v1(s.substring(i)));

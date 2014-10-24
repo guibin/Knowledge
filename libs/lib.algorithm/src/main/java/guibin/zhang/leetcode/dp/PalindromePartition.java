@@ -34,18 +34,16 @@ public class PalindromePartition {
     
     public List<List<String>> partition(String s) {
         
-        int n = s.length();
+        int len = s.length();
         //isPalindrom[i][j] => s.substring(i, j+1) is palindrome
-        boolean[][] isPalindrome = new boolean[n][n];
-        //A Single character is palindrome
-        for (int i = 0; i < n; i++)
-            isPalindrome[i][i] = true;
+        boolean[][] isPalindrome = new boolean[len][len];
+        
         //Scan from end to start
-        for (int i = n - 1; i >= 0; i--) {
-            for (int j = i + 1; j < n; j++) {
+        for (int i = len - 1; i >= 0; i--) {
+            for (int j = i; j < len; j++) {
                 if (s.charAt(i) == s.charAt(j)) {
                     //i and j are neighbor or the string between i and j is palindrome
-                    if (i + 1 == j || isPalindrome[i + 1][j - 1])
+                    if (j - i < 2 || isPalindrome[i + 1][j - 1])
                         isPalindrome[i][j] = true;
                 }
             }
