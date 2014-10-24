@@ -41,30 +41,28 @@ public class PalindromePartition {
         //Scan from end to start
         for (int i = len - 1; i >= 0; i--) {
             for (int j = i; j < len; j++) {
-                if (s.charAt(i) == s.charAt(j)) {
+                if (s.charAt(i) == s.charAt(j) && (j - i < 2 || isPalindrome[i + 1][j - 1])) {
                     //i and j are neighbor or the string between i and j is palindrome
-                    if (j - i < 2 || isPalindrome[i + 1][j - 1])
-                        isPalindrome[i][j] = true;
+                    isPalindrome[i][j] = true;
                 }
             }
         }
         List<List<String>> result = new LinkedList<>();
         List<String> branch = new LinkedList<>();
-        partition(s, 0, isPalindrome, branch, result);
+        partition(s, result, branch, 0, isPalindrome);
         return result;
     }
     
-    private void partition(String s, int start, boolean[][] isPalindrome, List<String> branch, List<List<String>> result) {
-        if (start == s.length()) {
-            List<String> newList = new LinkedList<>();
-            newList.addAll(branch);
-            result.add(newList);
+    //Standard combination
+    public void partition(String s, List<List<String>> result, List<String> branch, int startId, boolean[][] isPalindrome) {
+        if (startId == s.length()) {
+            result.add(new ArrayList<>(branch));
             return;
         }
-        for (int i = start; i < s.length(); i++) {
-            if (isPalindrome[start][i]) {
-                branch.add(s.substring(start, i + 1));
-                partition(s, i + 1, isPalindrome, branch, result);
+        for (int i = startId; i < s.length(); i++) {
+            if (isPalindrome[startId][i]) {
+                branch.add(s.substring(startId, i + 1));
+                partition(s, result, branch, i + 1, isPalindrome);
                 branch.remove(branch.size() - 1);
             }
         }
