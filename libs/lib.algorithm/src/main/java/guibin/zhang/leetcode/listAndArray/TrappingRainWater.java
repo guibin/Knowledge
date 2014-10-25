@@ -34,12 +34,17 @@ public class TrappingRainWater {
         while (curr < A.length) {
             while (!indices.isEmpty() && A[curr] >= A[indices.peek()]) {
                 int b = indices.pop();
-                if (indices.isEmpty()) break;
-                //这里 -1 的原因是 curr 距离 indices.peek() 中间隔了一个较小的 indices.pop.
-                //A[b] 是较小的 indices.pop 的高度
+                if (!indices.isEmpty()) {
+                    vol += (curr - indices.peek() - 1) * (Math.min(A[curr], A[indices.peek()]) - A[b]);
+                }
+                //We need three indices to form the container, the left side, the right side and the bottom
+                //the left side height is A[indices.peek()],
+                //the right side height is A[curr]
+                //the bottom height is A[b]
+                //the width is (curr - indices.peek() + 1)
+                //
                 //curr - indices.peek() - 1 is the bottom.
                 //(Math.min - A[b]) is the delta height that can contain the water.
-                vol += (curr - indices.peek() - 1) * (Math.min(A[curr], A[indices.peek()]) - A[b]);
             }
             indices.push(curr);
             curr ++;
