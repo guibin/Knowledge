@@ -39,20 +39,19 @@ public class LargestRectangleInHistogram {
         int maxArea = 0;
         for (int i = 0; i < histo.length; i++) {
             //Case 1, the height is larger thus it can be candidate of rectangle of *start*
-            int h = histo[i];
-            if (height.isEmpty() || h >= height.peek()) {
-                height.push(h);
+            if (height.isEmpty() || histo[i] >= height.peek()) {
+                height.push(histo[i]);
                 indices.push(i);
             } else {//h < height.peek()
                 //If current height is shorter, thus we need pop those larger heights, 
                 //and compute the candidate rectangle's area size.
-                while (!height.isEmpty() && h < height.peek()) {
+                while (!height.isEmpty() && histo[i] < height.peek()) {
                     start = indices.pop();
                     int area = height.pop() * (i - start);
                     maxArea = Math.max(maxArea, area);
                 }
 
-                height.push(h);
+                height.push(histo[i]);
                 //Note: here is lastIndex, not i;
                 //indices is used to save the start index, so here should push lastIndex instead of i.
                 indices.push(start);
@@ -64,7 +63,7 @@ public class LargestRectangleInHistogram {
             //Because at this time, the height in the stack of height are all greater than histo[curr] 
             //while curr = histo.length - 1. Since it is possible the last item of indices is (histo.length - 1),
             //so we should use (histo.length - indices.pop()) as width 
-            int area = height.pop() * (histo.length - indices.pop());
+            int area = height.pop() * (histo.length - 1 - indices.pop() + 1);
             maxArea = Math.max(maxArea, area);
         }
         return maxArea;
