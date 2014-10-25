@@ -24,6 +24,9 @@ import java.util.LinkedList;
  * 还有值得注意的技巧是，当begin>end时，要往ret AL里面添加null，使得每个AL里面至少有一个元素（null）。
  * 这样可以避免判断只有左区间或只有右区间的情况。
  * 
+ * http://www.lifeincode.net/programming/leetcode-unique-binary-search-trees-i-and-ii-java/
+ * http://blog.csdn.net/fightforyourdream/article/details/17345795
+ * 
  */
 public class UniqueBinarySearchTreeII {
     
