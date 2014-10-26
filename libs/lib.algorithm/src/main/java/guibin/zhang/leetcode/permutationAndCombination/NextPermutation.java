@@ -37,6 +37,29 @@ import java.util.Arrays;
  */
 public class NextPermutation {
     
+    public void nextPermutation_v2(int[] num) {
+        
+        if (num.length <= 1) return;
+        
+        int pivot = num.length - 1;
+        //Find the first violation item, use >=
+        while (pivot > 0 && num[pivot - 1] >= num[pivot]) {
+            pivot--;
+        }
+        pivot--;
+        
+        if (pivot >= 0) {
+            int j = num.length - 1;
+            //Find the first bigger one
+            while (j > pivot && num[pivot] >= num[j] ) {
+                j--;
+            }
+            swap(num, pivot, j);    
+        }
+        
+        reverse(num, pivot + 1, num.length - 1);
+    }
+    
     public void nextPermutation(int[] num) {
         // Start typing your Java solution below
         // DO NOT write main() function
@@ -89,5 +112,8 @@ public class NextPermutation {
         np.nextPermutation(num);
         Arrays.stream(num).forEach(i -> System.out.print(i + ","));
         System.out.println();
+        
+        int[] num2 = {1, 5, 1};
+        np.nextPermutation_v2(num2);
     }
 }
