@@ -39,6 +39,44 @@ package guibin.zhang.leetcode.string;
  */
 public class MinimumWindowSubstring {
     
+    public String minWindow_v2(String S, String T) {
+        
+        char[] sHash = new char[128];
+        char[] tHash = new char[128];
+        int found = 0;
+        int start = 0;
+        String result = "";
+        for (int i = 0; i < T.length(); i++) {
+            tHash[T.charAt(i)] ++;
+        }
+        for (int i = 0; i < S.length(); i++) {
+            char c = S.charAt(i);
+            if (tHash[c] > 0) {//Only continue while this char is in T
+                sHash[c]++;
+                if (sHash[c] <= tHash[c]) found++;
+            
+                if (found == T.length()) {
+                    while (start <= i) {
+                        char t = S.charAt(start);
+                        if (tHash[t] == 0 || (sHash[t]) > tHash[t]) {
+                            sHash[t]--;
+                            start ++;
+                        } else {
+                            String str = S.substring(start, i + 1);
+                            if (result.length() == 0 || str.length() < result.length()) result = str;
+                            found --;//Update found
+                            sHash[t]--;//Update sHash
+                            start ++;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+    
+    
     public String minWindow(String S, String T) {
         
         int[] tHash = new int[128];
@@ -87,5 +125,11 @@ public class MinimumWindowSubstring {
         }
         
         return begin == -1 ? "" : S.substring(begin, end + 1);
+    }
+    
+    
+    public static void main(String[] args) {
+        MinimumWindowSubstring mw = new MinimumWindowSubstring();
+        mw.minWindow_v2("bdab", "ab");
     }
 }
