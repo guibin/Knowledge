@@ -1,6 +1,7 @@
 package guibin.zhang.leetcode.string;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,42 +19,62 @@ public class RestoreIPAddresses {
     static final int IP_COUNT = 4;
     static final int IP_LEN = 3;
     
-    public ArrayList<String> restoreIpAddresses_error(String s) {
-        
-        ArrayList<String> result = new ArrayList<String>();
-        int length = s.length();
-        if(length < 4 || length > 12) {
-            result.add(null);
-            return result;
-        }
-        if("0000".equals(s)) {
-            result.add("0.0.0.0");
-            return result;
-        }
-        StringBuilder sb = new StringBuilder();
-        for(int i = 1; i <= length - 3; i ++) {
-            String s01 = s.substring(0, i);
-            int seg01 = Integer.parseInt(s01);
-            for(int j = i + 1; j <= length - 2 && !s01.startsWith("0") && seg01 <= 255 && seg01 >= 0; j ++) {
-                String s02 = s.substring(i, j);
-                int seg02 = Integer.parseInt(s02);
-                for(int k = j + 1; k <= length - 1 && !s02.startsWith("0") && seg02 <= 255 && seg02 >= 0; k ++) {
-                    String s03 = s.substring(j, k);
-                    int seg03 = Integer.parseInt(s03);
-                    for(int m = k + 1; m <= length && !s03.startsWith("0") && seg03 <= 255 && seg03 >= 0; m ++) {
-                        String s04 = s.substring(k, m);
-                        int seg04 = Integer.parseInt(s04);
-                        if(!s04.startsWith("0") && seg04 <= 255 && seg04 >= 0) {
-                            sb.append(seg01).append(".").append(seg02).append(".").append(seg03).append(".").append(seg04);
-                            result.add(sb.toString());
-                            sb = new StringBuilder();
-                        }
-                    }
-                }
-            }
-        }
-        return result;
+    public List<String> restoreIpAddresses_v3(String s) {
+        ArrayList<String> res = new ArrayList<String>();  
+        if (s.length()<4||s.length()>12) return res;  
+        dfs(s,"",res,0);  
+        return res; 
     }
+    
+    public void dfs(String s, String tmp, ArrayList<String> res, int count){  
+        if (count == 3 && isValid(s)) {  
+            res.add(tmp + s);  
+            return;  
+        }  
+        for(int i=1; i<4 && i<s.length(); i++){  
+            String substr = s.substring(0,i);  
+            if (isValid(substr)){  
+                dfs(s.substring(i), tmp + substr + '.', res, count+1);  
+            }  
+        }  
+    }  
+      
+    public boolean isValid(String s){  
+        if (s.charAt(0)=='0') return s.equals("0");  
+        int num = Integer.parseInt(s);  
+        return num<=255 && num>0;  
+    }
+    
+    
+    public List<String> restoreIpAddresses_v2(String s) {
+        return f(s, 4);
+    }
+    
+    private List<String> f(String s, int n) {
+        List<String> r = new ArrayList<>();
+        if(s.length()==0) return r;
+        if(n==1) {
+            if(check(s)) r.add(s);
+            return r;
+        }
+        for(String t : f(s.substring(1), n-1)) r.add(s.substring(0,1)+"."+t);
+        if(s.length()>=2 && check(s.substring(0,2))) {
+            for(String t: f(s.substring(2), n-1)) r.add(s.substring(0,2)+"."+t);
+        }
+        if(s.length()>=3 && check(s.substring(0,3))) {
+            for(String t: f(s.substring(3), n-1)) r.add(s.substring(0,3)+"."+t);
+        }
+        return r;
+    }
+    private boolean check(String s) {
+        if(s.length()==0) return false;
+        if(s.length()==1) return true;
+        if(s.charAt(0)=='0') return false;
+        if(s.length()>3) return false;
+        int v= Integer.valueOf(s);
+        return 10<=v && v<=255;
+    }
+    
     
     public ArrayList<String> restoreIpAddresses(String s) {
         
