@@ -22,19 +22,13 @@ public class PalindromeNumber {
     public boolean isPalindrome(int x) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        if (x < 0) return false;
-        
-        int result = 0;
-        int y = x;//Note, y will be changed, so we need the copy of x.
-        while (y != 0) {
-            //y%10 is to get the least significant digit of y
-            //Then *10 to shift left
-            result = result * 10 + y % 10;
-            y /= 10;//this is to shift y to right
+        int y = x;
+        int z = 0;
+        while (y > 0) {
+            z = z * 10 + y % 10;
+            y /=10;
         }
-        System.out.println(x);
-        System.out.println(result);
-        return x == result;
+        return x == z;
     }
     
     public static void main(String[] args) {
