@@ -22,6 +22,8 @@ import java.util.Map;
  * 正常使用时，连写的数字重复不得超过三次。（表盘上的四点钟“IIII”例外）
  * 在一个数的上面画一条横线，表示这个数扩大1000倍。
  * 
+ * 在左边出现的小的数字，仅仅会出现一次，因此只需要判断相邻两位的大小就可以知道是否是减法
+ * 
  * @author Guibin Zhang <guibin.beijing@gmail.com>
  */
 public class RomanToInt {
