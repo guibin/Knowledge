@@ -12,15 +12,16 @@ public class LongestCommonPrefix {
     
     public String longestCommonPrefix(String[] strs) {
         
-        int wordsLength = strs.length;
+        if (strs == null || strs.length == 0) return "";
+        
         // Initialize prefix length as the length of the first word
         int prefixLength = strs[0].length();
         // Iterate each character of the prefix to check if it exists in each word.
         for (int i = 0; i < prefixLength; i ++) {
             char c = strs[0].charAt(i);
             // Check the prefix character in each word
-            for (int j = 1; j < wordsLength; j ++) {
-                if (i > strs[j].length() - 1 || c != strs[j].charAt(i)) {
+            for (int j = 1; j < strs.length; j ++) {
+                if (i == strs[j].length() || c != strs[j].charAt(i)) {
                     return strs[0].substring(0, i);
                 }
             }
