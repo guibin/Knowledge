@@ -12,18 +12,14 @@ public class IntToRoman {
         String[] digits = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
 
         StringBuilder sb = new StringBuilder();
-        int i = 0;
-        while (n > 0 && i < nums.length) {
+        for (int i = 0; i < nums.length; i++) {
             int times = n / nums[i];
-            n -= nums[i] * times;
-            
             while (times > 0) {
                 sb.append(digits[i]);
-                times--;
+                times --;
             }
-            i++;
+            n = n % nums[i];
         }
-
         return sb.toString();
     }
 }
