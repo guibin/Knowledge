@@ -43,11 +43,9 @@ public class ReverseNodesInKGroup {
         while (curr != null) {
             curr = curr.next;
             i++;
-            if (i % k == 0) {
-                if (curr != null) {
-                    p1 = reverse_v2(p1, curr.next);
-                    curr = p1;//Update curr after reverse.
-                }
+            if (i % k == 0 && curr != null) {
+                p1 = reverse_v2(p1, curr.next);
+                curr = p1;//Update curr after reverse.
             }
         }
         return dummy.next;
