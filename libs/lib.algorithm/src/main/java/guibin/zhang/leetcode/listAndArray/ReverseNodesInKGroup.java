@@ -34,6 +34,25 @@ public class ReverseNodesInKGroup {
         }
     }
     
+    
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy, p1 = dummy;
+        dummy.next = head;
+        int i = 0;
+        while (curr != null) {
+            curr = curr.next;
+            i++;
+            if (i % k == 0) {
+                if (curr != null) {
+                    p1 = reverse_v2(p1, curr.next);
+                    curr = p1;//Update curr after reverse.
+                }
+            }
+        }
+        return dummy.next;
+    }
+    
     public ListNode reverseKGroup_v2(ListNode head, int k) {
         
         if(head == null || k == 1) return head;
@@ -93,57 +112,6 @@ public class ReverseNodesInKGroup {
         return tail;
     }
     
-    
-    public ListNode reverseKGroup(ListNode head, int k) {
-        
-        if(head == null || k == 1) return head;
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode pre = dummy;
-        int i = 0;
-        while (head != null) {
-            i ++;
-            if (i % k == 0) {
-                pre = reverse(pre, head.next);
-                head = pre.next;
-            } else {
-                head = head.next;
-            }
-        }
-        
-        return dummy.next;
-    }
-    
-    /**
-     * Reverse a list between pre and next exclusively.
-     * 
-     * an example:
-     * a linked list:
-     * 0->1->2->3->4->5->6
-     * |           |   
-     * pre        next
-     * 
-     * after call pre = reverse(pre, next)
-     * 0->3->2->1->4->5->6
-     *          |  |
-     *          pre next
-     * 
-     * @param pre
-     * @param next
-     * @return the reversed list's last node, which is the precedence of parameter next
-     */
-    public ListNode reverse(ListNode pre, ListNode next) {
-        
-        ListNode tail = pre.next; //where first will be doomed "last"
-        ListNode curr = tail.next;
-        while(curr != next) {//Note here is the next instead of null.
-            tail.next = curr.next;
-            curr.next = pre.next;
-            pre.next = curr;
-            curr = tail.next;
-        }
-        return tail;
-    }
     
     public static void main(String[] args) {
         ReverseNodesInKGroup rn = new ReverseNodesInKGroup();
