@@ -26,7 +26,8 @@ public class SimplifyPath {
     
     public String simplifyPath(String path) {
 
-        StringBuilder sb = new StringBuilder("/");
+        StringBuilder sb = new StringBuilder();
+        if (path.startsWith("/")) sb.append("/");
         Stack<String> stack = new Stack<>();
         
         String[] arr = path.split("/");
