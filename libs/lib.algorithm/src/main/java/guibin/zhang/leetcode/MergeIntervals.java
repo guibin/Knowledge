@@ -36,39 +36,28 @@ public class MergeIntervals {
     }
     
     public List<Interval> merge(List<Interval> intervals) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         
-        if (intervals== null || intervals.size() <= 1) return intervals;
+        List<Interval> result = new ArrayList<>();
+        if (intervals == null || intervals.size() == 0) return result;
         
-        Collections.sort(intervals, new Comparator<Interval>() {
-            public int compare(Interval v1, Interval v2) {
-                if (v1.start > v2.start) return 1;
-                if (v1.start < v2.start) return -1;
-                if (v1.end > v2.end) return 1;
-                if (v1.end < v2.end) return -1;
-                return 0;
+        Collections.sort(intervals, new Comparator<Interval>(){
+            public int compare(Interval x, Interval y){
+                if (x.start != y.start) return x.start - y.start;
+                return x.end - y.end;
             }
         });
         
-        Interval tmp = null;
-        List<Interval> result = new ArrayList<>();
-        for (Interval v : intervals) {
-            if (tmp == null) {
-                tmp = v;
-            } else {
-                if (v.end < tmp.start) {
-                    result.add(v);
-                } else if (tmp.end < v.start) {
-                    result.add(tmp);
-                    tmp = v;
-                } else {
-                    tmp = new Interval(Math.min(v.start, tmp.start), Math.max(v.end, tmp.end));
-                }
+        Interval tmp = intervals.get(0);
+        for (int i = 1; i < intervals.size(); i++) {
+            Interval curr = intervals.get(i);
+            if (curr.start > tmp.end) {//No overlap, add it to result
+                result.add(tmp);
+                tmp = curr;
+            } else {//Merge the overlap
+                tmp = new Interval(Math.min(tmp.start, curr.start), Math.max(tmp.end, curr.end));
             }
         }
         result.add(tmp);
-        
         return result;
     }
     
