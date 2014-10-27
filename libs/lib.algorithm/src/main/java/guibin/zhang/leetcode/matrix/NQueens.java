@@ -64,6 +64,37 @@ public class NQueens {
      * 
      * @param result
      * @param branch
+     * @param idx row id
+     */
+    public void dfs_v2(List<String[]> result, int[] branch, int idx) {
+        
+        if (idx == branch.length) {
+            String[] board = new String[branch.length];
+            for (int i = 0; i < board.length; i++) {//i row id
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < board.length; j++) {//j col id
+                    if (j == branch[i]) sb.append("Q");
+                    else sb.append(".");
+                }
+                board[i] = sb.toString();//No. i row is ready
+            }
+            result.add(board);
+            return;
+        }
+        
+        //Try each position on each line of the board
+        for (int j = 0; j < branch.length; j++) {//j col id
+            branch[idx] = j;//idx is rowid, branch[idx] is co lid
+            if (isValid(branch, idx)) {
+                dfs(result, branch, idx + 1);
+            }
+        }
+    }
+    
+    /**
+     * 
+     * @param result
+     * @param branch
      * @param idx The index/(row id) that put queen.
      */
     public void dfs(List<String[]> result, int[] branch, int idx) {
@@ -123,8 +154,8 @@ public class NQueens {
                 } else {
                     row.append(".");
                 }
-                board[i] = row.toString();
             }
+            board[i] = row.toString();
         }
         result.add(board);
     }
