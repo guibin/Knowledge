@@ -55,7 +55,7 @@ public class WordLadder {
             String prev = queue.remove();
             //Traverse all the adjacent words
             for(String curr : adjacent(prev, dict)) {
-                if(curr.equals(end)) {
+                if(curr.equals(end)) {//Get the shortest path, count the steps
                     int count = 1;
                     while(prev != null) {
                         prev = path.get(prev);
@@ -63,7 +63,7 @@ public class WordLadder {
                     }
                     return count;
                 }
-                
+                //Didn't get the shortest path, just record the path, add to queue
                 if(!visit.contains(curr)) {
                     path.put(curr, prev);
                     visit.add(curr);
