@@ -39,12 +39,10 @@ public class RestoreIPAddresses {
             String segment = s.substring(0, i);
             if (isValid(segment)) {
                 branch += segment + ".";
-                if (s.length() > 0) {
-                    dfs_v4 (s.substring(i), result, branch, ++count);
-                    //Since branch and count get changed when goes into dfs, so after dfs then should be restored.
-                    branch = branch.substring(0, branch.length() - segment.length() -1);
-                    count--;
-                }
+                dfs_v4 (s.substring(i), result, branch, ++count);
+                //Since branch and count get changed when goes into dfs, so after dfs then should be restored.
+                branch = branch.substring(0, branch.length() - segment.length() -1);
+                count--;
             }
         }
     }
