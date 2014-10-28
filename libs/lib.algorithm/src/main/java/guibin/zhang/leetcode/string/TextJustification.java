@@ -2,6 +2,7 @@ package guibin.zhang.leetcode.string;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Given an array of words and a length L, format the text such that each line 
@@ -40,6 +41,73 @@ import java.util.List;
  * @author Gubin Zhang <guibin.beijing@gmail.com>
  */
 public class TextJustification {
+    
+    public List<String> fullJustify_v3(String[] words, int L) {
+        
+        ArrayList<String> result = new ArrayList<String>();
+        if (L == 0) {
+            result.add("");
+            return result;
+        }
+        //Use stack to track each line
+        Stack<String> stack = new Stack<>();
+        int count = 0;
+        for (int i = 0; i < words.length; i++) {
+            if ((stack.size() + words[i].length() + count <= L)) {
+                stack.push(words[i]);
+                count += words[i].length();
+            } else {
+                int numOfBlank = L - count;
+                result.add(generateLine(stack, numOfBlank));
+                stack.push(words[i]);
+                count = words[i].length();
+            }
+        }
+        //Process the last line
+        count = 0;
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            String curr = stack.pop();
+            sb.insert(0, curr);
+            count += curr.length();
+            if (count < L && !stack.isEmpty()) {
+                sb.insert(0, " ");
+                count++;
+            }
+        }
+        if (L - count > 0) {
+            sb.append(space(L - count));
+        }
+        result.add(sb.toString());
+        return result;
+    }
+    
+    private String generateLine(Stack<String> stack, int numOfBlank) {
+        StringBuilder sb = new StringBuilder();
+        if (stack.size() == 1) {
+            sb.append(stack.pop());
+            sb.append(space(numOfBlank));
+        } else {
+            while(!stack.isEmpty()) {
+                String curr = stack.pop();
+                sb.insert(0, curr);
+                if (!stack.isEmpty()) {
+                    sb.insert(0, space(numOfBlank/stack.size()));
+                    numOfBlank -= numOfBlank/stack.size();
+                }
+            }
+        }
+        return sb.toString();
+    }
+    
+    private String space(int count) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            sb.append(' ');
+        }
+        return sb.toString();
+    }
+    
     
     /**
      * http://www.elvisyu.com/text-justification/#more-315
