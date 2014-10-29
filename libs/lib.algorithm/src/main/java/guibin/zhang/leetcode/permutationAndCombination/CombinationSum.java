@@ -2,6 +2,7 @@ package guibin.zhang.leetcode.permutationAndCombination;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 
@@ -29,15 +30,10 @@ import java.util.Arrays;
  */
 public class CombinationSum {
     
-    public ArrayList<ArrayList<Integer>> combinationSum(int[] candidates, int target) {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        int len = candidates.length;
-        ArrayList<ArrayList<Integer>> results = new ArrayList<ArrayList<Integer>>();
-        if (len == 0) {
-            return results;
-        }
-
+        List<List<Integer>> results = new ArrayList<>();
         Arrays.sort(candidates);
         
         combinate(candidates, target, 0, new ArrayList<Integer>(), results, 0);
@@ -54,8 +50,8 @@ public class CombinationSum {
      * @param result
      * @param startId 
      */
-    public void combinate(int[] arr, int target, int sum, ArrayList<Integer> branch,   
-            ArrayList<ArrayList<Integer>> result, int startId) {
+    public void combinate(int[] arr, int target, int sum, List<Integer> branch,   
+            List<List<Integer>> result, int startId) {
         
         if (sum == target) {
             result.add(new ArrayList<>(branch));
