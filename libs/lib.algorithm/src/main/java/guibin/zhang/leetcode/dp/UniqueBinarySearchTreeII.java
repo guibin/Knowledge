@@ -47,6 +47,7 @@ public class UniqueBinarySearchTreeII {
     public List<TreeNode> generateTrees(int start, int end) {
         List<TreeNode> list = new LinkedList<>();
         if (start > end) {
+            //We must add null, this will be used by line 61 and 62.
             list.add(null);
             return list;
         }
