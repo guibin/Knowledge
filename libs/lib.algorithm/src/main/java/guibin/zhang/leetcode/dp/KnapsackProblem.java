@@ -21,26 +21,26 @@ public class KnapsackProblem {
     
     /**
      * 
-     * @param W The target weight capacity of the knapsack.
+     * @param Capacity The target weight capacity of the knapsack.
      * @param wt Weight of each candidate item.
      * @param val Value of each candidate item.
      * @param n The nth item of current solution.
      * @return Returns the maximum value that can be put in a knapsack of capacity W
      */
-    public int knapsackNaive(int W, int[] wt, int[] val, int n) {
+    public int knapsackNaive(int Capacity, int[] wt, int[] val, int n) {
         
         //If target weight is 0 or no item to be seleced.
-        if (n == 0 || W == 0) {
+        if (n == 0 || Capacity == 0) {
             return 0;
         }
         
         // If weight of the nth item is more than Knapsack capacity W, then
         // this item cannot be included in the optimal solution
-        if (wt[n - 1] > W) {
-            return knapsackNaive(W, wt, val, n - 1);
+        if (wt[n - 1] > Capacity) {
+            return knapsackNaive(Capacity, wt, val, n - 1);
         } else {// Return the maximum of two cases: (1) nth item included (2) not included
-            return Math.max(val[n - 1] + knapsackNaive(W - wt[n - 1], wt, val, n - 1), //(1)
-                    knapsackNaive(W, wt, val, n - 1)); //(2)
+            return Math.max(val[n - 1] + knapsackNaive(Capacity - wt[n - 1], wt, val, n - 1), //(1)
+                    knapsackNaive(Capacity, wt, val, n - 1)); //(2)
         }
     }
     
