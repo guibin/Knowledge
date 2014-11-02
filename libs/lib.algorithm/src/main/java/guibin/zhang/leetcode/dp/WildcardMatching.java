@@ -35,14 +35,17 @@ public class WildcardMatching {
         int i = 0, j = 0;
         int star = -1, mark = -1;
 
-        while (i < s.length()) { 
+        while (i < s.length()) {
+            //iif p[j] == s[i] || p[j] == '?', move on i,j
             if (j < p.length()
                     && (p.charAt(j) == '?' || p.charAt(j) == s.charAt(i))) {
                ++i;
                ++j;
+           //iif p[j] == '*', save j & i; move on j
            } else if (j < p.length() && p.charAt(j) == '*') {
                star = j++;
                mark = i;
+           //iif match mothing, but still star, iff star, move on j to the next of star, move mark and i
            } else if (star != -1) {
                j = star + 1;
                i = ++mark;
@@ -50,6 +53,7 @@ public class WildcardMatching {
                return false;
            }
        }
+       // If star, keep on moving j
        while (j < p.length() && p.charAt(j) == '*') {
            ++j;
        }
