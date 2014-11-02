@@ -46,28 +46,32 @@ public class KnapsackProblem {
     
     /**
      * 
-     * @param W
+     * @param Capacity
      * @param wt
      * @param val
      * @return 
      */
-    public int knapsack(int W, int[] wt, int[] val) {
+    public int knapsack(int Capacity, int[] wt, int[] val) {
         
-        int[][] dp = new int[wt.length + 1][W + 1];
+        int[][] dp = new int[wt.length + 1][Capacity + 1];
         
         for(int i = 0; i <= wt.length; i++) {
-            for (int w = 0; w <= W; w++) {
-                if (i == 0 || w == 0) {
-                    dp[i][w] = 0;
-                } else if (wt[i - 1] <= w) {
-                    dp[i][w] = Math.max(val[i - 1] + dp[i - 1][w - wt[i - 1]], dp[i - 1][w]);
+            for (int c = 0; c <= Capacity; c++) {
+                //If capacity == 0 or put no items into knapsack, the value is 0.
+                if (i == 0 || c == 0) {
+                    dp[i][c] = 0;
+                // If capacity >= ith item, select the maxium of two cases:
+                // (1) ith item included, (2) not included
+                } else if (wt[i - 1] <= c) {
+                    dp[i][c] = Math.max(val[i - 1] + dp[i - 1][c - wt[i - 1]], dp[i - 1][c]);
                 } else {
-                    dp[i][w] = dp[i - 1][w];
+                    // If capacity < ith item, cannot include ith item. the value = previous one.
+                    dp[i][c] = dp[i - 1][c];
                 }
             }
         }
         
-        return dp[wt.length][W];
+        return dp[wt.length][Capacity];
     }
     
     public static void main(String[] args) {
