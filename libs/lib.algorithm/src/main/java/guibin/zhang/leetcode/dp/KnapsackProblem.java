@@ -20,43 +20,47 @@ package guibin.zhang.leetcode.dp;
 public class KnapsackProblem {
     
     /**
+     * 0-1 Knapsack problem, no duplicated item is allowed.
+     * We only consider whether the ith item can be selected.
      * 
-     * @param Capacity The target weight capacity of the knapsack.
+     * @param capacity The target weight capacity of the knapsack.
      * @param wt Weight of each candidate item.
      * @param val Value of each candidate item.
      * @param n The nth item of current solution.
      * @return Returns the maximum value that can be put in a knapsack of capacity W
      */
-    public int knapsackNaive(int Capacity, int[] wt, int[] val, int n) {
+    public int knapsackNaive(int capacity, int[] wt, int[] val, int n) {
         
         //If target weight is 0 or no item to be seleced.
-        if (n == 0 || Capacity == 0) {
+        if (n == 0 || capacity == 0) {
             return 0;
         }
         
         // If weight of the nth item is more than Knapsack capacity W, then
         // this item cannot be included in the optimal solution
-        if (wt[n - 1] > Capacity) {
-            return knapsackNaive(Capacity, wt, val, n - 1);
+        if (wt[n - 1] > capacity) {
+            return knapsackNaive(capacity, wt, val, n - 1);
         } else {// Return the maximum of two cases: (1) nth item included (2) not included
-            return Math.max(val[n - 1] + knapsackNaive(Capacity - wt[n - 1], wt, val, n - 1), //(1)
-                    knapsackNaive(Capacity, wt, val, n - 1)); //(2)
+            return Math.max(val[n - 1] + knapsackNaive(capacity - wt[n - 1], wt, val, n - 1), //(1)
+                    knapsackNaive(capacity, wt, val, n - 1)); //(2)
         }
     }
     
     /**
+     * 0-1 Knapsack problem, no duplicated item is allowed.
+     * We only consider whether the ith item can be selected.
      * 
-     * @param Capacity
+     * @param capacity
      * @param wt
      * @param val
      * @return 
      */
-    public int knapsack(int Capacity, int[] wt, int[] val) {
+    public int knapsack(int capacity, int[] wt, int[] val) {
         
-        int[][] dp = new int[wt.length + 1][Capacity + 1];
+        int[][] dp = new int[wt.length + 1][capacity + 1];
         
-        for(int i = 0; i <= wt.length; i++) {
-            for (int c = 0; c <= Capacity; c++) {
+        for (int c = 0; c <= capacity; c++) {
+            for(int i = 0; i <= wt.length; i++) {
                 //If capacity == 0 or put no items into knapsack, the value is 0.
                 if (i == 0 || c == 0) {
                     dp[i][c] = 0;
@@ -71,14 +75,43 @@ public class KnapsackProblem {
             }
         }
         
-        return dp[wt.length][Capacity];
+        return dp[wt.length][capacity];
     }
+    
+    /**
+     * Duplicated items is allowed from wt[] and val[].
+     * 
+     * @param capacity
+     * @param wt
+     * @param val
+     * @return 
+     */
+    public int integerKnapsack(int capacity, int[] wt, int[] val) {
+        
+        int[] dp = new int[capacity + 1];
+        for (int c = 0; c <= capacity; c++) {
+            
+            //The value of capacity c can be at least the value of capacity c - 1.
+            if (c > 0) dp[c] = dp[c - 1]; 
+            else dp[c] = 0;
+            //For each capacity, scan all possible wt[] and val[] to find the max val.
+            for (int i = 0; i < wt.length; i++) {
+                if (wt[i] <= c) {
+                    dp[c] = Math.max(dp[c], dp[c - wt[i]] + val[i]);
+                }
+            }
+        }
+        
+        return dp[capacity];
+    }
+    
     
     public static void main(String[] args) {
         int val[] = {60, 100, 120};
         int wt[] = {10, 20, 30};
         int W = 50;
         KnapsackProblem kp = new KnapsackProblem();
-        System.out.println(kp.knapsackNaive(W, wt, val, val.length) + ", " + kp.knapsack(W, wt, val));
+        System.out.println(kp.knapsackNaive(W, wt, val, val.length) + ", " + kp.knapsack(W, wt, val) + ", " 
+                + kp.integerKnapsack(W, wt, val));
     }
 }
