@@ -31,10 +31,10 @@ public class RegularExpressionMatching {
      * 
      * For the 1st case, if the first char of pattern is not ".", 
      * the first char of pattern and string should be the same. 
-     * Then continue to match the left part.
+     * Then continue to match the remaining part.
      * 
      * For the 2nd case, if the first char of pattern is "." 
-     * or first char of pattern == the first i char of string, continue to match the left.
+     * or first char of pattern == the first i char of string, continue to match the remaining.
      * 
      * Be careful about the offset.
      * 
@@ -43,10 +43,11 @@ public class RegularExpressionMatching {
      * @return 
      */
     public boolean isMatch(String s, String p) {
-        if (p.length() == 0) {
-            return s.length() == 0;
-        }
+        
+        // Base case: p.length() == 0
+        if (p.length() == 0) return s.length() == 0;
 
+        // Base case: p.length() == 1
         // length == 1 is the case that is easy to forget.
         // as p is subtracted 2 each time, so if original
         // p is odd, then finally it will face the length 1
@@ -55,38 +56,38 @@ public class RegularExpressionMatching {
                     && (p.charAt(0) == s.charAt(0) || p.charAt(0) == '.');
         }
 
+        // Case p.length() > 1
         // next char is not '*': must match current character
         if (p.charAt(1) != '*') {
-            if (s.length() < 1) {
-                return false;
-            } else {
-                return (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.')
-                        && isMatch(s.substring(1), p.substring(1));
-            }
+            if (s.length() < 1) return false;
+            else return (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.')
+                        && isMatch(s.substring(1), p.substring(1));// Rcur to move on s and p
         }
         
-        // next char is *
+        // case: p.charAt(1) == '*'
         while (s.length() > 0
                && (p.charAt(0) == s.charAt(0) || p.charAt(0) == '.')) {
+            //For the case: "aaa" "a*a"
             if (isMatch(s, p.substring(2))) {
                 return true;
             }
-            s = s.substring(1);
+            s = s.substring(1);//Else leverage *, continue to move on s
         }
         return isMatch(s, p.substring(2));
     }
     
     public boolean isMatch_v2(String s, String p) {
-        int height = s.length(), width = p.length();
-        boolean[][] dp = new boolean[height + 1][width + 1];
+        
+        boolean[][] dp = new boolean[s.length() + 1][p.length() + 1];
+        
         dp[0][0] = true;
-        for (int i = 1; i <= width; i++) {
+        for (int i = 1; i <= p.length(); i++) {
             if (p.charAt(i - 1) == '*') {
                 dp[0][i] = dp[0][i - 2];
             }
         }
-        for (int i = 1; i <= height; i++) {
-            for (int j = 1; j <= width; j++) {
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 1; j <= p.length(); j++) {
                 char sChar = s.charAt(i - 1);
                 char pChar = p.charAt(j - 1);
                 if (sChar == pChar || pChar == '.') {
@@ -100,6 +101,11 @@ public class RegularExpressionMatching {
                 }
             }
         }
-        return dp[height][width];
+        return dp[s.length()][p.length()];
+    }
+    
+    public static void main(String[] args) {
+        RegularExpressionMatching rem = new RegularExpressionMatching();
+        System.out.println(rem.isMatch("aaa", "a*a"));
     }
 }
