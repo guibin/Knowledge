@@ -8,13 +8,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import java.util.StringTokenizer;
 
 /**
  * Flatten the tree into string, then inflatten it back to tree.
  * 
  * @author Guibin Zhang <guibin.beijing@gmail.com>
  */
-public class TreeFlatten {
+public class TreeSerDe {
     
     public class TreeNode<T> {
         
@@ -41,12 +42,60 @@ public class TreeFlatten {
         }
     }
     
+    public void serialize_v4(TreeNode root, StringBuilder sb) {
+        
+        //Base case
+        if (root == null) return;
+        // Else, store current node and recur for its children
+        sb.append(root.val).append(" ");
+        if (root.children != null)
+            for (TreeNode n : (List<TreeNode>)root.children) {
+                serialize_v4(n, sb);
+            }
+        // Store marker at the end of children
+        sb.append("/ ");
+    }
+    
     /**
+     * 
+     * @param tokenizer 
+     * @return true if the next item is a valid tree key, else false.
+     */
+    public TreeNode deserialize_v4(StringTokenizer tokenizer) {
+        
+        //If theere are no more items or next
+        // item is marker, then return false to indicate same
+        if (!tokenizer.hasMoreTokens()) return null;
+        
+        String val = tokenizer.nextToken();
+        if ("/".equals(val)) return null;
+        
+        // Else create node with this item and recur for children
+        TreeNode root = new TreeNode(val, new ArrayList<>());
+        while(val != null && !"/".equals(val)) {
+            TreeNode kid = deserialize_v4(tokenizer);
+            if (kid != null) root.children.add(kid);
+            else break;
+        }
+        
+        return root;
+    }
+    
+    /**
+     * root -> child
+     * A B
+     * B E
+     * B F
+     * B G
+     * A C
+     * C H
+     * A D
+     * D I
      * 
      * @param root
      * @param sb 
      */
-    public void flatten_v2(TreeNode root, StringBuilder sb) {
+    public void serialize_v2(TreeNode root, StringBuilder sb) {
         
         if (root == null)  return;
         
@@ -54,12 +103,12 @@ public class TreeFlatten {
             for (int i = 0; i < root.children.size(); i++) {
                 TreeNode n = (TreeNode)root.children.get(i);
                 sb.append(root.val.toString()).append(" ").append(n.val.toString()).append("\n");
-                flatten_v2(n, sb);
+                serialize_v2(n, sb);
             }
         }
     }
     
-    public TreeNode deflatten_v2(String str) throws IOException {
+    public TreeNode deserialize_v2(String str) throws IOException {
         
         BufferedReader br = new BufferedReader(new StringReader(str));
         Map<TreeNode, TreeNode> checker = new HashMap<>();
@@ -84,11 +133,21 @@ public class TreeFlatten {
     }
     
     /**
-     * Flatten with position of children together
+     * Flatten with position of children together.
+     * 
+     * A B:0
+     * B E:0
+     * B F:1
+     * B G:2
+     * A C:1
+     * C H:0
+     * A D:2
+     * D I:0
+     * 
      * @param root
      * @param sb 
      */
-    public void flatten_v3(TreeNode root, StringBuilder sb) {
+    public void serialize_v3(TreeNode root, StringBuilder sb) {
         
         if (root == null)  return;
         
@@ -96,12 +155,12 @@ public class TreeFlatten {
             for (int i = 0; i < root.children.size(); i++) {
                 TreeNode n = (TreeNode)root.children.get(i);
                 sb.append(root.val.toString()).append(" ").append(n.val.toString()).append(":").append(i).append("\n");
-                flatten_v3(n, sb);
+                serialize_v3(n, sb);
             }
         }
     }
     
-    public TreeNode deflatten_v3(String str) throws IOException {
+    public TreeNode deserialize_v3(String str) throws IOException {
         
         BufferedReader br = new BufferedReader(new StringReader(str));
         Map<TreeNode, TreeNode> checker = new HashMap<>();
@@ -131,9 +190,9 @@ public class TreeFlatten {
         return root;
     }
     
-    public String flatten(TreeNode root) {
+    public String serialize(TreeNode root) {
         StringBuilder sb = new StringBuilder();
-        flatten(root, sb);
+        serialize(root, sb);
         return sb.toString();
     }
     
@@ -142,14 +201,14 @@ public class TreeFlatten {
      * @param root Root node
      * @param sb The result
      */
-    public void flatten(TreeNode<String> root, StringBuilder sb) {
+    public void serialize(TreeNode<String> root, StringBuilder sb) {
         
         if (root != null) {
             sb.append(root.val.toString());
             if (root.children != null) {
                 sb.append("(");
                 root.children.stream().forEach((n) -> {
-                    flatten(n, sb);
+                    serialize(n, sb);
                 });
                 sb.append(")");
             }
@@ -161,7 +220,7 @@ public class TreeFlatten {
      * @param s
      * @return 
      */
-    public TreeNode<Character> deflatten(String s) {
+    public TreeNode<Character> deserialize(String s) {
         
         if (s.length() < 1) return null;
         
@@ -186,7 +245,7 @@ public class TreeFlatten {
     }
     
     public static void main(String[] args) throws IOException {
-        TreeFlatten tr = new TreeFlatten();
+        TreeSerDe tr = new TreeSerDe();
         TreeNode<String> a = tr.new TreeNode<>("A");
         TreeNode<String> b = tr.new TreeNode<>("B");
         TreeNode<String> c = tr.new TreeNode<>("C");
@@ -224,9 +283,10 @@ public class TreeFlatten {
          * e  f  g  h  i
          * 
          * expected output: A(B(EFG)C(H)D(I))
+         * expected output: A B E / F / G / / C H / / D I / / / 
          */
         
-        String str = tr.flatten(a);
+        String str = tr.serialize(a);
         System.out.println(str);
         
         /**
@@ -241,26 +301,36 @@ public class TreeFlatten {
          * I D
          */
         StringBuilder sb = new StringBuilder();
-        tr.flatten_v2(a, sb);
+        tr.serialize_v2(a, sb);
         System.out.println("Serialize v2:");
         System.out.println(sb.toString());
         System.out.println("Deserialize");
-        TreeNode n = tr.deflatten_v2(sb.toString());
+        TreeNode n = tr.deserialize_v2(sb.toString());
         StringBuilder sb2 = new StringBuilder();
-        tr.flatten_v2(n, sb2);
+        tr.serialize_v2(n, sb2);
         System.out.println(sb2.toString());
         
         System.out.println("Serialize v3:");
         StringBuilder sb3 = new StringBuilder();
-        tr.flatten_v3(a, sb3);
+        tr.serialize_v3(a, sb3);
         System.out.println(sb3.toString());
         
         System.out.println("Deserialize v3:");
-        TreeNode d3 = tr.deflatten_v3(sb3.toString());
+        TreeNode d3 = tr.deserialize_v3(sb3.toString());
         StringBuilder sb4 = new StringBuilder();
-        tr.flatten_v3(d3, sb4);
+        tr.serialize_v3(d3, sb4);
         System.out.println(sb4.toString());
         
+        System.out.println("Serialize v4:");
+        StringBuilder sb5 = new StringBuilder();
+        tr.serialize_v4(a, sb5);
+        System.out.println(sb5.toString());
+        
+        //A B E / F / G / / C H / / D I / / / 
+        TreeNode root = tr.deserialize_v4(new StringTokenizer(sb5.toString()));
+        StringBuilder sb6 = new StringBuilder();
+        tr.serialize_v4(root, sb6);
+        System.out.println(sb6.toString());
         
 //        tr.deflatten(str);
     }
