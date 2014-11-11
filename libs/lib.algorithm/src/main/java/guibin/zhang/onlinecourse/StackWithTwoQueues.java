@@ -4,8 +4,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- *
- * @author Guibin Zhang <gzhang at radiumone.com>
+ * Give two queue with standard add and remove operation, 
+ * implement the standard queue operation push and pop.
+ * 
+ * @author Guibin Zhang <guibin.beijing@gmail.com>
  */
 public class StackWithTwoQueues<T> {
     
