@@ -30,6 +30,7 @@ public class SearchInRotatedSortedArray {
             
             //mid is in the left part of rotated array
             if (A[mid] >= A[start]) {
+                //target is in left part of rotate array && target is left of mid.
                 if (target >= A[start] && target < A[mid]) {
                     end = mid - 1;
                 } else {
